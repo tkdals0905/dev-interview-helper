@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../api/user';
-// import ReactDOM from 'react-dom';
+import Confirm from '../components/Confirm';
 
 const LoginComponent = styled.section`
   display: flex;
@@ -101,7 +102,7 @@ const LoginMain = styled.div`
 `;
 
 const SubmitBtn = styled.button`
-  width: 104%;
+  width: 100%;
   height: 40px;
   border-radius: 3px;
   color: white;
@@ -112,19 +113,14 @@ const SubmitBtn = styled.button`
   border: none;
   margin-top: 20px;
 `;
-const Footer = styled.footer`
-  display: flex;
-  margin-top: 25px;
-  font-size: 12px;
-  width: 300px;
-  justify-content: space-around;
-`;
 
 function Login() {
+  const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
+  const [message, setMessage] = useState('');
   const [isFull, setIsFull] = useState(false);
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -140,22 +136,30 @@ function Login() {
     }
   }, [loginInfo.email, loginInfo.password]);
 
+  useEffect(() => {
+    if (loginMutation.status === 'error') {
+      setMessage('login_fail');
+    } else if (loginMutation.status === 'success') {
+      navigate('/');
+    }
+  }, [loginMutation.status]);
+
   const handlesubmit = async (e) => {
     e.preventDefault();
     // 폼제출하고 나서 새로고침 방지
-    if (loginInfo.email && loginInfo.password) {
-      loginMutation.mutate({
-        email: loginInfo.email,
-        password: loginInfo.password,
-      });
-    } else {
-      alert('비밀번호 일치하게 작성해 주세요.');
-    }
+    loginMutation.mutate({
+      email: loginInfo.email,
+      password: loginInfo.password,
+    });
   };
-  console.log(loginInfo);
-
+  const resetMessage = () => {
+    setMessage('');
+  };
   return (
     <LoginComponent>
+      {message ? (
+        <Confirm message={message} handleMessage={resetMessage} />
+      ) : null}
       <LoginMain>
         <h2 className="login-title">로그인</h2>
         <form onSubmit={handlesubmit}>
@@ -195,11 +199,6 @@ function Login() {
           </div>
         </form>
       </LoginMain>
-      <Footer>
-        <p>이용약관</p>
-        <p>개인정보 처리방침</p>
-        <p>FAQ/문의</p>
-      </Footer>
     </LoginComponent>
   );
 }
