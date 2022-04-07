@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
 import signupApi from '../api/user';
+import Confirm from '../components/Confirm';
 
 const SignUpContainer = styled.main`
   display: flex;
@@ -48,8 +49,8 @@ const SignUpWrapper = styled.div`
     background-color: #fbfbfd;
     font-size: 16px;
     line-height: 24px;
-    width: 100%;
-    height: 40px;
+    width: 293px;
+    height: 28px;
     border: 1px solid #0078ff;
     padding: 8px 12px 8px 12px;
   }
@@ -67,7 +68,8 @@ const SignUpWrapper = styled.div`
     display: inline-block;
   }
   .user-alert {
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     color: #98a8b9;
     text-align: center;
   }
@@ -93,6 +95,7 @@ function SignUp() {
 
   const [isFull, setIsFull] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
@@ -114,6 +117,14 @@ function SignUp() {
     }
   }, [userInfo, checked]);
 
+  useEffect(() => {
+    if (signupMutation.isSuccess) {
+      setMessage('success_signup');
+    } else if (signupMutation.isError) {
+      setMessage('error_signup');
+    }
+  }, [signupMutation.status]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userInfo.password_check === userInfo.password) {
@@ -123,14 +134,19 @@ function SignUp() {
         password: userInfo.password,
       });
     } else {
-      alert('비밀번호 일치하게 작성해 주세요.');
+      setMessage('password_check_fail');
     }
   };
+
+  const resetMessage = () => {
+    setMessage('');
+  };
+
   return (
     <SignUpContainer>
-      {`loading:${signupMutation.isLoading ? 'loading' : 'pending'}`}
-      {`success:${signupMutation.isSuccess ? 'success' : 'pending'}`}
-      {`error:${signupMutation.isError ? 'error' : 'pending'}`}
+      {message ? (
+        <Confirm message={message} handleMessage={resetMessage} />
+      ) : null}
       <SignUpWrapper>
         <h2 className="sign-title">계정 만들기</h2>
         <form onSubmit={handleSubmit}>
