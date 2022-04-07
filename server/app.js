@@ -1,11 +1,10 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 4000;
-const db = require("./models");
+const db = require('./models');
 
-const signupPage = require("./router/signupPage");
-const loginPage = require("./router/loginPage");
+const userRouter = require('./routers/user');
 // const logoutPage = require("./router/logoutPage");
 // const mainPage = require("./router/mainPage");
 // const mypagePage = require("./router/mypagePage");
@@ -13,21 +12,27 @@ const loginPage = require("./router/loginPage");
 db.sequelize
   .sync()
   .then(() => {
-    console.log("db 연결 성공");
+    console.log('db 연결 성공');
   })
   .catch(console.error);
 
-app.use(cors({}));
+app.use(
+  cors({
+    origin: '*',
+    credentials: false,
+  })
+);
 
 // json형식으로 올 경우 body 파싱
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.get('/hi', (req, res) => {
+  res.json({ message: 'hi' });
+});
+app.use('/user', userRouter);
 
-app.use("/signup", signupPage);
-app.use("/login", loginPage);
-
-app.get("/", (req, res) => {
-  res.send("Hello, Express");
+app.get('/', (req, res) => {
+  res.send('Hello, Express');
 });
 
 //app.use("/logout", logoutPage);
@@ -36,5 +41,5 @@ app.get("/", (req, res) => {
 
 // 일단 마지막에 위치 (이유 찾아보기)
 app.listen(PORT, () => {
-  console.log(`Server listen PORT ${port}`);
+  console.log(`Server listen PORT ${PORT}`);
 });
