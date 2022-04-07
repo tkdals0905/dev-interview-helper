@@ -52,6 +52,9 @@ function Confirm({ message, handleMessage }) {
     } else if (message === 'password_check_fail') {
       setBtnInfo('닫 기');
       setCurMessage('비밀번호가 일치하지 않습니다');
+    } else if (message === 'login_fail') {
+      setBtnInfo('닫 기');
+      setCurMessage('로그인 실패');
     }
   }, []);
   const handleConfirm = () => {
@@ -59,7 +62,8 @@ function Confirm({ message, handleMessage }) {
       navigate('/');
     } else if (
       message === 'error_signup' ||
-      message === 'password_check_fail'
+      message === 'password_check_fail' ||
+      message === 'login_fail'
     ) {
       handleMessage('');
     }
