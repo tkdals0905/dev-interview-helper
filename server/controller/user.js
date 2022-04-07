@@ -1,19 +1,24 @@
-const { User } = require('../models');
-const { hashPassword } = require('../functions/security');
-const {  generateAccessToken, sendAccessToken, checkAccessToken } = require('../functions/jwtToken');
+const { User } = require("../models");
+
+const {
+  generateAccessToken,
+  sendAccessToken,
+  checkAccessToken,
+} = require("../functions/jwtToken");
+
+const { hashPassword } = require("./functions/security");
 
 module.exports = {
-   signup = async (req, res, next) => {
+  signup: async (req, res, next) => {
     try {
       const { email, username, password } = req.body;
-      console.log('여기는 백엔드:', email, username, password);
       const exUser = await User.findOne({
         where: {
           email,
         },
       });
       if (exUser) {
-        return res.status(403).send('이미 사용중인 이메일입니다.');
+        return res.status(403).send("이미 사용중인 이메일입니다.");
       }
 
       const hashPw = await hashPassword(password);
@@ -24,16 +29,14 @@ module.exports = {
         password: hashPw,
       });
 
-      return res.status(201).send('OK');
+      return res.status(201).send("OK");
     } catch (error) {
       console.error(error);
       next(error);
     }
-  }
-}
+  },
 
-module.exports = { 
-  login = async (req, res, next) => {
+  login: async (req, res, next) => {
     console.log(req.body);
     const { email, password } = req.body;
 
@@ -49,7 +52,7 @@ module.exports = {
       if (!userInfo) {
         return res.json({
           success: false,
-          message: '이메일 또는 비밀번호가 잘못되었습니다',
+          message: "이메일 또는 비밀번호가 잘못되었습니다",
         });
       }
       const match = await bcrypt.compare(
@@ -59,16 +62,16 @@ module.exports = {
       if (!match) {
         return res.json({
           success: false,
-          message: '이메일 또는 비밀번호가 잘못되었습니다',
+          message: "이메일 또는 비밀번호가 잘못되었습니다",
         });
       }
 
       return res
         .status(201)
-        .json({ success: true, message: '로그인이 완료되었습니다' });
+        .json({ success: true, message: "로그인이 완료되었습니다" });
     } catch (err) {
       console.error(err);
       next(err);
     }
   },
-}
+};
