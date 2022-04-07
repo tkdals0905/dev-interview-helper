@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-// import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
 const HeaderNavbar = styled.header`
   display: flex;
@@ -8,21 +8,21 @@ const HeaderNavbar = styled.header`
   color: white;
   align-items: center;
   justify-content: space-between;
-
+  width: 100%;
   padding: 10px;
-  * {
-    margin: 0px;
+  h4 {
+    color: white;
   }
 `;
 
-const Serch = styled.div`
+const Search = styled.div`
   display: flex;
   margin-right: 0px;
 
-  .serch-input {
+  .search-input {
     height: 40px;
   }
-  .serch-button {
+  .search-button {
     width: 40px;
     height: 40px;
     margin-right: 20px;
@@ -64,15 +64,19 @@ function Header() {
         <h2>dev interview</h2>
       </Logo>
       <Div>
-        <Serch>
-          <input className="serch-input" type="search" placeholder="Search" />
-          <button className="serch-button" type="submit">
+        <Search>
+          <input className="search-input" type="search" placeholder="Search" />
+          <button className="search-button" type="submit">
             <img className="s-img" src="/images/search.png" alt="search" />
           </button>
-        </Serch>
+        </Search>
         <Sign>
-          <h4> 로그인</h4>
-          <h4> 회원가입</h4>
+          <Link to="/login">
+            <h4>로그인</h4>
+          </Link>
+          <Link to="/signup">
+            <h4>회원가입</h4>
+          </Link>
         </Sign>
       </Div>
     </HeaderNavbar>

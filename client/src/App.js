@@ -7,14 +7,14 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <main>
+    <>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </main>
+    </>
   );
 }
 
