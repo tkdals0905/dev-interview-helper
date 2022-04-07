@@ -93,27 +93,12 @@ function SignUp() {
 
   const [isFull, setIsFull] = useState(false);
   const [checked, setChecked] = useState(false);
+
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
   };
 
-  const signupMutation = useMutation(signupApi, {
-    onMutate: (variable) => {
-      console.log('onMutate', variable);
-      // variable : {eamil: 'xxx',username:'xxx, password; 'xxx'}
-    },
-    onError: (error, variable, context) => {
-      // error
-      console.error(error);
-      console.log(variable, context);
-    },
-    onSuccess: (data, variables, context) => {
-      console.log('success', data, variables, context);
-    },
-    onSettled: () => {
-      console.log('end');
-    },
-  });
+  const signupMutation = useMutation(signupApi);
 
   useEffect(() => {
     if (
@@ -129,7 +114,7 @@ function SignUp() {
     }
   }, [userInfo, checked]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (userInfo.password_check === userInfo.password) {
       signupMutation.mutate({
@@ -170,7 +155,7 @@ function SignUp() {
             onChange={handleInputValue('password')}
             placeholder="비밀번호"
           />
-          <label htmlFor="name">이름</label>
+          <label htmlFor="password-check">비밀번호 확인</label>
           <input
             type="password"
             id="password-check"
