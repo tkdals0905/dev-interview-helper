@@ -14,7 +14,7 @@ module.exports = class User extends Model {
           allowNull: true, //필수
           unique: true, //고유한값
         },
-        full_name: {
+        username: {
           type: DataTypes.STRING(30),
           allowNull: false, //필수
         },
