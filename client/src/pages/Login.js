@@ -1,23 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
+import { loginApi } from '../api/user';
 // import ReactDOM from 'react-dom';
 
 const LoginComponent = styled.section`
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-
-  button {
-    padding: 10px;
-    width: 300px;
-    margin-top: 10px;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    border-style: none;
-    border-radius: 3px;
-  }
 
   * {
     margin: 0px;
@@ -31,21 +21,29 @@ const LoginComponent = styled.section`
   }
 `;
 
-const LoginMain = styled.form`
+const LoginMain = styled.div`
+  width: 320px;
   display: flex;
   flex-direction: column;
-  div {
-    margin-top: 10px;
-  }
-  .git-login-btn {
-    background-color: black;
-  }
-  .login-btn {
-    background-color: #1e90ff;
+
+  font-size: 12px;
+  h2 {
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
   }
   .between {
     margin-top: 15px;
     margin-bottom: 10px;
+  }
+  .disabled-button {
+    background-color: #c0deff;
+  }
+  .able-button {
+    background-color: #0078ff;
+  }
+  .git-button {
+    background-color: #000000;
   }
   .line {
     display: flex;
@@ -74,38 +72,45 @@ const LoginMain = styled.form`
     font-size: 0px;
     line-height: 0px;
   }
-`;
-const LoginInput = styled.form`
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
+
   input {
-    display: block;
+    border-radius: 3px;
+    background-color: #fbfbfd;
+    font-size: 16px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #0078ff;
     margin-top: 5px;
-    width: 300px;
+    margin-bottom: 5px;
     height: 40px;
     opacity: 0.6;
+    padding: 2px 0px 2px 10px;
   }
-  div {
-    width: 300px;
-  }
+
   a {
     display: inline;
     text-decoration-line: none;
+    margin-left: 20px;
   }
-  .reset-password {
-    margin-left: 190px;
-  }
+
   .create-id {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    a {
-      margin-left: 20px;
-    }
   }
-  p {
-    display: inline;
-  }
+`;
+
+const SubmitBtn = styled.button`
+  width: 104%;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-top: 20px;
 `;
 const Footer = styled.footer`
   display: flex;
@@ -113,44 +118,82 @@ const Footer = styled.footer`
   font-size: 12px;
   width: 300px;
   justify-content: space-around;
-  p {
-    padding-right: 10px;
-  }
 `;
 
 function Login() {
+  const [loginInfo, setLoginInfo] = useState({
+    email: '',
+    password: '',
+  });
+  const [isFull, setIsFull] = useState(false);
+  const handleInputValue = (key) => (e) => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+  };
+
+  const loginMutation = useMutation(loginApi);
+
+  useEffect(() => {
+    if (loginInfo.email && loginInfo.password) {
+      setIsFull(true);
+    } else {
+      setIsFull(false);
+    }
+  }, [loginInfo.email, loginInfo.password]);
+
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    // 폼제출하고 나서 새로고침 방지
+    if (loginInfo.email && loginInfo.password) {
+      loginMutation.mutate({
+        email: loginInfo.email,
+        password: loginInfo.password,
+      });
+    } else {
+      alert('비밀번호 일치하게 작성해 주세요.');
+    }
+  };
+  console.log(loginInfo);
+
   return (
     <LoginComponent>
-      <h2 className="login-title">로그인</h2>
       <LoginMain>
-        <button className="git-login-btn" type="submit">
-          <i className="fa-brands fa-github-alt" />
-          Github으로 로그인하기
-        </button>
-        <div className="between">
-          <p className="line">또는</p>
-        </div>
-        <LoginInput>
-          <div className="userInfo-email">
-            <p className="userInfo">이메일</p>
-            <input id="email" type="email" placeholder="이메일" />
+        <h2 className="login-title">로그인</h2>
+        <form onSubmit={handlesubmit}>
+          <SubmitBtn className="git-button" type="submit">
+            Github으로 로그인하기
+          </SubmitBtn>
+          <div className="between">
+            <p className="line">또는</p>
           </div>
-          <div className="userInfo-password">
-            <p className="userInfo">이메일</p>
-            <a className="reset-password" href="www.naver.com">
-              비밀번호 재설정
-            </a>
-            <input type="password" placeholder="비밀번호" />
-          </div>
-          <button className="login-btn" type="submit">
-            <i className="fa-brands fa-github-alt" />
+
+          <label htmlFor="user-email">이메일</label>
+          <input
+            id="user-email"
+            type="email"
+            placeholder="이메일"
+            onChange={handleInputValue('email')}
+          />
+
+          <label htmlFor="user-password">비밀번호</label>
+          <input
+            id="user-password"
+            type="password"
+            placeholder="비밀번호"
+            onChange={handleInputValue('password')}
+          />
+
+          <SubmitBtn
+            disabled={!isFull}
+            className={isFull ? 'able-button' : 'disabled-button'}
+            type="submit"
+          >
             로그인 하기
-          </button>
+          </SubmitBtn>
           <div className="create-id">
             <p>아직 계정이 없으신가요?</p>
             <a href="www.naver.com">계정 만들기</a>
           </div>
-        </LoginInput>
+        </form>
       </LoginMain>
       <Footer>
         <p>이용약관</p>
