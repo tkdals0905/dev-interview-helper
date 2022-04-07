@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
+import signupApi from '../api/user';
 
 const SignUpContainer = styled.main`
   display: flex;
@@ -95,6 +97,24 @@ function SignUp() {
     setUserInfo({ ...userInfo, [key]: e.target.value });
   };
 
+  const signupMutation = useMutation(signupApi, {
+    onMutate: (variable) => {
+      console.log('onMutate', variable);
+      // variable : {eamil: 'xxx',username:'xxx, password; 'xxx'}
+    },
+    onError: (error, variable, context) => {
+      // error
+      console.error(error);
+      console.log(variable, context);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log('success', data, variables, context);
+    },
+    onSettled: () => {
+      console.log('end');
+    },
+  });
+
   useEffect(() => {
     if (
       userInfo.email &&
@@ -111,10 +131,21 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(checked, isFull);
+    if (userInfo.password_check === userInfo.password) {
+      signupMutation.mutate({
+        username: userInfo.username,
+        email: userInfo.email,
+        password: userInfo.password,
+      });
+    } else {
+      alert('비밀번호 일치하게 작성해 주세요.');
+    }
   };
   return (
     <SignUpContainer>
+      {`loading:${signupMutation.isLoading ? 'loading' : 'pending'}`}
+      {`success:${signupMutation.isSuccess ? 'success' : 'pending'}`}
+      {`error:${signupMutation.isError ? 'error' : 'pending'}`}
       <SignUpWrapper>
         <h2 className="sign-title">계정 만들기</h2>
         <form onSubmit={handleSubmit}>
