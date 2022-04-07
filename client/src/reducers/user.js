@@ -12,7 +12,7 @@ export const ADD_CARD_TO_ME = 'ADD_CARD_TO_ME';
 
 export const REMOVE_CARD_OF_ME = 'REMOVE_CARD_OF_ME';
 
-const reducer = (action, state = initialized) =>
+const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case ADD_CARD_TO_ME:

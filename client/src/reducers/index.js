@@ -3,8 +3,8 @@ import user from './user';
 import card from './card';
 
 const rootReducer = combineReducers({
-  user,
   card,
+  user,
 });
 
 export default rootReducer;

@@ -6,7 +6,7 @@ const initialized = {
 
 export const LOAD_CARDS_SUCCESS = 'LOAD_CARDS_SUCCESS';
 
-const reducer = (action, state = initialized) =>
+const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case LOAD_CARDS_SUCCESS:
