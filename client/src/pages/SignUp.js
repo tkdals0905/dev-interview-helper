@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
-import signupApi from '../api/user';
+import { signupApi } from '../api/user';
 import Confirm from '../components/Confirm';
 
 const SignUpContainer = styled.main`
