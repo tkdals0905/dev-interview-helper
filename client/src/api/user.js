@@ -1,5 +1,8 @@
 import axios from 'axios';
 
-const signupApi = (data) => axios.post('http://localhost:4000/user', data);
+axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.withCredentials = true;
 
-export default signupApi;
+export const signupApi = (data) => axios.post('/user', data);
+
+export const loginApi = (data) => axios.post('/user/login', data);
