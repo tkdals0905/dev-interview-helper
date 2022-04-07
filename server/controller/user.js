@@ -1,10 +1,10 @@
-const { User } = require('../../models');
-const { hashPassword } = require('../functions/security');
+const { User } = require('../models');
+const { hashPassword } = require('./functions/security');
 
-export const signup = async (req, res, next) => {
+module.exports = {
+  signup: async (req, res, next) => {
     try {
       const { email, username, password } = req.body;
-      console.log('여기는 백엔드:', email, username, password);
       const exUser = await User.findOne({
         where: {
           email,
@@ -27,9 +27,8 @@ export const signup = async (req, res, next) => {
       console.error(error);
       next(error);
     }
-}
-
-export const login = async (req, res, next) => {
+  },
+  login: async (req, res, next) => {
     console.log(req.body);
     const { email, password } = req.body;
 
@@ -67,3 +66,4 @@ export const login = async (req, res, next) => {
       next(err);
     }
   },
+};
