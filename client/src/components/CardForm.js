@@ -32,6 +32,7 @@ const Container = styled.div`
     margin: auto;
     width: 580px;
     height: 240px;
+    font-size: 20px;
   }
   #postBtn {
     display: block;

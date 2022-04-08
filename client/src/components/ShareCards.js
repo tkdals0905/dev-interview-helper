@@ -1,16 +1,45 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import Card from './Card';
 import CardsContainner from '../styles/CardsStyle';
 
+const Image = styled.img`
+  display: block;
+  width: 500px;
+  height: 355px;
+`;
+
+const ImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: auto;
+`;
 function ShareCards({ cardsInfo }) {
+  const { me } = useSelector((state) => state.user);
   return (
     <CardsContainner>
-      <button className="studyBtn" type="button">
-        학습하러 가기
-      </button>
-      {cardsInfo.map((cardInfo) => (
-        <Card key={cardInfo.id} cardInfo={cardInfo} />
-      ))}
+      {me ? (
+        <>
+          {' '}
+          <button className="studyBtn" type="button">
+            학습하러 가기
+          </button>
+          {cardsInfo.map((cardInfo) => (
+            <Card key={cardInfo.id} cardInfo={cardInfo} />
+          ))}
+        </>
+      ) : (
+        <ImageBox>
+          <h3>로그인 후 나만의 문제집을 만들어 보세요.</h3>
+          <Image
+            src="./images/13210.jpg"
+            className="decoration"
+            alt="배경이미지"
+          />
+        </ImageBox>
+      )}
     </CardsContainner>
   );
 }
