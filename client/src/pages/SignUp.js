@@ -34,6 +34,8 @@ const SignUpWrapper = styled.div`
   }
   .sign-title {
     width: 100%;
+    display: block;
+    margin-top: 2rem;
     font-weight: 700;
     font-size: 32px;
     text-align: center;
@@ -49,8 +51,8 @@ const SignUpWrapper = styled.div`
     background-color: #fbfbfd;
     font-size: 16px;
     line-height: 24px;
-    width: 293px;
-    height: 28px;
+    width: 320px;
+    height: 40px;
     border: 1px solid #0078ff;
     padding: 8px 12px 8px 12px;
   }
