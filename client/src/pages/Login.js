@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { loginApi } from '../api/user';
+import { LOG_IN_SUCCESS } from '../reducers/user';
 import Confirm from '../components/Confirm';
 
 const LoginComponent = styled.section`
@@ -115,6 +117,7 @@ const SubmitBtn = styled.button`
 `;
 
 function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({
     email: '',
@@ -147,9 +150,19 @@ function Login() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     // 폼제출하고 나서 새로고침 방지
-    loginMutation.mutate({
-      email: loginInfo.email,
-      password: loginInfo.password,
+    // loginMutation.mutate({
+    //   email: loginInfo.email,
+    //   password: loginInfo.password,
+    // });
+    const userInfo = {
+      username: 'sungmin',
+      email: 'aa@aa.com',
+      Cards: [],
+      Shares: [],
+    };
+    dispatch({
+      type: LOG_IN_SUCCESS,
+      data: userInfo,
     });
   };
   const resetMessage = () => {
