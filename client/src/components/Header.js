@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const HeaderNavbar = styled.header`
   display: flex;
@@ -55,6 +56,8 @@ const Logo = styled.div`
 `;
 
 function Header() {
+  const { me } = useSelector((state) => state.user);
+  console.log('여기는 헤더:', me);
   return (
     <HeaderNavbar>
       <Logo>
