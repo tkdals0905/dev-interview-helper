@@ -10,9 +10,6 @@ const HeaderNavbar = styled.header`
   justify-content: space-between;
   width: 100%;
   padding: 10px;
-  h4 {
-    color: white;
-  }
 `;
 
 const Search = styled.div`
@@ -44,6 +41,7 @@ const Sign = styled.div`
     margin: 5px;
     padding-right: 5px;
     cursor: pointer;
+    color: white;
   }
 `;
 const Logo = styled.div`
@@ -71,10 +69,10 @@ function Header() {
           </button>
         </Search>
         <Sign>
-          <Link to="/login">
+          <Link style={{ textDecoration: 'none' }} to="/login">
             <h4>로그인</h4>
           </Link>
-          <Link to="/signup">
+          <Link style={{ textDecoration: 'none' }} to="/signup">
             <h4>회원가입</h4>
           </Link>
         </Sign>
