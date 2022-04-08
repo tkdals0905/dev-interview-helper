@@ -11,16 +11,22 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 5, 12, 0.5);
+  .back-arrow {
+    font-size: 20px;
+    margin-left: 5px;
+    margin-top: 1px;
+    font-weight: 800;
+    cursor: pointer;
+  }
 `;
 
 const MessageBox = styled.div`
   background-color: white;
   width: 300px;
   height: 200px;
-  z-index: 100;
+  z-index: 10;
   border-radius: 3px;
   h2 {
-    margin-top: 2rem;
     text-align: center;
     margin-bottom: 5rem;
   }
@@ -55,6 +61,9 @@ function Confirm({ message, handleMessage }) {
     } else if (message === 'login_fail') {
       setBtnInfo('닫 기');
       setCurMessage('로그인 실패');
+    } else if (message === 'should_login') {
+      setBtnInfo('로그인 하기');
+      setCurMessage('로그인 해야 사용가능합니다.');
     }
   }, []);
   const handleConfirm = () => {
@@ -68,10 +77,20 @@ function Confirm({ message, handleMessage }) {
       handleMessage('');
     }
   };
-
+  const handleCancel = () => {
+    handleMessage('');
+  };
   return (
     <Container>
       <MessageBox>
+        <div
+          role="button"
+          onClick={handleCancel}
+          className="back-arrow"
+          aria-hidden="true"
+        >
+          ❌
+        </div>
         <h2>{curMessage}</h2>
         <button type="button" onClick={handleConfirm}>
           {btnInfo}

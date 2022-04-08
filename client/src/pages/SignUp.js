@@ -17,7 +17,6 @@ const SubmitBtn = styled.button`
   text-align: center;
   font-weight: 700;
   line-height: 35px;
-  cursor: pointer;
   border: none;
   transition: 0.3s ease-in;
   border-radius: 3px;
@@ -28,9 +27,11 @@ const SignUpWrapper = styled.div`
   text-align: left;
   .disabled_button {
     background-color: #c0deff;
+    cursor: not-allowed;
   }
   .able_button {
     background-color: #0153f4;
+    cursor: pointer;
   }
   .sign-title {
     width: 100%;

@@ -41,9 +41,11 @@ const LoginMain = styled.div`
   }
   .disabled-button {
     background-color: #c0deff;
+    cursor: not-allowed;
   }
   .able-button {
     background-color: #0078ff;
+    cursor: pointer;
   }
   .git-button {
     background-color: #000000;
@@ -111,7 +113,7 @@ const SubmitBtn = styled.button`
   font-size: 16px;
   text-align: center;
   font-weight: 600;
-  cursor: pointer;
+
   border: none;
   margin-top: 20px;
 `;
