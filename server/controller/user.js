@@ -78,4 +78,16 @@ module.exports = {
       next(err);
     }
   },
+
+  logout: async (req, res, next) => {
+    try {
+      // 로그아웃 할 때는 쿠키를 삭제한다.
+      res.cookie("accessToken", null, { maxAge: 0 });
+      // 로그아웃 성공시 200을 보냄.
+      res.status(200).json({ message: "ok" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error!" });
+    }
+  },
 };

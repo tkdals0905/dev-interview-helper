@@ -11,7 +11,6 @@ const userRouter = require("./routers/user");
 // const mainPage = require("./router/mainPage");
 // const mypagePage = require("./router/mypagePage");
 
-/*
 // EC2 - RDS 연동을 위한 코드 수정으로 주석처리 (by. 오상민)
 db.sequelize
   .sync()
@@ -19,25 +18,24 @@ db.sequelize
     console.log("db 연결 성공");
   })
   .catch(console.error);
-*/
 
-const rdsConnection = mysql.createConnection({
-  host: process.env.RDS_HOSTNAME,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT,
-});
+// const rdsConnection = mysql.createConnection({
+//   host: process.env.RDS_HOSTNAME,
+//   user: process.env.RDS_USERNAME,
+//   password: process.env.RDS_PASSWORD,
+//   port: process.env.RDS_PORT,
+// });
 
-rdsConnection.connect(function (err) {
-  if (err) {
-    console.error("Database connection failed: " + err.stack);
-    return;
-  }
+// rdsConnection.connect(function (err) {
+//   if (err) {
+//     console.error("Database connection failed: " + err.stack);
+//     return;
+//   }
 
-  console.log("Connected to database.");
-});
+//   console.log("Connected to database.");
+// });
 
-rdsConnection.end();
+// rdsConnection.end();
 
 app.use(
   cors({
@@ -54,6 +52,7 @@ app.get("/hi", (req, res) => {
   res.json({ message: "hi" });
 });
 app.use("/user", userRouter);
+app.use("/cards", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, Express");

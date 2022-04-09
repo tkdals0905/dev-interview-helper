@@ -1,5 +1,5 @@
 const { User } = require("../models");
-const { checkAccessToken } = require("../functions/");
+const { checkAccessToken } = require("./functions/");
 
 module.exports = async (req, res) => {
   try {
