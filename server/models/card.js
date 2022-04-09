@@ -5,10 +5,10 @@ module.exports = class Effect extends Model {
   static init(sequelize) {
     return super.init(
       {
-        user_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
+        // user_id: {
+        //   type: DataTypes.INTEGER,
+        //   allowNull: false,
+        // },
         question: {
           type: DataTypes.TEXT,
           allowNull: false,
