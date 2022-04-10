@@ -8,6 +8,7 @@ const CardsContainner = styled.section`
   justify-content: space-between;
   position: relative;
   margin: auto;
+  margin-bottom: 2rem;
   .studyBtn {
     position: absolute;
     border: none;

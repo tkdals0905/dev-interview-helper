@@ -41,7 +41,7 @@ function Home() {
   return (
     <Container>
       <Divider title="학습 중" />
-      <ShareCards cardsInfo={mainCards} />
+      <ShareCards />
       <Divider title="문제집" />
       {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
       <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />

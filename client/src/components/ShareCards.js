@@ -16,7 +16,7 @@ const ImageBox = styled.div`
   text-align: center;
   margin: auto;
 `;
-function ShareCards({ cardsInfo }) {
+function ShareCards() {
   const { me } = useSelector((state) => state.user);
   return (
     <CardsContainner>
@@ -26,8 +26,8 @@ function ShareCards({ cardsInfo }) {
           <button className="studyBtn" type="button">
             학습하러 가기
           </button>
-          {cardsInfo.map((cardInfo) => (
-            <Card key={cardInfo.id} cardInfo={cardInfo} />
+          {me.Shares.map((cardInfo) => (
+            <Card key={cardInfo.id} cardRole="share" cardInfo={cardInfo} />
           ))}
         </>
       ) : (
