@@ -9,7 +9,8 @@ export const HeaderBackColor = styled.div`
 export const HeaderNavbar = styled.header`
   display: flex;
   margin: 0px 20px 0px 20px;
-  max-width: 1000px;
+  max-width: 1100px;
+  height: 65px;
   color: white;
   align-items: center;
   justify-content: space-between;
@@ -46,10 +47,7 @@ export const HeaderNavbar = styled.header`
 export const Rightmenu = styled.div`
   display: flex;
   align-items: center;
-  .search {
-    display: flex;
-    align-items: center;
-  }
+
   input {
     height: 40px;
     width: 300px;
@@ -144,6 +142,10 @@ export const Rightmenu = styled.div`
   .dropdown:hover .user-profile {
     color: #fdd835;
   }
+  .search {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const SearchBtn = styled.button`
@@ -165,14 +167,13 @@ export const Logo = styled.div`
   display: flex;
   position: relative;
   .header-title {
-    font-size: 30px;
-
+    font-size: 25px;
     position: relative;
     top: -15px;
   }
   .logo {
     margin-right: 10px;
-    height: 60px;
+    height: 45px;
     cursor: pointer;
   }
 `;

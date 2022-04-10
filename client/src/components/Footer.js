@@ -8,10 +8,11 @@ import { faCopyright } from '@fortawesome/free-regular-svg-icons';
 
 function Footer() {
   const FooterComponent = styled.footer`
+    /* max-width: 1100px; */
+    position: absolute;
+    left: 0;
     bottom: 0;
     width: 100%;
-
-    position: fixed;
   `;
 
   const Introduce = styled.div`
@@ -26,7 +27,7 @@ function Footer() {
     }
 
     .introduce-box {
-      width: 1000px;
+      width: 1100px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -65,7 +66,7 @@ function Footer() {
     color: black;
 
     .footer-box {
-      width: 1000px;
+      width: 1100px;
       display: flex;
       justify-content: space-between;
       align-items: center;
