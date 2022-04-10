@@ -10,14 +10,20 @@ function Footer() {
   const FooterComponent = styled.footer`
     bottom: 0;
     width: 100%;
+
+    position: fixed;
   `;
 
   const Introduce = styled.div`
     display: flex;
     justify-content: center;
-    background-color: black;
+    background: #0a174e;
     padding: 20px;
     color: white;
+    .link-style {
+      text-decoration: none;
+      color: white;
+    }
 
     .introduce-box {
       width: 1000px;
@@ -34,7 +40,7 @@ function Footer() {
     button {
       border-radius: 5px;
       padding: 10px;
-      background-color: black;
+      background: #0a174e;
       color: white;
       font-weight: 700;
       border: 2px solid white;
@@ -86,14 +92,14 @@ function Footer() {
   `;
   const Logo = styled.div`
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     .logo {
-      margin-right: 10px;
-      height: 20px;
+      margin-right: 5px;
+      height: 15px;
       cursor: pointer;
     }
     .logo-title {
-      font-weight: 500;
+      font-weight: 800;
       font-size: 12px;
     }
   `;
@@ -104,14 +110,11 @@ function Footer() {
         <div className="introduce-box">
           <div className="left-introduce">
             <Logo>
-              <Link style={{ textDecoration: 'none' }} to="/">
-                <img className="logo" src="/images/logo.png" alt="logo" />
+              <Link className="link-style" to="/">
+                <img className="logo" src="/images/logo1.png" alt="logo" />
               </Link>
-              <Link style={{ textDecoration: 'none', color: 'white' }} to="/">
-                <p className="logo-title">
-                  dev <br />
-                  interview
-                </p>
+              <Link className="link-style" to="/">
+                <p className="logo-title">dev interview</p>
               </Link>
             </Logo>
             <p className="introduce">
@@ -119,7 +122,7 @@ function Footer() {
               <strong> dev interview</strong>
             </p>
           </div>
-          <Link style={{ textDecoration: 'none' }} to="/signup">
+          <Link className="link-style" to="/signup">
             <button type="button" className="footer-btn">
               Start Learning Together !
             </button>
