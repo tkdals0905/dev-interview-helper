@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ADD_CARD_SUCCESS } from '../reducers/card';
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  top: -90px;
+  top: 0px;
   width: 100%;
-  height: 110%;
+  height: 100%;
   background-color: rgba(0, 5, 12, 0.5);
   z-index: 10;
   .post-form {

@@ -6,6 +6,7 @@ import ShareCards from '../components/ShareCards';
 import { LOAD_CARDS_SUCCESS } from '../reducers/card';
 import Divider from '../components/Divider';
 import CardForm from '../components/CardForm';
+import CardDetail from '../components/CardDetail';
 
 const Container = styled.main`
   width: 100%;
@@ -29,7 +30,9 @@ const Container = styled.main`
 
 function Home() {
   const dispatch = useDispatch();
-  const { mainCards, isLoadCards } = useSelector((state) => state.card);
+  const { mainCards, isLoadCards, isDetail } = useSelector(
+    (state) => state.card,
+  );
   const [isPostCard, setPostCard] = useState(false);
   useEffect(() => {
     if (!isLoadCards) {
@@ -43,6 +46,7 @@ function Home() {
       <Divider title="학습 중" />
       <ShareCards />
       <Divider title="문제집" />
+      {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
       {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
       <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />
     </Container>

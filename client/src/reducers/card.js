@@ -3,6 +3,7 @@ import produce from 'immer';
 const initialized = {
   mainCards: [],
   isLoadCards: false,
+  isDetail: null,
 };
 
 export const card1 = {
@@ -56,8 +57,11 @@ export const card5 = {
           특정 HTTP header를 사용하여 웹 애플리케이션의 cross-origin 요청을 브라우저가 제한적으로 허용하는 정책입니다.`,
   Likers: [2, 3, 4, 5, 6],
 };
+
 export const LOAD_CARDS_SUCCESS = 'LOAD_CARDS_SUCCESS';
 export const ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS';
+export const OPEN_CARD_DETAIL = 'OPEN_CARD_DETAIL';
+export const CLOSE_CARD_DETAIL = 'CLOSE_CARD_DETAIL';
 
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
@@ -74,6 +78,12 @@ const reducer = (state = initialized, action) =>
         break;
       case ADD_CARD_SUCCESS:
         draft.mainCards = [action.data, ...draft.mainCards];
+        break;
+      case OPEN_CARD_DETAIL:
+        draft.isDetail = action.data;
+        break;
+      case CLOSE_CARD_DETAIL:
+        draft.isDetail = null;
         break;
       default:
         break;
