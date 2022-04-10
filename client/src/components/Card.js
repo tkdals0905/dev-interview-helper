@@ -67,10 +67,9 @@ const BtnInfo = styled.div`
   }
 `;
 
-function Card({ cardInfo }) {
+function Card({ cardInfo, cardRole }) {
   const [isLike, setIsLike] = useState(false);
   const [shortAnswer, setShortAnsewer] = useState(cardInfo.answer);
-
   useEffect(() => {
     if (shortAnswer.length > 51) {
       let str = shortAnswer.substr(0, 51);
@@ -83,6 +82,7 @@ function Card({ cardInfo }) {
     setIsLike((prev) => !prev);
   };
 
+  const handleDetail = () => {};
   return (
     <Containner>
       <HeartIcon onClick={handleHeart}>
@@ -99,19 +99,27 @@ function Card({ cardInfo }) {
         <p>{shortAnswer}</p>
       </div>
       <BtnInfo>
-        <button id="shareBtn" type="button">
-          {' '}
-          공유하기
-        </button>
-        <button id="editBtn" type="button">
+        {cardRole === 'main' ? (
+          <button id="shareBtn" type="button">
+            {' '}
+            공유하기
+          </button>
+        ) : null}
+        {cardRole === 'share' ? (
+          <button id="shareBtn" type="button">
+            {' '}
+            공유취소
+          </button>
+        ) : null}
+        {/* <button id="editBtn" type="button">
           {' '}
           수정하기
         </button>
         <button id="deleteBtn" type="button">
           {' '}
           삭제하기
-        </button>
-        <button id="moreBtn" type="button">
+        </button> */}
+        <button onClick={handleDetail} id="moreBtn" type="button">
           {' '}
           더 보기
         </button>
