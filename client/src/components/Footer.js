@@ -13,6 +13,7 @@ function Footer() {
     left: 0;
     bottom: 0;
     width: 100%;
+    display: block;
   `;
 
   const Introduce = styled.div`
