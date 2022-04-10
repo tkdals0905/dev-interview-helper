@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const initialized = {
   me: null,
+  // me: { username: 'ys' },
 };
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';

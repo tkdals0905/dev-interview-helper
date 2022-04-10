@@ -1,92 +1,95 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-const HeaderNavbar = styled.header`
-  display: flex;
-  background: black;
-  color: white;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px;
-`;
-
-const Search = styled.div`
-  display: flex;
-  margin-right: 0px;
-
-  .search-input {
-    height: 40px;
-  }
-  .search-button {
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    cursor: pointer;
-  }
-  .s-img {
-    width: 20px;
-    /* cursor: pointer; */
-  }
-`;
-const Div = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Sign = styled.div`
-  display: flex;
-  h4 {
-    margin: 5px;
-    padding-right: 5px;
-    cursor: pointer;
-    color: white;
-  }
-`;
-const Logo = styled.div`
-  display: flex;
-
-  .logo {
-    margin-right: 10px;
-    height: 30px;
-    cursor: pointer;
-  }
-`;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  HeaderBackColor,
+  HeaderNavbar,
+  Logo,
+  Rightmenu,
+  SearchBtn,
+} from '../styles/HeaderStyle';
+import { LOG_OUT_SUCCESS } from '../reducers/user';
 
 function Header() {
   const { me } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  console.log('여기는 헤더:', me);
+  // console.log('여기는 헤더:', me.data);
+  // console.log('여기는 헤더:', me.username);
+
+  const handleLogout = () => {
+    dispatch({
+      type: LOG_OUT_SUCCESS,
+    });
+  };
+
   return (
-    <HeaderNavbar>
-      <Logo>
-        <img className="logo" src="/images/search.png" alt="logo" />
-        <h2>dev interview</h2>
-      </Logo>
-      <Div>
-        <Search>
-          <input className="search-input" type="search" placeholder="Search" />
-          <button className="search-button" type="submit">
-            <img className="s-img" src="/images/search.png" alt="search" />
-          </button>
-        </Search>
-        <Sign>
-          {me ? (
-            <h4>{me.username}</h4>
-          ) : (
+    <HeaderBackColor>
+      <HeaderNavbar>
+        <Logo>
+          <Link className="link-style" to="/">
             <>
-              {' '}
-              <Link style={{ textDecoration: 'none' }} to="/login">
-                <h4>로그인</h4>
-              </Link>
-              <Link style={{ textDecoration: 'none' }} to="/signup">
-                <h4>회원가입</h4>
-              </Link>
+              <img className="logo" src="/images/logo.png" alt="logo" />
+              <h2 clasName="header-title">dev interview</h2>
             </>
-          )}
-        </Sign>
-      </Div>
-    </HeaderNavbar>
+          </Link>
+        </Logo>
+
+        <Rightmenu>
+          <form className="search">
+            <label htmlFor="search-input" />
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Search"
+              // onKeyPress={handleLogout}
+            />
+            <SearchBtn type="submit">
+              <FontAwesomeIcon icon={faSearch} className="search-img" />
+            </SearchBtn>
+          </form>
+          <div className="menu">
+            {me ? (
+              <>
+                {' '}
+                <div className="dropdown">
+                  <span className="user-profile">{me.username}</span>
+                  <div className="dropdown-content">
+                    <Link className="link-style" to="/myPage">
+                      <button className="toggle-sub" type="button">
+                        myPage
+                      </button>
+                    </Link>
+                    <hr />
+                    <button
+                      className="toggle-sub"
+                      type="button"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <ul className="navbar-menu">
+                <Link className="link-style" to="/">
+                  <li className="menu-btn">HOME</li>
+                </Link>
+                <Link className="link-style" to="/login">
+                  <li className="menu-btn">LOGIN</li>
+                </Link>
+                <Link className="link-style" to="/signup">
+                  <li className="menu-btn">SIGN UP</li>
+                </Link>
+              </ul>
+            )}
+          </div>
+        </Rightmenu>
+      </HeaderNavbar>
+    </HeaderBackColor>
   );
 }
 
