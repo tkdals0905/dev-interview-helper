@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { loginApi } from '../api/user';
 import { LOG_IN_SUCCESS } from '../reducers/user';
 import Confirm from '../components/Confirm';
+import { card1, card3, card5 } from '../reducers/card';
 
 const LoginComponent = styled.section`
   display: flex;
@@ -157,15 +158,17 @@ function Login() {
     //   password: loginInfo.password,
     // });
     const userInfo = {
+      id: 1,
       username: 'sungmin',
       email: 'aa@aa.com',
       Cards: [],
-      Shares: [],
+      Shares: [card5, card1, card3],
     };
     dispatch({
       type: LOG_IN_SUCCESS,
       data: userInfo,
     });
+    navigate('/');
   };
   const resetMessage = () => {
     setMessage('');

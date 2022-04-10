@@ -5,7 +5,7 @@ const initialized = {
   isLoadCards: false,
 };
 
-const card1 = {
+export const card1 = {
   id: 1,
   userId: 1,
   username: 'sungmin',
@@ -14,15 +14,15 @@ const card1 = {
     '호이스팅은 코드 실행 전에 변수 및 함수 선언을 해당 범위의 맨 위로 이동하는 자바스크립트 메커니즘이다',
   Likers: [1, 2, 3, 4],
 };
-const card2 = {
+export const card2 = {
   id: 2,
-  userId: 1,
-  username: 'sungmin',
+  userId: 2,
+  username: 'zerocho',
   question: '비동기란?',
   answer: `비동기방식은 현재 작업의 요청과 해당작업의 응답이 동시에 진행되지 않아도 되는 것으로 응답에 관계없이 바로 다음 동작이 실행되는 것을 말한다`,
   Likers: [1, 2],
 };
-const card3 = {
+export const card3 = {
   id: 3,
   userId: 1,
   username: 'sungmin',
@@ -33,7 +33,7 @@ const card3 = {
     예외처리 까다로운점`,
   Likers: [],
 };
-const card4 = {
+export const card4 = {
   id: 4,
   userId: 1,
   username: 'sungmin',
@@ -47,16 +47,17 @@ const card4 = {
   Likers: [5],
 };
 
-const card5 = {
+export const card5 = {
   id: 5,
-  userId: 1,
-  username: 'sungmin',
+  userId: 2,
+  username: 'zerocho',
   question: 'cors 란?',
   answer: `Cross-origin resource sharing(CORS)는 최초에 리소스를 제공한 출처(origin)와 다른 출처의 리소스를 요청하는 경우(cross-origin 요청), 
           특정 HTTP header를 사용하여 웹 애플리케이션의 cross-origin 요청을 브라우저가 제한적으로 허용하는 정책입니다.`,
   Likers: [2, 3, 4, 5, 6],
 };
 export const LOAD_CARDS_SUCCESS = 'LOAD_CARDS_SUCCESS';
+export const ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS';
 
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
@@ -70,6 +71,9 @@ const reducer = (state = initialized, action) =>
           card5,
         );
         draft.isLoadCards = true;
+        break;
+      case ADD_CARD_SUCCESS:
+        draft.mainCards = [action.data, ...draft.mainCards];
         break;
       default:
         break;

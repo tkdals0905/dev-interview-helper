@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_CARD_SUCCESS } from '../reducers/card';
 
 const Container = styled.div`
   position: absolute;
@@ -60,14 +62,29 @@ const Container = styled.div`
 `;
 
 function CardForm({ handlePostCard }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
   const [cardInfo, setCardInfo] = useState({
     question: '',
     answer: '',
   });
   const [isFull, setIsFull] = useState(false);
+  const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newCard = {
+      id: 6,
+      userId: me.id,
+      username: me.username,
+      question: cardInfo.question,
+      answer: cardInfo.answer,
+      Likers: [],
+    };
+    dispatch({
+      type: ADD_CARD_SUCCESS,
+      data: newCard,
+    });
+  };
+
   const handleInputValue = (key) => (e) => {
     setCardInfo({ ...cardInfo, [key]: e.target.value });
   };

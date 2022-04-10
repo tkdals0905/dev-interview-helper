@@ -57,7 +57,6 @@ const Logo = styled.div`
 
 function Header() {
   const { me } = useSelector((state) => state.user);
-  console.log('여기는 헤더:', me);
   return (
     <HeaderNavbar>
       <Logo>
@@ -72,12 +71,19 @@ function Header() {
           </button>
         </Search>
         <Sign>
-          <Link style={{ textDecoration: 'none' }} to="/login">
-            <h4>로그인</h4>
-          </Link>
-          <Link style={{ textDecoration: 'none' }} to="/signup">
-            <h4>회원가입</h4>
-          </Link>
+          {me ? (
+            <h4>{me.username}</h4>
+          ) : (
+            <>
+              {' '}
+              <Link style={{ textDecoration: 'none' }} to="/login">
+                <h4>로그인</h4>
+              </Link>
+              <Link style={{ textDecoration: 'none' }} to="/signup">
+                <h4>회원가입</h4>
+              </Link>
+            </>
+          )}
         </Sign>
       </Div>
     </HeaderNavbar>

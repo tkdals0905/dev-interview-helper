@@ -16,7 +16,7 @@ function Cards({ cardsInfo, handlePostCard }) {
         </button>
       ) : null}
       {cardsInfo.map((cardInfo) => (
-        <Card key={cardInfo.id} cardInfo={cardInfo} />
+        <Card key={cardInfo.id} cardRole="main" cardInfo={cardInfo} />
       ))}
     </CardsContainner>
   );
