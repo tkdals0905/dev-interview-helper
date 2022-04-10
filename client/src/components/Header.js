@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -13,8 +13,9 @@ import {
 import { LOG_OUT_SUCCESS } from '../reducers/user';
 
 function Header() {
-  const { me } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
   console.log('여기는 헤더:', me);
   // console.log('여기는 헤더:', me.data);
   // console.log('여기는 헤더:', me.username);
@@ -23,6 +24,7 @@ function Header() {
     dispatch({
       type: LOG_OUT_SUCCESS,
     });
+    navigate('/');
   };
 
   return (
@@ -40,12 +42,7 @@ function Header() {
         <Rightmenu>
           <form className="search">
             <label htmlFor="search-input" />
-            <input
-              id="search-input"
-              type="text"
-              placeholder="Search"
-              // onKeyPress={handleLogout}
-            />
+            <input id="search-input" type="text" placeholder="Search" />
             <SearchBtn type="submit">
               <FontAwesomeIcon icon={faSearch} className="search-img" />
             </SearchBtn>
