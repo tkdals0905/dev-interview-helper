@@ -169,7 +169,7 @@ const Logo = styled.div`
 function Header() {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log('여기c는 헤더:', me);
+  console.log('여기는 헤더:', me);
   // console.log('여기는 헤더:', me.data);
   // console.log('여기는 헤더:', me.username);
   const [userProfile, setUserProfile] = useState(false);
