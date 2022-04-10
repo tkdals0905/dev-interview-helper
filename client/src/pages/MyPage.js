@@ -1,120 +1,97 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+// import SetMyInfo from '../components/SetMyInfo';
 
-const MyPageComponent = styled.section`
+const MyPageComponent = styled.div`
   display: flex;
-  align-items: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 1100px;
   flex-direction: column;
-
-  * {
-    margin: 0px;
-  }
 
   .myPage-title {
-    padding-top: 20px;
-    padding-bottom: 10px;
-  }
-`;
-
-const MainPage = styled.div`
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  font-size: 15px;
-  font-weight: 500;
-  h2 {
-    padding: 20px;
     text-align: center;
-    font-size: 30px;
+    padding: 20px;
+    .title {
+      padding: 10px;
+    }
   }
-  .between {
-    margin-top: 15px;
-    margin-bottom: 10px;
-  }
-
-  input {
-    border-radius: 3px;
-    background-color: #fbfbfd;
-    font-size: 16px;
-    width: 100%;
-    height: 40px;
-    border: 1px solid #0078ff;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 40px;
-    opacity: 0.6;
-    padding: 2px 0px 2px 10px;
-  }
-
-  .signUp-connect {
-    margin-left: 20px;
-  }
-  form {
-    margin-top: 10px;
-  }
-  .infomation {
+  .bettwen {
     margin-top: 20px;
+    background: black;
+    padding-top: 1px;
+  }
+  button {
+    width: 40%;
+    height: 40px;
+    border-radius: 3px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    box-shadow: 1px 1px;
+    background: #0078ff;
+  }
+
+  button:active {
+    position: relative;
+    top: 1px;
+  }
+`;
+const MyInfo = styled.section`
+  background-color: whitesmoke;
+  width: 320px;
+  border-radius: 5px;
+  border-color: #0a174e;
+  border: solid 3px #0a174e;
+  box-shadow: 2px 2px;
+  font-weight: 700;
+  padding: 15px;
+  display: flex;
+  .sub-title {
+    font-size: 25px;
+    padding: 10px 0px;
+  }
+  .information {
+    display: flex;
   }
 `;
 
-const SubmitBtn = styled.button`
-  width: 100%;
-  height: 40px;
-  border-radius: 3px;
-  color: white;
-  font-size: 16px;
-  text-align: center;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  margin-top: 20px;
-  background-color: #0078ff;
-  cursor: pointer;
+const MyStudyCards = styled.section`
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
 `;
 
-const handlesubmit = async (e) => {
-  e.preventDefault();
-  // 폼제출하고 나서 새로고침 방지
-  // loginMutation.mutate({
-  //   email: loginInfo.email,
-  //   password: loginInfo.password,
-  // });
-};
 function MyPage() {
   const { me } = useSelector((state) => state.user);
   return (
     <MyPageComponent>
-      <MainPage>
-        <h2 className="myPage-title">마이페이지</h2>
-        {/* <p>{me.username}</p> */}
-        <h3 className="infomation">기본정보 / 수정하기</h3>
+      <div className="myPage-title">
+        <h1 className="title">My Page</h1>
+        <h3>{me.username} 님, 환영합니다.</h3>
+      </div>
+      <MyInfo>
+        <div className="infomaition">
+          <p className="sub-title">내 정보</p>
+          <div className="user-info">
+            <p>이름 : {me.username}</p>
+            <p>이메일 : {me.email}</p>
+          </div>
+        </div>
+        <button type="button">정보 수정</button>
+      </MyInfo>
 
-        <form onSubmit={handlesubmit}>
-          <label htmlFor="user-email">이메일</label>
-          <input
-            id="user-email"
-            type="email"
-            placeholder={`이메일${me}`}
-            // onChange={handleInputValue('email')}
-          />
-          <label htmlFor="user-name">이름</label>
-          <input
-            id="user-name"
-            type="text"
-            placeholder={`이름${me}`}
-            // onChange={handleInputValue('email')}
-          />
-          <label htmlFor="user-password">비밀번호</label>
-          <input
-            id="user-password"
-            type="password"
-            placeholder="비밀번호"
-            // onChange={handleInputValue('password')}
-          />
-          <SubmitBtn type="submit">기본 정보 수정하기</SubmitBtn>
-        </form>
-      </MainPage>
+      <hr className="bettwen" />
+      <MyStudyCards>
+        <div className="myPage-title">
+          <h1 className="title">Study Cards Storage</h1>
+        </div>
+      </MyStudyCards>
     </MyPageComponent>
   );
 }
