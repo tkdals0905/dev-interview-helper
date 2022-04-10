@@ -31,8 +31,8 @@ function Header() {
         <Logo>
           <Link className="link-style" to="/">
             <>
-              <img className="logo" src="/images/logo.png" alt="logo" />
-              <h2 clasName="header-title">dev interview</h2>
+              <img className="logo" src="/images/logo1.png" alt="logo" />
+              <span className="header-title">dev interview</span>
             </>
           </Link>
         </Logo>
@@ -57,6 +57,7 @@ function Header() {
                 <div className="dropdown">
                   <span className="user-profile">{me.username}</span>
                   <div className="dropdown-content">
+                    <hr />
                     <Link className="link-style" to="/myPage">
                       <button className="toggle-sub" type="button">
                         myPage
