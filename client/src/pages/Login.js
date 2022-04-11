@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginApi } from '../api/user';
+
 import { LOG_IN_SUCCESS } from '../reducers/user';
 import Confirm from '../components/Confirm';
 import { card1, card3, card5 } from '../reducers/card';
@@ -213,7 +214,9 @@ function Login() {
           </SubmitBtn>
           <div className="create-id">
             <p>아직 계정이 없으신가요?</p>
-            <a href="www.naver.com">계정 만들기</a>
+            <Link className="link-style" to="/myPage">
+              <p> 계정 만들기</p>
+            </Link>
           </div>
         </form>
       </LoginMain>

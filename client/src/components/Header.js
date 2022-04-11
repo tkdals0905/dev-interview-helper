@@ -16,7 +16,7 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  console.log('여기는 헤더:', me);
+  // console.log('여기는 헤더:', me);
   // console.log('여기는 헤더:', me.data);
   // console.log('여기는 헤더:', me.username);
 
