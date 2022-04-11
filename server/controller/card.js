@@ -5,10 +5,10 @@ module.exports = {
   card: async (req, res, next) => {
     try {
       // 로그인인증.. 이게 맞는지 모르겠다...
-      const userInfo = await auth(req, res);
-      if (!userInfo) {
-        return res.status(400).json({ message: '로그인 하셔야합니다.' });
-      }
+      // const userInfo = await auth(req, res);
+      // if (!userInfo) {
+      //   return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      // }
 
       const newCard = await Card.create({
         question: req.body.question,

@@ -1,20 +1,20 @@
-const { Card, User } = require("../models");
+const { Card, User } = require('../models');
 
 module.exports = {
   cards: async (req, res, next) => {
     try {
       const cards = await Card.findAll({
-        order: [["createdAt", "DESC"]],
-        attributes: ["question", "answer"],
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'question', 'answer'],
         include: [
           {
             model: User,
-            as: "Likers",
-            attributes: ["id"],
+            as: 'Likers',
+            attributes: ['id'],
           },
           {
             model: User,
-            attributes: ["id", "username"],
+            attributes: ['id', 'username'],
           },
         ],
       });

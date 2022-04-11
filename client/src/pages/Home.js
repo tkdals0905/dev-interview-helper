@@ -10,6 +10,7 @@ import Divider from '../components/Divider';
 import CardForm from '../components/CardForm';
 import CardDetail from '../components/CardDetail';
 import { tokenApi } from '../api/user';
+import { getCardsApi } from '../api/card';
 
 const Container = styled.main`
   width: 100%;
@@ -40,7 +41,9 @@ function Home() {
   const getToken = useQuery('getToken', tokenApi, {
     retry: false,
   });
-
+  const getMainCards = useQuery('getCards', getCardsApi, {
+    retry: false,
+  });
   const [isPostCard, setPostCard] = useState(false);
 
   useEffect(() => {
@@ -60,11 +63,29 @@ function Home() {
 
   useEffect(() => {
     if (!isLoadCards) {
-      dispatch({
-        type: LOAD_CARDS_SUCCESS,
-      });
+      if (getMainCards.status === 'success') {
+        const customCards = getMainCards.data.data.map((data) => {
+          const { id, question, answer, Likers } = data;
+          const { username } = data.User;
+          const newData = {
+            id,
+            question,
+            answer,
+            Likers,
+            username,
+          };
+          return newData;
+        });
+        dispatch({
+          type: LOAD_CARDS_SUCCESS,
+          data: customCards,
+        });
+        console.log(getMainCards.data);
+      } else if (getMainCards.status === 'error') {
+        console.error(getMainCards.error);
+      }
     }
-  }, []);
+  }, [getMainCards.status]);
   return (
     <Container>
       <Divider title="학습 중" />
