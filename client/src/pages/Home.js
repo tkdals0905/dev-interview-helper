@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 import Cards from '../components/Cards';
 import ShareCards from '../components/ShareCards';
 import { LOAD_CARDS_SUCCESS } from '../reducers/card';
+import { LOG_IN_SUCCESS } from '../reducers/user';
 import Divider from '../components/Divider';
 import CardForm from '../components/CardForm';
+import CardDetail from '../components/CardDetail';
+import { tokenApi } from '../api/user';
 
 const Container = styled.main`
   width: 100%;
@@ -29,8 +33,31 @@ const Container = styled.main`
 
 function Home() {
   const dispatch = useDispatch();
-  const { mainCards, isLoadCards } = useSelector((state) => state.card);
+  const { mainCards, isLoadCards, isDetail } = useSelector(
+    (state) => state.card,
+  );
+
+  const getToken = useQuery('getToken', tokenApi, {
+    retry: false,
+  });
+
   const [isPostCard, setPostCard] = useState(false);
+
+  useEffect(() => {
+    if (getToken.status === 'error') {
+      console.error(getToken.error);
+    } else if (getToken.status === 'success') {
+      const userInfo = {
+        Cards: [],
+        ...getToken.data.data,
+      };
+      dispatch({
+        type: LOG_IN_SUCCESS,
+        data: userInfo,
+      });
+    }
+  }, [getToken.status]);
+
   useEffect(() => {
     if (!isLoadCards) {
       dispatch({
@@ -43,6 +70,7 @@ function Home() {
       <Divider title="학습 중" />
       <ShareCards />
       <Divider title="문제집" />
+      {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
       {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
       <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />
     </Container>

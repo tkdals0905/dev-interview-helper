@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
+
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginApi } from '../api/user';
 
 import { LOG_IN_SUCCESS } from '../reducers/user';
+
 import Confirm from '../components/Confirm';
-import { card1, card3, card5 } from '../reducers/card';
+// import { card1, card3, card5 } from '../reducers/card';
 
 const LoginComponent = styled.section`
   display: flex;
@@ -121,7 +123,6 @@ const SubmitBtn = styled.button`
 `;
 
 function Login() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({
     email: '',
@@ -153,23 +154,23 @@ function Login() {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-    // 폼제출하고 나서 새로고침 방지
-    // loginMutation.mutate({
-    //   email: loginInfo.email,
-    //   password: loginInfo.password,
-    // });
-    const userInfo = {
-      id: 1,
-      username: 'sungmin',
-      email: 'aa@aa.com',
-      Cards: [],
-      Shares: [card5, card1, card3],
-    };
-    dispatch({
-      type: LOG_IN_SUCCESS,
-      data: userInfo,
+    loginMutation.mutate({
+      email: loginInfo.email,
+      password: loginInfo.password,
     });
-    navigate('/');
+
+    // const userInfo = {
+    //   id: 1,
+    //   username: 'sungmin',
+    //   email: 'aa@aa.com',
+    //   Cards: [],
+    //   Shares: [card5, card1, card3],
+    // };
+    // dispatch({
+    //   type: LOG_IN_SUCCESS,
+    //   data: userInfo,
+    // });
+    // navigate('/');
   };
   const resetMessage = () => {
     setMessage('');

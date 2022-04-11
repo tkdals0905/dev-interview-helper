@@ -50,7 +50,8 @@
       "jsx-a11y/label-has-associated-control": 0,
       "react/prop-types": 0,
       "no-param-reassign": 0,
-      "default-param-last": 0
+      "default-param-last": 0,
+      "react/destructuring-assignment":0
     },
     "env": {
       "browser": true,

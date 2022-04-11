@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as like } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unlike } from '@fortawesome/free-regular-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { OPEN_CARD_DETAIL } from '../reducers/card';
 
 const Containner = styled.div`
   width: 356px;
@@ -67,10 +69,11 @@ const BtnInfo = styled.div`
   }
 `;
 
-function Card({ cardInfo }) {
+function Card({ cardInfo, cardRole }) {
+  const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
   const [isLike, setIsLike] = useState(false);
   const [shortAnswer, setShortAnsewer] = useState(cardInfo.answer);
-
   useEffect(() => {
     if (shortAnswer.length > 51) {
       let str = shortAnswer.substr(0, 51);
@@ -83,6 +86,12 @@ function Card({ cardInfo }) {
     setIsLike((prev) => !prev);
   };
 
+  const handleDetail = () => {
+    dispatch({
+      type: OPEN_CARD_DETAIL,
+      data: cardInfo,
+    });
+  };
   return (
     <Containner>
       <HeartIcon onClick={handleHeart}>
@@ -99,19 +108,27 @@ function Card({ cardInfo }) {
         <p>{shortAnswer}</p>
       </div>
       <BtnInfo>
-        <button id="shareBtn" type="button">
-          {' '}
-          공유하기
-        </button>
-        <button id="editBtn" type="button">
+        {cardRole === 'main' && me ? (
+          <button id="shareBtn" type="button">
+            {' '}
+            공유하기
+          </button>
+        ) : null}
+        {cardRole === 'share' ? (
+          <button id="shareBtn" type="button">
+            {' '}
+            공유취소
+          </button>
+        ) : null}
+        {/* <button id="editBtn" type="button">
           {' '}
           수정하기
         </button>
         <button id="deleteBtn" type="button">
           {' '}
           삭제하기
-        </button>
-        <button id="moreBtn" type="button">
+        </button> */}
+        <button onClick={handleDetail} id="moreBtn" type="button">
           {' '}
           더 보기
         </button>

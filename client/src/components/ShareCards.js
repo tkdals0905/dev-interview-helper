@@ -26,7 +26,7 @@ function ShareCards() {
           <button className="studyBtn" type="button">
             학습하러 가기
           </button>
-          {me.Shares.map((cardInfo) => (
+          {me.Cards.map((cardInfo) => (
             <Card key={cardInfo.id} cardRole="share" cardInfo={cardInfo} />
           ))}
         </>
