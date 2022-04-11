@@ -1,14 +1,10 @@
-const DataTypes = require("sequelize");
+const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
 module.exports = class Effect extends Model {
   static init(sequelize) {
     return super.init(
       {
-        // user_id: {
-        //   type: DataTypes.INTEGER,
-        //   allowNull: false,
-        // },
         question: {
           type: DataTypes.TEXT,
           allowNull: false,
@@ -19,10 +15,10 @@ module.exports = class Effect extends Model {
         },
       },
       {
-        modelName: "Card",
-        tableName: "cards",
-        charset: "utf8", // 이렇게 셋팅안하면 한글넣을시 에라남.
-        collate: "utf8_general_ci", //한글저장
+        modelName: 'Card',
+        tableName: 'cards',
+        charset: 'utf8', // 이렇게 셋팅안하면 한글넣을시 에라남.
+        collate: 'utf8_general_ci', //한글저장
         sequelize,
       }
     );
@@ -30,7 +26,7 @@ module.exports = class Effect extends Model {
 
   static associate(db) {
     db.Card.belongsTo(db.User);
-    db.Card.belongsToMany(db.User, { through: "Like", as: "Likers" });
-    db.Card.belongsToMany(db.User, { through: "Share", as: "Sharing" });
+    db.Card.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+    db.Card.belongsToMany(db.User, { through: 'Share', as: 'Sharing' });
   }
 };

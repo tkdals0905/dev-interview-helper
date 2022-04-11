@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { ADD_CARD_SUCCESS } from '../reducers/card';
+import { useSelector } from 'react-redux';
+// import { ADD_CARD_SUCCESS } from '../reducers/card';
+import { useMutation } from 'react-query';
+import { postCardApi } from '../api/card';
 
 const Container = styled.div`
   position: fixed;
@@ -62,32 +64,44 @@ const Container = styled.div`
 `;
 
 function CardForm({ handlePostCard }) {
+  // const dispatch = useDispatch();
   const [cardInfo, setCardInfo] = useState({
     question: '',
     answer: '',
   });
+
+  const postCardMutation = useMutation(postCardApi);
+
+  useEffect(() => {
+    if (postCardMutation.status === 'error') {
+      console.error('error');
+    } else if (postCardMutation.status === 'success') {
+      console.log(postCardMutation.data);
+      // dispatch({
+      //     type: ADD_CARD_SUCCESS,
+      //     data: newCard,
+      // });
+    }
+  }, [postCardMutation.status]);
+
   const [isFull, setIsFull] = useState(false);
-  const dispatch = useDispatch();
+
   const { me } = useSelector((state) => state.user);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newCard = {
-      id: 6,
       userId: me.id,
-      username: me.username,
       question: cardInfo.question,
       answer: cardInfo.answer,
-      Likers: [],
     };
-    dispatch({
-      type: ADD_CARD_SUCCESS,
-      data: newCard,
-    });
+    postCardMutation.mutate(newCard);
   };
 
   const handleInputValue = (key) => (e) => {
     setCardInfo({ ...cardInfo, [key]: e.target.value });
   };
+
   useEffect(() => {
     if (cardInfo.question && cardInfo.answer) {
       setIsFull(true);
