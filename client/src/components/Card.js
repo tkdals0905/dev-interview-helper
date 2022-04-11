@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as like } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unlike } from '@fortawesome/free-regular-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { OPEN_CARD_DETAIL } from '../reducers/card';
 
 const Containner = styled.div`
   width: 356px;
@@ -68,6 +70,8 @@ const BtnInfo = styled.div`
 `;
 
 function Card({ cardInfo, cardRole }) {
+  const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
   const [isLike, setIsLike] = useState(false);
   const [shortAnswer, setShortAnsewer] = useState(cardInfo.answer);
   useEffect(() => {
@@ -82,7 +86,12 @@ function Card({ cardInfo, cardRole }) {
     setIsLike((prev) => !prev);
   };
 
-  const handleDetail = () => {};
+  const handleDetail = () => {
+    dispatch({
+      type: OPEN_CARD_DETAIL,
+      data: cardInfo,
+    });
+  };
   return (
     <Containner>
       <HeartIcon onClick={handleHeart}>
@@ -99,7 +108,7 @@ function Card({ cardInfo, cardRole }) {
         <p>{shortAnswer}</p>
       </div>
       <BtnInfo>
-        {cardRole === 'main' ? (
+        {cardRole === 'main' && me ? (
           <button id="shareBtn" type="button">
             {' '}
             공유하기

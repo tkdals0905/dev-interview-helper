@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import MyPage from './pages/MyPage';
 import Footer from './components/Footer';
-import CardDetail from './pages/CardDetail';
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/myPage" element={<MyPage />} />
-        <Route path="/card/:id" element={<CardDetail />} />
       </Routes>
       <Footer />
     </>
