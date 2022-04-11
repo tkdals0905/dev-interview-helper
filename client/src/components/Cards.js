@@ -5,6 +5,7 @@ import CardsContainner from '../styles/CardsStyle';
 
 function Cards({ cardsInfo, handlePostCard }) {
   const { me } = useSelector((state) => state.user);
+  console.log(cardsInfo);
   const handleStudyBtn = () => {
     handlePostCard(true);
   };
