@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Confirm from './Confirm';
 // import { Link, useNavigate } from 'react-router-dom';
-import { editNameApi } from '../api/user';
+import { editNameApi, changePWDApi } from '../api/user';
 import { EDIT_NAME_SUCCESS } from '../reducers/user';
 // import { DELETE_MY_INFO } from '../reducers/user';
 
@@ -14,7 +14,6 @@ import { EDIT_NAME_SUCCESS } from '../reducers/user';
 const InfoChangeComponent = styled.section`
   display: flex;
   width: 400px;
-  /* background-color: pink; */
 `;
 
 const Info = styled.div`
@@ -25,7 +24,7 @@ const Info = styled.div`
   width: 100%;
   display: flex;
   font-size: 13px;
-  /* background-color: yellow; */
+
   button {
     margin-left: 0px;
     margin-right: 5px;
@@ -71,19 +70,13 @@ function InfoChange() {
     password: '',
   });
   console.log(userInfo);
-  // const [userInfoP, setUserInfoP] = useState({
-  //   password_now: '',
-  //   password: '',
-  // });
 
   const handleChangeInfo = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
   };
-  // const handleInputPass = (key) => (e) => {
-  //   setUserInfoP({ ...userInfoP, [key]: e.target.value });
-  // };
 
   const editNameMutation = useMutation(editNameApi);
+  const editPasswordMutaiton = useMutation(changePWDApi);
   // const infoPMutation = useMutation(infopAPi);
   // const deleteMutation = useMutation(infoDeleteAPi);
   // console.log(infoMutation.data);
@@ -96,6 +89,15 @@ function InfoChange() {
     }
   };
 
+  const handleEditPassword = async () => {
+    if (userInfo.password !== userInfo.password_now) {
+      editPasswordMutaiton.mutate({
+        password_now: userInfo.password_now,
+        password: userInfo.password,
+      });
+    }
+  };
+  // const hand
   // const handlePassWord = async (e) => {
   //   e.preventDefault();
   //   if (
@@ -114,7 +116,7 @@ function InfoChange() {
     if (editNameMutation.status === 'error') {
       setMessage('info_edit_fail');
     } else if (editNameMutation.status === 'success') {
-      // setMessage('info_edit_success');
+      setMessage('info_edit_success');
       dispatch({
         type: EDIT_NAME_SUCCESS,
         data: userInfo.username,
@@ -137,15 +139,11 @@ function InfoChange() {
   };
   return (
     <>
-      {/* // <MyPageComponent> */}
-      {/* <MainPage> */}
-
       <InfoChangeComponent>
         {message ? (
           <Confirm message={message} handleMessage={resetMessage} />
         ) : null}
         <Info>
-          {/* <form onSubmit={handleEmail}> */}
           <label htmlFor="user-email">이름</label>
           <input
             id="user-email"
@@ -172,7 +170,11 @@ function InfoChange() {
             placeholder="새로운 비밀번호"
             onChange={handleChangeInfo('password')}
           />
-          <button className="pass-btn" type="submit">
+          <button
+            className="pass-btn"
+            type="submit"
+            onClick={handleEditPassword}
+          >
             Password edit
           </button>
 
