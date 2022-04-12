@@ -18,3 +18,5 @@ export const unShareCardApi = (data) => axios.delete(`/card/${data}/share`);
 export const likeCardApi = (data) => axios.patch(`/card/${data}/like`);
 
 export const unLikeCardApi = (data) => axios.delete(`/card/${data}/like`);
+
+export const getMyCardsApi = () => axios.get(`/cards/myCards`);

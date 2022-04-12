@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { LOAD_CARDS_SUCCESS } from '../reducers/card';
+// import { LOAD_MY_CARDS_SUCCESS } from '../reducers/card';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router';
 import MyCards from '../components/myCards';
 // eslint-disable-next-line import/no-named-as-default
 import InfoChange from '../components/InfoChange';
-// import { useMutation } from 'react-query';
-// import { signupApi } from '../api/user';
+import { getMyCardsApi, getSharedCards } from '../api/card';
+import { tokenApi } from '../api/user';
+import { LOAD_MY_CARDS_SUCCESS } from '../reducers/card';
+import { LOG_IN_SUCCESS } from '../reducers/user';
+import CardDetail from '../components/CardDetail';
 
 const Background = styled.section`
   display: flex;
@@ -17,8 +21,6 @@ const Background = styled.section`
 `;
 const MyPageComponent = styled.div`
   width: 100%;
-  max-width: 1100px;
-
   .myPage-title {
     text-align: center;
     padding: 20px;
@@ -35,7 +37,8 @@ const MyPageComponent = styled.div`
 const MyInfo = styled.section`
   background: whitesmoke;
   display: flex;
-  width: 100%;
+  margin: auto;
+  width: 80%;
   border-radius: 5px;
   font-weight: 700;
   padding: 15px 30px;
@@ -94,63 +97,112 @@ const MyStudyCards = styled.section`
 `;
 // { cardsInfo }
 function MyPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainCards, isLoadCards } = useSelector((state) => state.card);
+  const { myCards, isLoadMyCards, isDetail } = useSelector(
+    (state) => state.card,
+  );
   const [info, setInfo] = useState(false);
 
+  const getToken = useQuery('getToken', tokenApi, {
+    retry: false,
+  });
+
+  const getMyCards = useQuery('getMyCards', getMyCardsApi, {
+    retry: false,
+  });
   // 로드 상태가 true 가 된 상태! 카드 보여?
   useEffect(() => {
-    if (!isLoadCards) {
-      dispatch({
-        type: LOAD_CARDS_SUCCESS,
+    if (!isLoadMyCards) {
+      if (getMyCards.status === 'error') {
+        console.error(getMyCards.error);
+      } else if (getMyCards.status === 'success') {
+        const customCards = getMyCards.data.data.map((data) => {
+          const { id, question, answer, Likers } = data;
+          const { username } = data.User;
+          const newData = {
+            id,
+            question,
+            answer,
+            Likers,
+            username,
+          };
+          return newData;
+        });
+        dispatch({
+          type: LOAD_MY_CARDS_SUCCESS,
+          data: customCards,
+        });
+      }
+    }
+  }, [getMyCards.status]);
+
+  useEffect(() => {
+    if (getToken.status === 'error') {
+      console.error(getToken.error);
+      navigate('/');
+    } else if (getToken.status === 'success') {
+      console.log('token Success');
+      getSharedCards().then((cbData) => {
+        const SharedIdArr = cbData.data.Shared.map((card) => card.id);
+        const userInfo = {
+          ...cbData.data,
+          SharedIdArr,
+        };
+        dispatch({
+          type: LOG_IN_SUCCESS,
+          data: userInfo,
+        });
       });
     }
-  }, []);
-
+  }, [getToken.status]);
   const handleInfoChange = () => {
     setInfo(!info);
   };
-
-  return (
-    <Background>
-      <MyPageComponent>
-        <div className="myPage-title">
-          <h1 className="title">My Page</h1>
-          <h3>{me.username} 님, 환영합니다.</h3>
-        </div>
-        <MyInfo>
-          <div className="left-profile">
-            <div className="sub-title">
-              <p>
-                my <br />
-                profile
-              </p>
-            </div>
-            <div className="user-info">
-              <p>이름 : {me.username}</p>
-              <p>이메일 : {me.email}</p>
-              <button
-                className="Edit-btn"
-                onClick={handleInfoChange}
-                type="button"
-              >
-                info edit
-              </button>
-            </div>
+  if (getToken.status === 'loading') {
+    return <h1>Loading...</h1>;
+  }
+  if (me) {
+    return (
+      <Background>
+        {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
+        <MyPageComponent>
+          <div className="myPage-title">
+            <h1 className="title">My Page</h1>
+            <h3>{me.username} 님, 환영합니다.</h3>
           </div>
+          <MyInfo>
+            <div className="left-profile">
+              <div className="sub-title">
+                <p>
+                  my <br />
+                  profile
+                </p>
+              </div>
+              <div className="user-info">
+                <p>이름 : {me.username}</p>
+                <p>이메일 : {me.email}</p>
+                <button
+                  className="Edit-btn"
+                  onClick={handleInfoChange}
+                  type="button"
+                >
+                  info edit
+                </button>
+              </div>
+            </div>
+            <SetInFo> {info ? <InfoChange /> : null}</SetInFo>
+          </MyInfo>
 
-          <SetInFo> {info ? <InfoChange /> : null}</SetInFo>
-        </MyInfo>
-
-        <hr className="division" />
-        <div className="myPage-title">
-          <h1 className="title">Study Cards Storage</h1>
-        </div>
-        <MyCards cardsInfo={mainCards} />
-        <MyStudyCards />
-      </MyPageComponent>
-    </Background>
-  );
+          <div className="myPage-title">
+            <h1 className="title">Study Cards Storage</h1>
+          </div>
+          <MyCards cardsInfo={myCards} />
+          <MyStudyCards />
+        </MyPageComponent>
+      </Background>
+    );
+  }
 }
 export default MyPage;

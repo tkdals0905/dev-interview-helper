@@ -2,7 +2,9 @@ import produce from 'immer';
 
 const initialized = {
   mainCards: [],
+  myCards: [],
   isLoadCards: false,
+  isLoadMyCards: false,
   isDetail: null,
 };
 
@@ -59,6 +61,8 @@ export const card5 = {
 
 export const LOAD_CARDS_SUCCESS = 'LOAD_CARDS_SUCCESS';
 
+export const LOAD_MY_CARDS_SUCCESS = 'LOAD_MY_CARDS_SUCCESS';
+
 export const ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS';
 
 export const SHARE_CARD_SUCCESS = 'SHARE_CARD_SUCCESS';
@@ -99,6 +103,10 @@ const reducer = (state = initialized, action) =>
         card.Likers = card.Likers.filter((v) => v.id !== action.data.UserId);
         break;
       }
+      case LOAD_MY_CARDS_SUCCESS:
+        draft.myCards = draft.myCards.concat(...action.data);
+        draft.isLoadMyCards = true;
+        break;
       default:
         break;
     }
