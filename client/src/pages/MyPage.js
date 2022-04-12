@@ -4,15 +4,9 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_CARDS_SUCCESS } from '../reducers/card';
 import MyCards from '../components/myCards';
-import InfoChange from './InfoChange';
-
-// import Card from '../components/Card';
-// import CardsContainner from '../styles/CardsStyle';
-
-// import Card from '../components/Card';
-// import ShareCards from '../components/ShareCards';
-// import { LOAD_CARDS_SUCCESS } from '../reducers/card';
-// import SetMyInfo from '../components/SetMyInfo';
+import InfoChange from '../components/InfoChange';
+// import { useMutation } from 'react-query';
+// import { signupApi } from '../api/user';
 
 const Background = styled.section`
   display: flex;
@@ -23,6 +17,7 @@ const Background = styled.section`
 const MyPageComponent = styled.div`
   width: 100%;
   max-width: 1100px;
+
   .myPage-title {
     text-align: center;
     padding: 20px;
@@ -42,8 +37,9 @@ const MyInfo = styled.section`
   width: 100%;
   border-radius: 5px;
   font-weight: 700;
-  padding: 15px;
+  padding: 15px 30px;
   align-items: center;
+  justify-content: space-between;
   font-weight: 700;
   .left-profile {
     display: flex;
@@ -69,8 +65,11 @@ const MyInfo = styled.section`
     cursor: pointer;
     border: none;
     background: #0078ff;
-    margin-left: 5px;
+
     margin-top: 5px;
+  }
+  .Edit-btn {
+    margin-left: 5px;
   }
 
   button:active {
@@ -99,7 +98,7 @@ function MyPage() {
   const { mainCards, isLoadCards } = useSelector((state) => state.card);
   const [info, setInfo] = useState(false);
 
-  // 로드 상태가 true 가 된 상태! 카드 보여야지
+  // 로드 상태가 true 가 된 상태! 카드 보여?
   useEffect(() => {
     if (!isLoadCards) {
       dispatch({
@@ -107,6 +106,7 @@ function MyPage() {
       });
     }
   }, []);
+
   const handleInfoChange = () => {
     setInfo(!info);
   };
