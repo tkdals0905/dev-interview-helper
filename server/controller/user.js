@@ -1,6 +1,5 @@
 const { User, Card } = require('../models');
 const bcrypt = require('bcrypt');
-const { isAuth } = require('./auth');
 
 const {
   generateAccessToken,
@@ -97,7 +96,6 @@ module.exports = {
       }
 
       const { username } = req.body;
-
       await User.update(
         {
           username,
@@ -108,7 +106,43 @@ module.exports = {
           },
         },
       );
+      return res.status(200).json({ message: 'ok' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error!' });
+      next(err);
+    }
+  },
 
+  editPwd: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+
+      const { password } = req.body;
+      const match = await bcrypt.compare(
+        password,
+        userInfo.dataValues.password,
+      );
+      if (!match) {
+        return res.status(403).json({
+          success: false,
+          message: '비밀번호가 잘못되었습니다.',
+        });
+      }
+      const hashPw = await hashPassword(password);
+      await User.update(
+        {
+          password: hashPw,
+        },
+        {
+          where: {
+            id: userInfo.dataValues.id,
+          },
+        },
+      );
       return res.status(200).json({ message: 'ok' });
     } catch (err) {
       console.error(err);
@@ -118,10 +152,13 @@ module.exports = {
   },
 
   signout: async (req, res, next) => {
-    const userId = req.params.user_id;
     try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
       await User.destroy({
-        where: { id: userId },
+        where: { id: userInfo.dataValues.id },
       });
       // 쿠키 삭제
       res.cookie('accessToken', null, { maxAge: 0 });
