@@ -99,18 +99,22 @@ module.exports = {
   },
   like: async (req, res, next) => {
     try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
       const like = await Card.findOne({
         where: {
-          id: req.param.cardId,
+          id: req.params.cardId,
         },
       });
       if (!like) {
         return res.status(403).send('좋아요가 존재하지 않습니다.');
       }
-      await like.addLikers(req.user.id);
+      await like.addLikers(userInfo.dataValues.id);
       return res.status(200).json({
         CardId: Number(req.params.cardId),
-        UserId: Number(req.user.id),
+        UserId: Number(userInfo.dataValues.id),
       });
     } catch (error) {
       console.error(error);
@@ -118,8 +122,11 @@ module.exports = {
     }
   },
   dislike: async (req, res, next) => {
-    // console.log(req.params);
     try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
       const dislike = await Card.findOne({
         where: {
           id: req.params.cardId,
@@ -128,10 +135,10 @@ module.exports = {
       if (!dislike) {
         return res.status(403).send('싫어요가 존재하지 않습니다.');
       }
-      await dislike.removeLikers(req.user.id);
+      await dislike.removeLikers(userInfo.dataValues.id);
       return res.status(200).json({
         CardId: Number(req.params.cardId),
-        UserId: Number(req.user.id),
+        UserId: Number(userInfo.dataValues.id),
       });
     } catch (error) {
       console.error(error);

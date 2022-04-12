@@ -5,8 +5,17 @@ import { faHeart as like } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unlike } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useQuery } from 'react-query';
-import { OPEN_CARD_DETAIL } from '../reducers/card';
-import { shareCardApi, unShareCardApi } from '../api/card';
+import {
+  LIKE_CARD_SUCCESS,
+  OPEN_CARD_DETAIL,
+  UNLIKE_CARD_SUCCESS,
+} from '../reducers/card';
+import {
+  likeCardApi,
+  shareCardApi,
+  unLikeCardApi,
+  unShareCardApi,
+} from '../api/card';
 import { SHARE_CARD_TO_ME, UNSHARE_CARD_TO_ME } from '../reducers/user';
 
 const Containner = styled.div`
@@ -77,14 +86,7 @@ function Card({ cardInfo, cardRole }) {
   const { me } = useSelector((state) => state.user);
   const [isLike, setIsLike] = useState(false);
   const [shortAnswer, setShortAnsewer] = useState(cardInfo.answer);
-
-  // const { refetch, data, status } = useQuery(
-  //   'shareCard',
-  //   () => shareCardApi(cardInfo.id),
-  //   {
-  //     enabled: false,
-  //   },
-  // );
+  const [cardLikersLen, setCardLikersLen] = useState(cardInfo.Likers.length);
 
   useEffect(() => {
     if (shortAnswer.length > 51) {
@@ -92,10 +94,39 @@ function Card({ cardInfo, cardRole }) {
       str += ' ....';
       setShortAnsewer(str);
     }
-  }, []);
+    if (me) {
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < cardInfo.Likers.length; i++) {
+        if (cardInfo.Likers[i].id === me.id) {
+          setIsLike(true);
+          break;
+        }
+      }
+    }
+  }, [me]);
 
-  const handleHeart = () => {
-    setIsLike((prev) => !prev);
+  const handleHeart = async () => {
+    if (isLike === false) {
+      const likeInfo = await likeCardApi(cardInfo.id);
+      if (likeInfo.status === 200) {
+        dispatch({
+          type: LIKE_CARD_SUCCESS,
+          data: likeInfo.data,
+        });
+        setIsLike(true);
+        setCardLikersLen(cardLikersLen + 1);
+      }
+    } else if (isLike === true) {
+      const likeInfo = await unLikeCardApi(cardInfo.id);
+      if (likeInfo.status === 200) {
+        dispatch({
+          type: UNLIKE_CARD_SUCCESS,
+          data: likeInfo.data,
+        });
+        setIsLike(false);
+        setCardLikersLen(cardLikersLen - 1);
+      }
+    }
   };
 
   const handleDetail = () => {
@@ -108,7 +139,6 @@ function Card({ cardInfo, cardRole }) {
   const handleShare = async () => {
     const Info = await shareCardApi(cardInfo.id);
     if (Info.status === 200) {
-      // console.log(Info.data);
       dispatch({
         type: SHARE_CARD_TO_ME,
         data: Info.data,
@@ -123,10 +153,6 @@ function Card({ cardInfo, cardRole }) {
         type: UNSHARE_CARD_TO_ME,
         data: Info.data.cardId,
       });
-      // dispatch({
-      //   type: SHARE_CARD_TO_ME,
-      //   data: Info.data,
-      // });
     }
   };
 
@@ -138,7 +164,7 @@ function Card({ cardInfo, cardRole }) {
           className={isLike ? 'like' : 'unlike'}
           size="1x"
         />
-        <span>{cardInfo.Likers.length}</span>
+        <span>{cardLikersLen}</span>
       </HeartIcon>
       <h3>{cardInfo.question}</h3>
       <h4>작성자: {cardInfo.username}</h4>

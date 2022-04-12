@@ -5,6 +5,7 @@ import CardsContainner from '../styles/CardsStyle';
 
 function Cards({ cardsInfo, handlePostCard }) {
   const { me } = useSelector((state) => state.user);
+  const { mainCards } = useSelector((state) => state.card);
   const [loginCardsInfo, setLoginCardsInfo] = useState([]);
   useEffect(() => {
     if (me) {
@@ -13,11 +14,11 @@ function Cards({ cardsInfo, handlePostCard }) {
       );
       setLoginCardsInfo(filterCards);
     }
-  }, [me, me?.Shared.length]);
+  }, [me, me?.Shared.length, mainCards]);
   const handleStudyBtn = () => {
     handlePostCard(true);
   };
-  console.log('loginCardsInfo:', loginCardsInfo);
+
   return (
     <CardsContainner>
       {me ? (

@@ -60,7 +60,6 @@ function Home() {
           ...cbData.data,
           SharedIdArr,
         };
-        console.log('userInfo:', userInfo);
         dispatch({
           type: LOG_IN_SUCCESS,
           data: userInfo,
