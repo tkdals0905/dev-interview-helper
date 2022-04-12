@@ -1,6 +1,6 @@
 const { User, Card } = require('../models');
 const bcrypt = require('bcrypt');
-
+const { isAuth } = require('./auth');
 const {
   generateAccessToken,
   sendAccessToken,

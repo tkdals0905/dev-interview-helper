@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_CARDS_SUCCESS } from '../reducers/card';
 import MyCards from '../components/myCards';
+// eslint-disable-next-line import/no-named-as-default
 import InfoChange from '../components/InfoChange';
 // import { useMutation } from 'react-query';
 // import { signupApi } from '../api/user';
