@@ -40,14 +40,6 @@ module.exports = {
   login: async (req, res, next) => {
     console.log(req.body);
     const { email, password } = req.body;
-
-    // email과 password가 비어 있을 경우 해당 메시지 리턴. > Line 11 ~ 15) Front에서 다룬다하여 주석처리
-    // if (!email)
-    //   return res.json({ success: false, message: "이메일을 입력해주세요" });
-    // if (!password)
-    //   return res.json({ success: false, message: "비밀번호를 입력해주세요" });
-
-    // email과 password가 정상적인 데이터일 경우
     try {
       const userInfo = await User.findOne({ where: { email } });
       if (!userInfo) {
@@ -66,36 +58,16 @@ module.exports = {
           message: '비밀번호가 잘못되었습니다.',
         });
       }
-
-      const newAccessToken = generateAccessToken(userInfo.dataValues);
-      sendAccessToken(res, newAccessToken);
       const user = userInfo.dataValues;
+
       const userWithoutPassword = await User.findOne({
         where: { id: user.id },
         attributes: ['id', 'username', 'email'],
-        include: [
-          {
-            model: Card,
-            attributes: ['id', 'question', 'answer'],
-            include: [
-              {
-                model: User,
-                as: 'Likers',
-                attributes: ['id'],
-              },
-              {
-                model: User,
-                as: 'Sharing',
-                attributes: ['id'],
-              },
-              {
-                model: User,
-                attributes: ['id', 'username'],
-              },
-            ],
-          },
-        ],
       });
+      const newAccessToken = generateAccessToken(
+        userWithoutPassword.dataValues
+      );
+      sendAccessToken(res, newAccessToken);
       return res.status(200).json(userWithoutPassword);
     } catch (err) {
       console.error(err);

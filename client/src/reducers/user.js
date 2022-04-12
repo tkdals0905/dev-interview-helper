@@ -14,6 +14,8 @@ export const ADD_CARD_TO_ME = 'ADD_CARD_TO_ME';
 
 export const SHARE_CARD_TO_ME = 'SHARE_CARD_TO_ME';
 
+export const UNSHARE_CARD_TO_ME = 'UNSHARE_CARD_TO_ME';
+
 export const REMOVE_CARD_OF_ME = 'REMOVE_CARD_OF_ME';
 
 const reducer = (state = initialized, action) =>
@@ -34,7 +36,12 @@ const reducer = (state = initialized, action) =>
         draft.me = null;
         break;
       case SHARE_CARD_TO_ME:
-        draft.me.Shares = [action.data, ...draft.me.Shares];
+        draft.me.Shared = [action.data, ...draft.me.Shared];
+        break;
+      case UNSHARE_CARD_TO_ME:
+        draft.me.Shared = draft.me.Shared.filter(
+          (card) => card.id !== action.data,
+        );
         break;
       default:
         break;

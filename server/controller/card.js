@@ -1,14 +1,13 @@
 const { Card, User } = require('../models');
-const { auth } = require('./auth');
+const { auth, isAuth } = require('./auth');
 
 module.exports = {
   card: async (req, res, next) => {
     try {
-      // 로그인인증.. 이게 맞는지 모르겠다...
-      // const userInfo = await auth(req, res);
-      // if (!userInfo) {
-      //   return res.status(400).json({ message: '로그인 하셔야합니다.' });
-      // }
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
 
       const newCard = await Card.create({
         question: req.body.question,
@@ -34,6 +33,69 @@ module.exports = {
         ],
       });
       return res.status(201).json(fullCard);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  shareCard: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+
+      const card = await Card.findOne({
+        where: {
+          id: req.params.cardId,
+        },
+      });
+
+      if (!card) {
+        return res.status(403).send('공유할려는 카드가 존재하지 않습니다');
+      }
+      await card.addSharing(userInfo.dataValues.id);
+      const fullCard = await Card.findOne({
+        where: {
+          id: req.params.cardId,
+        },
+        attributes: ['id', 'question', 'answer'],
+        include: [
+          {
+            model: User,
+            as: 'Likers',
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            attributes: ['id', 'username'],
+          },
+        ],
+      });
+      return res.status(200).json(fullCard);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  unShareCard: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+
+      const card = await Card.findOne({
+        where: {
+          id: req.params.cardId,
+        },
+      });
+
+      if (!card) {
+        return res.status(403).send('공유취소 할려는 카드가 존재하지 않습니다');
+      }
+      await card.removeSharing(userInfo.dataValues.id);
+      return res.status(200).json({ cardId: Number(card.dataValues.id) });
     } catch (error) {
       console.error(error);
       next(error);

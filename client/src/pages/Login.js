@@ -143,6 +143,7 @@ function Login() {
     if (loginMutation.status === 'error') {
       setMessage('login_fail');
     } else if (loginMutation.status === 'success') {
+      console.log('userInfo:', loginMutation.data);
       navigate('/');
     }
   }, [loginMutation.status]);
@@ -153,19 +154,6 @@ function Login() {
       email: loginInfo.email,
       password: loginInfo.password,
     });
-
-    // const userInfo = {
-    //   id: 1,
-    //   username: 'sungmin',
-    //   email: 'aa@aa.com',
-    //   Cards: [],
-    //   Shares: [card5, card1, card3],
-    // };
-    // dispatch({
-    //   type: LOG_IN_SUCCESS,
-    //   data: userInfo,
-    // });
-    // navigate('/');
   };
   const resetMessage = () => {
     setMessage('');

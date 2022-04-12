@@ -5,12 +5,12 @@ import { useQuery } from 'react-query';
 import Cards from '../components/Cards';
 import ShareCards from '../components/ShareCards';
 import { LOAD_CARDS_SUCCESS } from '../reducers/card';
-import { LOG_IN_SUCCESS } from '../reducers/user';
+import { LOG_IN_SUCCESS, LOG_OUT_SUCCESS } from '../reducers/user';
 import Divider from '../components/Divider';
 import CardForm from '../components/CardForm';
 import CardDetail from '../components/CardDetail';
 import { tokenApi } from '../api/user';
-import { getCardsApi } from '../api/card';
+import { getCardsApi, getSharedCards } from '../api/card';
 
 const Container = styled.main`
   width: 100%;
@@ -49,14 +49,18 @@ function Home() {
   useEffect(() => {
     if (getToken.status === 'error') {
       console.error(getToken.error);
-    } else if (getToken.status === 'success') {
-      const userInfo = {
-        Cards: [],
-        ...getToken.data.data,
-      };
       dispatch({
-        type: LOG_IN_SUCCESS,
-        data: userInfo,
+        type: LOG_OUT_SUCCESS,
+      });
+    } else if (getToken.status === 'success') {
+      console.log('token:', getToken.data);
+      // 로그인 성공시 공유된카드 불러오기
+      getSharedCards().then((cbData) => {
+        console.log('cbData', cbData.data);
+        dispatch({
+          type: LOG_IN_SUCCESS,
+          data: cbData.data,
+        });
       });
     }
   }, [getToken.status]);
@@ -80,7 +84,6 @@ function Home() {
           type: LOAD_CARDS_SUCCESS,
           data: customCards,
         });
-        console.log(getMainCards.data);
       } else if (getMainCards.status === 'error') {
         console.error(getMainCards.error);
       }
