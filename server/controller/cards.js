@@ -1,6 +1,37 @@
 const { Card, User } = require('../models');
 const { isAuth } = require('./auth');
 module.exports = {
+  myCards: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+
+      const myCards = await Card.findAll({
+        where: {
+          UserId: userInfo.dataValues.id,
+        },
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'question', 'answer'],
+        include: [
+          {
+            model: User,
+            as: 'Likers',
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            attributes: ['id', 'username'],
+          },
+        ],
+      });
+      return res.status(200).json(myCards);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
   cards: async (req, res, next) => {
     try {
       const cards = await Card.findAll({

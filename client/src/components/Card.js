@@ -184,14 +184,18 @@ function Card({ cardInfo, cardRole }) {
             공유취소
           </button>
         ) : null}
-        {/* <button id="editBtn" type="button">
-          {' '}
-          수정하기
-        </button>
-        <button id="deleteBtn" type="button">
-          {' '}
-          삭제하기
-        </button> */}
+        {cardRole === 'mine' ? (
+          <>
+            <button id="editBtn" type="button">
+              {' '}
+              수정하기
+            </button>
+            <button id="deleteBtn" type="button">
+              {' '}
+              삭제하기
+            </button>
+          </>
+        ) : null}
         <button onClick={handleDetail} id="moreBtn" type="button">
           {' '}
           더 보기
