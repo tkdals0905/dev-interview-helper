@@ -23,6 +23,7 @@ function Header() {
   });
 
   const { me } = useSelector((state) => state.user);
+
   // console.log('여기는 헤더:', me.data);
   // console.log('여기는 헤더:', me.username);
 

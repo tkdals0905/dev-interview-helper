@@ -64,19 +64,29 @@ function Confirm({ message, handleMessage }) {
     } else if (message === 'should_login') {
       setBtnInfo('로그인 하기');
       setCurMessage('로그인 해야 사용가능합니다.');
+    } else if (message === 'info_edit_fail') {
+      setBtnInfo('닫 기');
+      setCurMessage('변경하는 정보를 다시 확인해주세요.');
+    } else if (message === 'info_edit_success') {
+      setBtnInfo('수정 완료');
+      setCurMessage('수정이 완료되었습니다');
     }
   }, []);
+
   const handleConfirm = () => {
     if (message === 'success_signup') {
       navigate('/');
     } else if (
       message === 'error_signup' ||
       message === 'password_check_fail' ||
-      message === 'login_fail'
+      message === 'login_fail' ||
+      message === 'info_dit_fail' ||
+      message === 'info_edit_success'
     ) {
       handleMessage('');
     }
   };
+
   const handleCancel = () => {
     handleMessage('');
   };

@@ -8,7 +8,6 @@ module.exports = {
       if (!userInfo) {
         return res.status(400).json({ message: '로그인 하셔야합니다.' });
       }
-
       const newCard = await Card.create({
         question: req.body.question,
         answer: req.body.answer,
@@ -86,16 +85,54 @@ module.exports = {
       }
 
       const card = await Card.findOne({
-        where: {
-          id: req.params.cardId,
-        },
+        where: { id: req.params.cardId },
       });
-
       if (!card) {
         return res.status(403).send('공유취소 할려는 카드가 존재하지 않습니다');
       }
       await card.removeSharing(userInfo.dataValues.id);
       return res.status(200).json({ cardId: Number(card.dataValues.id) });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  like: async (req, res, next) => {
+    try {
+      const like = await Card.findOne({
+        where: {
+          id: req.param.cardId,
+        },
+      });
+      if (!like) {
+        return res.status(403).send('좋아요가 존재하지 않습니다.');
+      }
+      await like.addLikers(req.user.id);
+      return res.status(200).json({
+        CardId: Number(req.params.cardId),
+        UserId: Number(req.user.id),
+      });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  dislike: async (req, res, next) => {
+    // console.log(req.params);
+    try {
+      const dislike = await Card.findOne({
+        where: {
+          id: req.params.cardId,
+        },
+      });
+      if (!dislike) {
+        return res.status(403).send('싫어요가 존재하지 않습니다.');
+      }
+      await dislike.removeLikers(req.user.id);
+      return res.status(200).json({
+        CardId: Number(req.params.cardId),
+        UserId: Number(req.user.id),
+      });
     } catch (error) {
       console.error(error);
       next(error);

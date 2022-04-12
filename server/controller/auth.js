@@ -17,11 +17,12 @@ module.exports = {
       }
 
       // 에세스 토큰 정보가 유효한지 확인.
-      // const { email } = accessTokenData;
-      // const userInfo = await User.findOne({ where: { email } });
-      // if (!userInfo) {
-      //   return res.status(403).json({ message: 'Not authorized!' });
-      // }
+
+      const { email } = accessTokenData;
+      const userInfo = await User.findOne({ where: { email } });
+      if (!userInfo) {
+        return res.status(403).json({ message: 'Not authorized!' });
+      }
 
       return res.status(200).json(accessTokenData);
     } catch (err) {

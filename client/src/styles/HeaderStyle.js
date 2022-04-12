@@ -77,7 +77,6 @@ export const Rightmenu = styled.div`
     right: 1000px;
   }
   .userInfo-header {
-    background-color: black;
     height: 30px;
     width: 125px;
     right: 0px;

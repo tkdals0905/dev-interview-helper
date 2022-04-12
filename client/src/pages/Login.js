@@ -10,14 +10,12 @@ const LoginComponent = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
-
   * {
     margin: 0px;
   }
   li {
     list-style: none;
   }
-
   .login-title {
     padding: 30px;
   }
@@ -27,7 +25,6 @@ const LoginMain = styled.div`
   width: 320px;
   display: flex;
   flex-direction: column;
-
   font-size: 12px;
   h2 {
     padding: 20px;
@@ -76,7 +73,6 @@ const LoginMain = styled.div`
     font-size: 0px;
     line-height: 0px;
   }
-
   input {
     border-radius: 3px;
     background-color: #fbfbfd;
@@ -90,13 +86,11 @@ const LoginMain = styled.div`
     opacity: 0.6;
     padding: 2px 0px 2px 10px;
   }
-
   a {
     display: inline;
     text-decoration-line: none;
     margin-left: 20px;
   }
-
   .create-id {
     margin-top: 20px;
     display: flex;
@@ -112,7 +106,6 @@ const SubmitBtn = styled.button`
   font-size: 16px;
   text-align: center;
   font-weight: 600;
-
   border: none;
   margin-top: 20px;
 `;

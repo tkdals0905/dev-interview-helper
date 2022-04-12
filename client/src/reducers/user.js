@@ -18,6 +18,8 @@ export const UNSHARE_CARD_TO_ME = 'UNSHARE_CARD_TO_ME';
 
 export const REMOVE_CARD_OF_ME = 'REMOVE_CARD_OF_ME';
 
+export const DELETE_MY_INFO = 'DELETE_MY_INFO';
+
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -42,6 +44,9 @@ const reducer = (state = initialized, action) =>
         draft.me.Shared = draft.me.Shared.filter(
           (card) => card.id !== action.data,
         );
+        break;
+      case DELETE_MY_INFO:
+        draft.me = null;
         break;
       default:
         break;

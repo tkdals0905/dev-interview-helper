@@ -86,4 +86,56 @@ module.exports = {
       res.status(500).json({ message: 'Server error!' });
     }
   },
+
+  update: async (req, res, next) => {
+    const userId = req.params.user_id;
+    const { username, password } = req.body;
+    if (username || password) {
+      try {
+        if (username) {
+          const { username } = req.body;
+          await User.update(
+            { username },
+            {
+              where: { id: userId },
+            }
+          );
+        }
+        if (password) {
+          const { password } = req.body;
+          const hashPw = await hashPassword(password);
+          await User.update(
+            { password: hashPw },
+            {
+              where: { id: userId },
+            }
+          );
+        }
+        const userInfo = await User.findOne({ where: { id: userId } });
+
+        res.status(200).json({ message: '정보수정완료 ', userInfo });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error!' });
+      }
+    } else {
+      res.status(422).json({ message: 'insufficient parameters supplied' });
+    }
+  },
+
+  signout: async (req, res, next) => {
+    const userId = req.params.user_id;
+    try {
+      await User.destroy({
+        where: { id: userId },
+      });
+      // 쿠키 삭제
+      res.cookie('accessToken', null, { maxAge: 0 });
+
+      res.status(200).json({ message: 'successfully deleted' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'server error' });
+    }
+  },
 };
