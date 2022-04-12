@@ -74,7 +74,7 @@ function CardForm({ handlePostCard }) {
 
   useEffect(() => {
     if (postCardMutation.status === 'error') {
-      console.error('error');
+      console.error(postCardMutation.error);
     } else if (postCardMutation.status === 'success') {
       const { id, question, answer, Likers } = postCardMutation.data.data;
       const { username } = postCardMutation.data.data.User;

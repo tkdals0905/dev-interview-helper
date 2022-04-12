@@ -45,6 +45,9 @@ const reducer = (state = initialized, action) =>
         draft.me.Shared = draft.me.Shared.filter(
           (card) => card.id !== action.data,
         );
+        draft.me.SharedIdArr = draft.me.SharedIdArr.filter(
+          (id) => id !== action.data,
+        );
         break;
       case DELETE_MY_INFO:
         draft.me = null;
