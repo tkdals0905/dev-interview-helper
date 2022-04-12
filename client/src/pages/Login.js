@@ -136,7 +136,7 @@ function Login() {
     if (loginMutation.status === 'error') {
       setMessage('login_fail');
     } else if (loginMutation.status === 'success') {
-      console.log('userInfo:', loginMutation.data);
+      console.log('userInfo(login):', loginMutation.data);
       navigate('/');
     }
   }, [loginMutation.status]);

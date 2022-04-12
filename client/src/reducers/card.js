@@ -69,6 +69,10 @@ export const OPEN_CARD_DETAIL = 'OPEN_CARD_DETAIL';
 
 export const CLOSE_CARD_DETAIL = 'CLOSE_CARD_DETAIL';
 
+export const LIKE_CARD_SUCCESS = 'LIKE_CARD_SUCCESS';
+
+export const UNLIKE_CARD_SUCCESS = 'UNLIKE_CARD_SUCCESS';
+
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -85,6 +89,16 @@ const reducer = (state = initialized, action) =>
       case CLOSE_CARD_DETAIL:
         draft.isDetail = null;
         break;
+      case LIKE_CARD_SUCCESS: {
+        const card = draft.mainCards.find((v) => v.id === action.data.CardId);
+        card.Likers.push(action.data.UserId);
+        break;
+      }
+      case UNLIKE_CARD_SUCCESS: {
+        const card = draft.mainCards.find((v) => v.id === action.data.CardId);
+        card.Likers = card.Likers.filter((v) => v.id !== action.data.UserId);
+        break;
+      }
       default:
         break;
     }

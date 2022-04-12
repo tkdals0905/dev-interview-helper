@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Card from './Card';
 import CardsContainner from '../styles/CardsStyle';
 
 function Cards({ cardsInfo, handlePostCard }) {
   const { me } = useSelector((state) => state.user);
-  console.log(cardsInfo);
+  const { mainCards } = useSelector((state) => state.card);
+  const [loginCardsInfo, setLoginCardsInfo] = useState([]);
+  useEffect(() => {
+    if (me) {
+      const filterCards = cardsInfo.filter(
+        (card) => !me.SharedIdArr.includes(card.id),
+      );
+      setLoginCardsInfo(filterCards);
+    }
+  }, [me, me?.Shared.length, mainCards]);
   const handleStudyBtn = () => {
     handlePostCard(true);
   };
+
   return (
     <CardsContainner>
       {me ? (
-        <button onClick={handleStudyBtn} className="studyBtn" type="button">
-          문제 추가하기
-        </button>
-      ) : null}
-      {cardsInfo.map((cardInfo) => (
-        <Card key={cardInfo.id} cardRole="main" cardInfo={cardInfo} />
-      ))}
+        <>
+          <button onClick={handleStudyBtn} className="studyBtn" type="button">
+            문제 추가하기
+          </button>
+          {loginCardsInfo.map((cardInfo) => (
+            <Card key={cardInfo.id} cardRole="main" cardInfo={cardInfo} />
+          ))}
+        </>
+      ) : (
+        <>
+          {cardsInfo.map((cardInfo) => (
+            <Card key={cardInfo.id} cardRole="main" cardInfo={cardInfo} />
+          ))}
+        </>
+      )}
     </CardsContainner>
   );
 }

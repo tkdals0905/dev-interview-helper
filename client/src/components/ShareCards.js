@@ -26,9 +26,19 @@ function ShareCards() {
           <button className="studyBtn" type="button">
             학습하러 가기
           </button>
-          {me.Shared.map((cardInfo) => (
-            <Card key={cardInfo.id} cardRole="share" cardInfo={cardInfo} />
-          ))}
+          {me.Shared.map((cardInfo) => {
+            const customCardInfo = {
+              ...cardInfo,
+              username: cardInfo.User.username,
+            };
+            return (
+              <Card
+                key={cardInfo.id}
+                cardRole="share"
+                cardInfo={customCardInfo}
+              />
+            );
+          })}
         </>
       ) : (
         <ImageBox>

@@ -39,6 +39,7 @@ const reducer = (state = initialized, action) =>
         break;
       case SHARE_CARD_TO_ME:
         draft.me.Shared = [action.data, ...draft.me.Shared];
+        draft.me.SharedIdArr.push(action.data.id);
         break;
       case UNSHARE_CARD_TO_ME:
         draft.me.Shared = draft.me.Shared.filter(

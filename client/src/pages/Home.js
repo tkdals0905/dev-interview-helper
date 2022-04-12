@@ -53,13 +53,16 @@ function Home() {
         type: LOG_OUT_SUCCESS,
       });
     } else if (getToken.status === 'success') {
-      console.log('token:', getToken.data);
       // 로그인 성공시 공유된카드 불러오기
       getSharedCards().then((cbData) => {
-        console.log('cbData', cbData.data);
+        const SharedIdArr = cbData.data.Shared.map((card) => card.id);
+        const userInfo = {
+          ...cbData.data,
+          SharedIdArr,
+        };
         dispatch({
           type: LOG_IN_SUCCESS,
-          data: cbData.data,
+          data: userInfo,
         });
       });
     }
