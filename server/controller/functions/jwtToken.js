@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports = {
   // Access token으로 sign
   generateAccessToken: (data) => {
-    return jwt.sign(data, process.env.ACCESS_SECRET, { expiresIn: '12h' });
+    return jwt.sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
   },
   // JWT 토큰을 쿠키로 전달
   sendAccessToken: (res, accessToken) => {
