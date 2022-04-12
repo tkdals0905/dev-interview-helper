@@ -6,9 +6,12 @@ axios.defaults.withCredentials = true;
 export const signupApi = (data) => axios.post('/user', data);
 
 export const loginApi = (data) => axios.post('/user/login', data);
-export const infoAPi = (data) => axios.patch('/user/:user_id', data);
 
-export const infoDeleteAPi = () => axios.delete('/user/:user_id');
+export const editNameApi = (data) => axios.patch('/user/username', data);
+
+export const changePWDApi = (data) => axios.patch('/user/password', data);
+
+export const infoDeleteApi = () => axios.delete('/user');
 
 export const logOutApi = () => axios.get('/user/logout');
 
