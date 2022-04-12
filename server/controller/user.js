@@ -1,13 +1,13 @@
-const { User, Card } = require('../models');
-const bcrypt = require('bcrypt');
+const { User, Card } = require("../models");
+const bcrypt = require("bcrypt");
 
 const {
   generateAccessToken,
   sendAccessToken,
   checkAccessToken,
-} = require('./functions/jwtToken');
+} = require("./functions/jwtToken");
 
-const { hashPassword } = require('./functions/security');
+const { hashPassword } = require("./functions/security");
 
 module.exports = {
   signup: async (req, res, next) => {
@@ -19,7 +19,7 @@ module.exports = {
         },
       });
       if (exUser) {
-        return res.status(403).send('이미 사용중인 이메일입니다.');
+        return res.status(403).send("이미 사용중인 이메일입니다.");
       }
 
       const hashPw = await hashPassword(password);
@@ -30,7 +30,7 @@ module.exports = {
         password: hashPw,
       });
 
-      return res.status(201).send('OK');
+      return res.status(201).send("OK");
     } catch (error) {
       console.error(error);
       next(error);
@@ -53,7 +53,7 @@ module.exports = {
       if (!userInfo) {
         return res.status(403).json({
           success: false,
-          message: '이메일 이 존재하지 않습니다.',
+          message: "이메일 이 존재하지 않습니다.",
         });
       }
       const match = await bcrypt.compare(
@@ -63,7 +63,7 @@ module.exports = {
       if (!match) {
         return res.status(403).json({
           success: false,
-          message: '비밀번호가 잘못되었습니다.',
+          message: "비밀번호가 잘못되었습니다.",
         });
       }
 
@@ -72,25 +72,25 @@ module.exports = {
       const user = userInfo.dataValues;
       const userWithoutPassword = await User.findOne({
         where: { id: user.id },
-        attributes: ['id', 'username', 'email'],
+        attributes: ["id", "username", "email"],
         include: [
           {
             model: Card,
-            attributes: ['id', 'question', 'answer'],
+            attributes: ["id", "question", "answer"],
             include: [
               {
                 model: User,
-                as: 'Likers',
-                attributes: ['id'],
+                as: "Likers",
+                attributes: ["id"],
               },
               {
                 model: User,
-                as: 'Sharing',
-                attributes: ['id'],
+                as: "Sharing",
+                attributes: ["id"],
               },
               {
                 model: User,
-                attributes: ['id', 'username'],
+                attributes: ["id", "username"],
               },
             ],
           },
@@ -106,12 +106,64 @@ module.exports = {
   logout: async (req, res, next) => {
     try {
       // 로그아웃 할 때는 쿠키를 삭제한다.
-      res.cookie('accessToken', null, { maxAge: 0 });
+      res.cookie("accessToken", null, { maxAge: 0 });
       // 로그아웃 성공시 200을 보냄.
-      res.status(200).json({ message: 'ok' });
+      res.status(200).json({ message: "ok" });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error!' });
+      res.status(500).json({ message: "Server error!" });
+    }
+  },
+
+  update: async (req, res, next) => {
+    const userId = req.params.user_id;
+    const { username, password } = req.body;
+    if (username || password) {
+      try {
+        if (username) {
+          const { username } = req.body;
+          await User.update(
+            { username },
+            {
+              where: { id: userId },
+            }
+          );
+        }
+        if (password) {
+          const { password } = req.body;
+          const hashPw = await hashPassword(password);
+          await User.update(
+            { password: hashPw },
+            {
+              where: { id: userId },
+            }
+          );
+        }
+        const userInfo = await User.findOne({ where: { id: userId } });
+
+        res.status(200).json({ message: "정보수정완료 ", userInfo });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error!" });
+      }
+    } else {
+      res.status(422).json({ message: "insufficient parameters supplied" });
+    }
+  },
+
+  signout: async (req, res, next) => {
+    const userId = req.params.user_id;
+    try {
+      await User.destroy({
+        where: { id: userId },
+      });
+      // 쿠키 삭제
+      res.cookie("accessToken", null, { maxAge: 0 });
+
+      res.status(200).json({ message: "successfully deleted" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "server error" });
     }
   },
 };
