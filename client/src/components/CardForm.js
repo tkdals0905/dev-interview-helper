@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-// import { ADD_CARD_SUCCESS } from '../reducers/card';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
+import { ADD_CARD_SUCCESS } from '../reducers/card';
 import { postCardApi } from '../api/card';
 
 const Container = styled.div`
@@ -64,7 +64,7 @@ const Container = styled.div`
 `;
 
 function CardForm({ handlePostCard }) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [cardInfo, setCardInfo] = useState({
     question: '',
     answer: '',
@@ -76,11 +76,20 @@ function CardForm({ handlePostCard }) {
     if (postCardMutation.status === 'error') {
       console.error('error');
     } else if (postCardMutation.status === 'success') {
-      console.log(postCardMutation.data);
-      // dispatch({
-      //     type: ADD_CARD_SUCCESS,
-      //     data: newCard,
-      // });
+      const { id, question, answer, Likers } = postCardMutation.data.data;
+      const { username } = postCardMutation.data.data.User;
+      const newPost = {
+        id,
+        question,
+        answer,
+        Likers,
+        username,
+      };
+      dispatch({
+        type: ADD_CARD_SUCCESS,
+        data: newPost,
+      });
+      handlePostCard(false);
     }
   }, [postCardMutation.status]);
 

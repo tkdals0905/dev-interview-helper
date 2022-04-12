@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as like } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unlike } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+// import { useQuery } from 'react-query';
 import { OPEN_CARD_DETAIL } from '../reducers/card';
+import { shareCardApi, unShareCardApi } from '../api/card';
+import { SHARE_CARD_TO_ME, UNSHARE_CARD_TO_ME } from '../reducers/user';
 
 const Containner = styled.div`
   width: 356px;
@@ -74,6 +77,15 @@ function Card({ cardInfo, cardRole }) {
   const { me } = useSelector((state) => state.user);
   const [isLike, setIsLike] = useState(false);
   const [shortAnswer, setShortAnsewer] = useState(cardInfo.answer);
+
+  // const { refetch, data, status } = useQuery(
+  //   'shareCard',
+  //   () => shareCardApi(cardInfo.id),
+  //   {
+  //     enabled: false,
+  //   },
+  // );
+
   useEffect(() => {
     if (shortAnswer.length > 51) {
       let str = shortAnswer.substr(0, 51);
@@ -92,6 +104,32 @@ function Card({ cardInfo, cardRole }) {
       data: cardInfo,
     });
   };
+
+  const handleShare = async () => {
+    const Info = await shareCardApi(cardInfo.id);
+    if (Info.status === 200) {
+      // console.log(Info.data);
+      dispatch({
+        type: SHARE_CARD_TO_ME,
+        data: Info.data,
+      });
+    }
+  };
+
+  const handleUnshare = async () => {
+    const Info = await unShareCardApi(cardInfo.id);
+    if (Info.status === 200) {
+      dispatch({
+        type: UNSHARE_CARD_TO_ME,
+        data: Info.data.cardId,
+      });
+      // dispatch({
+      //   type: SHARE_CARD_TO_ME,
+      //   data: Info.data,
+      // });
+    }
+  };
+
   return (
     <Containner>
       <HeartIcon onClick={handleHeart}>
@@ -109,13 +147,13 @@ function Card({ cardInfo, cardRole }) {
       </div>
       <BtnInfo>
         {cardRole === 'main' && me ? (
-          <button id="shareBtn" type="button">
+          <button onClick={handleShare} id="shareBtn" type="button">
             {' '}
             공유하기
           </button>
         ) : null}
         {cardRole === 'share' ? (
-          <button id="shareBtn" type="button">
+          <button onClick={handleUnshare} id="shareBtn" type="button">
             {' '}
             공유취소
           </button>

@@ -18,8 +18,7 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { refetch, isSuccess } = useQuery('logout', logOutApi, {
-    refetchOnWindowFocus: false,
+  const { refetch, status } = useQuery('logout', logOutApi, {
     enabled: false,
   });
 
@@ -28,9 +27,9 @@ function Header() {
   // console.log('여기는 헤더:', me.data);
   // console.log('여기는 헤더:', me.username);
 
-  const handleLogout = () => {
-    refetch();
-    if (isSuccess) {
+  const handleLogout = async () => {
+    await refetch();
+    if (status === 'success') {
       dispatch({
         type: LOG_OUT_SUCCESS,
       });
