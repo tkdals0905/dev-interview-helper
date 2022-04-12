@@ -99,6 +99,7 @@ module.exports = {
   },
   like: async (req, res, next) => {
     try {
+      // 로그인이 되었는지 아닌지 확인..
       const userInfo = await isAuth(req, res);
       if (!userInfo) {
         return res.status(400).json({ message: '로그인 하셔야합니다.' });
