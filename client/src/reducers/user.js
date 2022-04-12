@@ -16,6 +16,8 @@ export const SHARE_CARD_TO_ME = 'SHARE_CARD_TO_ME';
 
 export const REMOVE_CARD_OF_ME = 'REMOVE_CARD_OF_ME';
 
+export const DELETE_MY_INFO = 'DELETE_MY_INFO';
+
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -35,6 +37,9 @@ const reducer = (state = initialized, action) =>
         break;
       case SHARE_CARD_TO_ME:
         draft.me.Shares = [action.data, ...draft.me.Shares];
+        break;
+      case DELETE_MY_INFO:
+        draft.me = null;
         break;
       default:
         break;

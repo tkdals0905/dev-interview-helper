@@ -5,10 +5,6 @@ import CardsContainner from '../styles/CardsStyle';
 
 function MyCards({ cardsInfo }) {
   const { me } = useSelector((state) => state.user);
-  // const { mainCards } = useSelector((state) => state.card);
-  // console.log(cardsInfo);
-  // console.log(me);
-  // console.log(mainCards);
 
   return (
     <CardsContainner>
