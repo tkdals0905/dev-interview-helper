@@ -6,7 +6,6 @@ axios.defaults.withCredentials = true;
 export const signupApi = (data) => axios.post('/user', data);
 
 export const loginApi = (data) => axios.post('/user/login', data);
-
 export const infoAPi = (data) => axios.patch('/user/:user_id', data);
 
 export const infoDeleteAPi = () => axios.delete('/user/:user_id');
