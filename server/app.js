@@ -1,14 +1,14 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = 4000;
-const db = require('./models');
-const cookieParser = require('cookie-parser');
-const mysql = require('mysql');
-const morgan = require('morgan');
-const userRouter = require('./routers/user');
-const cardsRouter = require('./routers/cards');
-const cardRouter = require('./routers/card');
+const db = require("./models");
+const cookieParser = require("cookie-parser");
+const mysql = require("mysql");
+const morgan = require("morgan");
+const userRouter = require("./routers/user");
+const cardsRouter = require("./routers/cards");
+const cardRouter = require("./routers/card");
 // const logoutPage = require("./router/logoutPage");
 // const mainPage = require("./router/mainPage");
 // const mypagePage = require("./router/mypagePage");
@@ -17,7 +17,7 @@ const cardRouter = require('./routers/card');
 db.sequelize
   .sync()
   .then(() => {
-    console.log('db 연결 성공');
+    console.log("db 연결 성공");
   })
   .catch(console.error);
 
@@ -41,24 +41,24 @@ db.sequelize
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(cookieParser());
 // json형식으로 올 경우 body 파싱
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.get('/hi', (req, res) => {
-  res.json({ message: 'hi' });
+app.get("/hi", (req, res) => {
+  res.json({ message: "hi" });
 });
-app.use('/user', userRouter);
-app.use('/card', cardRouter);
-app.use('/cards', cardsRouter);
+app.use("/user", userRouter);
+app.use("/card", cardRouter);
+app.use("/cards", cardsRouter);
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express');
+app.get("/", (req, res) => {
+  res.send("Hello, Express");
 });
 
 //app.use("/logout", logoutPage);
