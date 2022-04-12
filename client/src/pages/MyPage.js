@@ -121,6 +121,7 @@ function MyPage() {
           const { id, question, answer, Likers } = data;
           const { username } = data.User;
           const newData = {
+            userId: data.User.id,
             id,
             question,
             answer,
@@ -142,7 +143,6 @@ function MyPage() {
       console.error(getToken.error);
       navigate('/');
     } else if (getToken.status === 'success') {
-      console.log('token Success');
       getSharedCards().then((cbData) => {
         const SharedIdArr = cbData.data.Shared.map((card) => card.id);
         const userInfo = {
@@ -156,6 +156,7 @@ function MyPage() {
       });
     }
   }, [getToken.status]);
+
   const handleInfoChange = () => {
     setInfo(!info);
   };

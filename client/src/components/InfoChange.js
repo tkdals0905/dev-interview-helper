@@ -5,8 +5,9 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Confirm from './Confirm';
 // import { Link, useNavigate } from 'react-router-dom';
-import { editNameApi } from '../api/user';
+import { editNameApi, deleteUserApi } from '../api/user';
 import { EDIT_NAME_SUCCESS } from '../reducers/user';
+import { DELETE_USER_SUCCESS } from '../reducers/card';
 // import { DELETE_MY_INFO } from '../reducers/user';
 
 // useMutation : 값을 바꿀때 사용하는 api
@@ -26,6 +27,9 @@ const Info = styled.div`
   display: flex;
   font-size: 13px;
   /* background-color: yellow; */
+  .delete-btn {
+    background-color: #c0392b;
+  }
   button {
     margin-left: 0px;
     margin-right: 5px;
@@ -122,14 +126,18 @@ function InfoChange() {
     }
   }, [editNameMutation.status]);
 
-  const handleInfoDelete = async (e) => {
-    e.preventDefault();
-
-    if (me) {
-      // deleteMutation.mutate({});
-      navigate('/');
-      //    navigate('/');
-      // dispatch({type:DELETE_MY_INFO})
+  const handleInfoDelete = async () => {
+    const result = window.confirm('정말로 계정삭제를 하시겠습니까?');
+    if (result) {
+      const isDelete = await deleteUserApi();
+      if (isDelete.status === 200) {
+        // console.log(isDelete.data); // {userId:6}
+        dispatch({
+          type: DELETE_USER_SUCCESS,
+          data: isDelete.data,
+        });
+        navigate('/');
+      }
     }
   };
   const resetMessage = () => {
@@ -178,7 +186,7 @@ function InfoChange() {
 
           <button
             className="delete-btn"
-            type="submit"
+            type="button"
             onClick={handleInfoDelete}
           >
             Profile Delete

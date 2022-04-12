@@ -118,15 +118,21 @@ module.exports = {
   },
 
   signout: async (req, res, next) => {
-    const userId = req.params.user_id;
     try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+      const userId = userInfo.dataValues.id;
+      await Card.destroy({
+        where: { UserId: userId },
+      });
       await User.destroy({
         where: { id: userId },
       });
       // 쿠키 삭제
       res.cookie('accessToken', null, { maxAge: 0 });
-
-      res.status(200).json({ message: 'successfully deleted' });
+      res.status(200).json({ userId });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'server error' });
