@@ -4,7 +4,7 @@ const {
   signup,
   login,
   logout,
-  update,
+  editUsername,
   signout,
 } = require('../controller/user');
 const { auth } = require('../controller/auth');
@@ -17,8 +17,8 @@ router.post('/login', login);
 router.get('/logout', logout);
 //토근 인증
 router.get('/token', auth);
-// 회원정보 수정
-router.patch('/update', update);
+// 회원정보 수정 (아메일)
+router.patch('/username', editUsername);
 // 회원탈퇴
 router.delete('/delete', signout);
 

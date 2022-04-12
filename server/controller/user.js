@@ -1,5 +1,6 @@
 const { User, Card } = require('../models');
 const bcrypt = require('bcrypt');
+const { isAuth } = require('./auth');
 
 const {
   generateAccessToken,
@@ -50,7 +51,7 @@ module.exports = {
       }
       const match = await bcrypt.compare(
         password,
-        userInfo.dataValues.password
+        userInfo.dataValues.password,
       );
       if (!match) {
         return res.status(403).json({
@@ -65,7 +66,7 @@ module.exports = {
         attributes: ['id', 'username', 'email'],
       });
       const newAccessToken = generateAccessToken(
-        userWithoutPassword.dataValues
+        userWithoutPassword.dataValues,
       );
       sendAccessToken(res, newAccessToken);
       return res.status(200).json(userWithoutPassword);
@@ -87,39 +88,32 @@ module.exports = {
     }
   },
 
-  update: async (req, res, next) => {
-    const userId = req.params.user_id;
-    const { username, password } = req.body;
-    if (username || password) {
-      try {
-        if (username) {
-          const { username } = req.body;
-          await User.update(
-            { username },
-            {
-              where: { id: userId },
-            }
-          );
-        }
-        if (password) {
-          const { password } = req.body;
-          const hashPw = await hashPassword(password);
-          await User.update(
-            { password: hashPw },
-            {
-              where: { id: userId },
-            }
-          );
-        }
-        const userInfo = await User.findOne({ where: { id: userId } });
-
-        res.status(200).json({ message: '정보수정완료 ', userInfo });
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error!' });
+  //   patch /user/:userId/username    body:{username: '바보'}
+  editUsername: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
       }
-    } else {
-      res.status(422).json({ message: 'insufficient parameters supplied' });
+
+      const { username } = req.body;
+
+      await User.update(
+        {
+          username,
+        },
+        {
+          where: {
+            id: userInfo.dataValues.id,
+          },
+        },
+      );
+
+      return res.status(200).json({ message: 'ok' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error!' });
+      next(err);
     }
   },
 

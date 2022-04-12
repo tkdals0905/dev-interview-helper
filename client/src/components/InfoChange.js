@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Confirm from './Confirm';
 // import { Link, useNavigate } from 'react-router-dom';
-import { infoDeleteAPi, infoAPi } from '../api/user';
+import { editNameApi } from '../api/user';
+import { EDIT_NAME_SUCCESS } from '../reducers/user';
 // import { DELETE_MY_INFO } from '../reducers/user';
 
 // useMutation : 값을 바꿀때 사용하는 api
@@ -58,6 +59,7 @@ const Info = styled.div`
 `;
 
 function InfoChange() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { me } = useSelector((state) => state.user);
   console.log(me.username);
@@ -81,38 +83,17 @@ function InfoChange() {
   //   setUserInfoP({ ...userInfoP, [key]: e.target.value });
   // };
 
-  const infoMutation = useMutation(infoAPi);
+  const editNameMutation = useMutation(editNameApi);
   // const infoPMutation = useMutation(infopAPi);
-  const deleteMutation = useMutation(infoDeleteAPi);
-  console.log(infoMutation.data);
+  // const deleteMutation = useMutation(infoDeleteAPi);
+  // console.log(infoMutation.data);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // 폼제출하고 나서 새로고침 방지
-    // const info ={
-    //   username: userInfo.username,
-    //   password: userInfo.password,
-    // };
-    //   infoMutation.mutate(info);
-    // }
+  const handleEditName = async () => {
     if (me.username !== userInfo.username) {
-      infoMutation.mutate({
+      editNameMutation.mutate({
         username: userInfo.username,
-        password: userInfo.password,
       });
     }
-    // e.preventDefault();
-    // axios // endpoint에 요청보내기
-    //   .post('https://localhost:4000//:user_id', {
-    //     username: userInfo.username,
-    //     password: userInfo.password,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
 
   // const handlePassWord = async (e) => {
@@ -130,18 +111,22 @@ function InfoChange() {
   // };
 
   useEffect(() => {
-    if (infoMutation === 'error') {
+    if (editNameMutation.status === 'error') {
       setMessage('info_edit_fail');
-    } else if (infoMutation.status === 'success') {
-      setMessage('info_edit_success');
+    } else if (editNameMutation.status === 'success') {
+      // setMessage('info_edit_success');
+      dispatch({
+        type: EDIT_NAME_SUCCESS,
+        data: userInfo.username,
+      });
     }
-  }, [infoMutation.status]);
+  }, [editNameMutation.status]);
 
   const handleInfoDelete = async (e) => {
     e.preventDefault();
 
     if (me) {
-      deleteMutation.mutate({});
+      // deleteMutation.mutate({});
       navigate('/');
       //    navigate('/');
       // dispatch({type:DELETE_MY_INFO})
@@ -160,50 +145,44 @@ function InfoChange() {
           <Confirm message={message} handleMessage={resetMessage} />
         ) : null}
         <Info>
-          <form onSubmit={handleSubmit}>
-            {/* <form onSubmit={handleEmail}> */}
-            <label htmlFor="user-email">이름</label>
-            <input
-              id="user-email"
-              type="text"
-              placeholder="이름"
-              onChange={handleChangeInfo('username')}
-            />
-            <Link className="link-style" to="/myPage">
-              <button className="email-btn" type="submit">
-                Nickname edit
-              </button>
-            </Link>
-            {/* </form> */}
-            <hr />
-            {/* <form onSubmit={handlePassWord}> */}
-            <label htmlFor="past-password">현재 비밀번호</label>
-            <input
-              id="past-password"
-              type="password"
-              placeholder="현재 비밀번호"
-              onChange={handleChangeInfo('password_now')}
-            />
-            <label htmlFor="set-password">비밀번호 생성</label>
-            <input
-              id="set-password"
-              type="password"
-              placeholder="새로운 비밀번호"
-              onChange={handleChangeInfo('password')}
-            />
-            <Link className="link-style" to="/myPage">
-              <button className="pass-btn" type="submit">
-                Password edit
-              </button>
-            </Link>
-            <button
-              className="delete-btn"
-              type="submit"
-              onClick={handleInfoDelete}
-            >
-              Profile Delete
-            </button>
-          </form>
+          {/* <form onSubmit={handleEmail}> */}
+          <label htmlFor="user-email">이름</label>
+          <input
+            id="user-email"
+            type="text"
+            placeholder="이름"
+            onChange={handleChangeInfo('username')}
+          />
+          <button onClick={handleEditName} className="email-btn" type="button">
+            Nickname edit
+          </button>
+          <hr />
+          {/* <form onSubmit={handlePassWord}> */}
+          <label htmlFor="past-password">현재 비밀번호</label>
+          <input
+            id="past-password"
+            type="password"
+            placeholder="현재 비밀번호"
+            onChange={handleChangeInfo('password_now')}
+          />
+          <label htmlFor="set-password">비밀번호 생성</label>
+          <input
+            id="set-password"
+            type="password"
+            placeholder="새로운 비밀번호"
+            onChange={handleChangeInfo('password')}
+          />
+          <button className="pass-btn" type="submit">
+            Password edit
+          </button>
+
+          <button
+            className="delete-btn"
+            type="submit"
+            onClick={handleInfoDelete}
+          >
+            Profile Delete
+          </button>
         </Info>
       </InfoChangeComponent>
       {/* </MainPage> */}

@@ -20,6 +20,8 @@ export const REMOVE_CARD_OF_ME = 'REMOVE_CARD_OF_ME';
 
 export const DELETE_MY_INFO = 'DELETE_MY_INFO';
 
+export const EDIT_NAME_SUCCESS = 'EDIT_NAME_SUCCESS';
+
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -51,6 +53,12 @@ const reducer = (state = initialized, action) =>
         break;
       case DELETE_MY_INFO:
         draft.me = null;
+        break;
+      case EDIT_NAME_SUCCESS:
+        draft.me = {
+          ...draft.me,
+          username: action.data,
+        };
         break;
       default:
         break;
