@@ -84,18 +84,35 @@ function InfoChange() {
   const infoMutation = useMutation(infoAPi);
   // const infoPMutation = useMutation(infopAPi);
   const deleteMutation = useMutation(infoDeleteAPi);
+  console.log(infoMutation.data);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 폼제출하고 나서 새로고침 방지
-
+    // const info ={
+    //   username: userInfo.username,
+    //   password: userInfo.password,
+    // };
+    //   infoMutation.mutate(info);
+    // }
     if (me.username !== userInfo.username) {
       infoMutation.mutate({
-        email: me.email,
         username: userInfo.username,
         password: userInfo.password,
       });
     }
+    // e.preventDefault();
+    // axios // endpoint에 요청보내기
+    //   .post('https://localhost:4000//:user_id', {
+    //     username: userInfo.username,
+    //     password: userInfo.password,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   // const handlePassWord = async (e) => {
