@@ -8,7 +8,6 @@ export const postCardApi = (data) => axios.post('/card', data);
 export const deleteCardApi = (data) => axios.delete(`/card/${data}`);
 
 export const updateCardApi = (data) => axios.patch('/card', data);
-// {cordId:1, question:'blabla', answer:'blabla'};
 
 export const getCardsApi = () => axios.get('/cards');
 

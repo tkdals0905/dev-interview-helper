@@ -177,7 +177,7 @@ module.exports = {
       if (!userInfo) {
         return res.status(400).json({ message: '로그인 하셔야합니다.' });
       }
-      const { question, answer } = req.body;
+      const { question, answer, cardId } = req.body;
       await Card.update(
         {
           question,
@@ -185,7 +185,7 @@ module.exports = {
         },
         {
           where: {
-            id: req.params.cardId,
+            id: cardId,
           },
         },
       );

@@ -12,6 +12,7 @@ import {
   UNLIKE_CARD_SUCCESS,
   UNSELECT_CARD,
   DELETE_CARD_SUCCESS,
+  OPEN_EDIT_CARD_FORM,
 } from '../reducers/card';
 import {
   likeCardApi,
@@ -190,10 +191,9 @@ function Card({ cardInfo, cardRole }) {
     if (result) {
       const isDelete = await deleteCardApi(cardInfo.id);
       if (isDelete.status === 200) {
-        console.log(isDelete.data);
         dispatch({
           type: DELETE_CARD_SUCCESS,
-          data: isDelete.data,
+          data: cardInfo.id, // ok
         });
       }
     }
@@ -209,6 +209,13 @@ function Card({ cardInfo, cardRole }) {
     dispatch({
       type: UNSELECT_CARD,
       data: cardInfo.id,
+    });
+  };
+
+  const handleEditCard = () => {
+    dispatch({
+      type: OPEN_EDIT_CARD_FORM,
+      data: cardInfo,
     });
   };
 
@@ -242,7 +249,7 @@ function Card({ cardInfo, cardRole }) {
         ) : null}
         {cardRole === 'mine' ? (
           <>
-            <button id="editBtn" type="button">
+            <button onClick={handleEditCard} id="editBtn" type="button">
               {' '}
               수정하기
             </button>

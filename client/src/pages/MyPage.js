@@ -12,6 +12,7 @@ import { tokenApi } from '../api/user';
 import { LOAD_MY_CARDS_SUCCESS } from '../reducers/card';
 import { LOG_IN_SUCCESS } from '../reducers/user';
 import CardDetail from '../components/CardDetail';
+import EditCardForm from '../components/EditCardForm';
 
 const Background = styled.section`
   display: flex;
@@ -100,7 +101,7 @@ function MyPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { myCards, isLoadMyCards, isDetail } = useSelector(
+  const { myCards, isLoadMyCards, isDetail, isEditCard } = useSelector(
     (state) => state.card,
   );
   const [info, setInfo] = useState(false);
@@ -113,6 +114,7 @@ function MyPage() {
     retry: false,
   });
   // 로드 상태가 true 가 된 상태! 카드 보여?
+
   useEffect(() => {
     if (!isLoadMyCards) {
       if (getMyCards.status === 'error') {
@@ -168,6 +170,7 @@ function MyPage() {
     return (
       <Background>
         {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
+        {isEditCard ? <EditCardForm card={isEditCard} /> : null}
         <MyPageComponent>
           <div className="myPage-title">
             <h1 className="title">My Page</h1>
