@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   LIKE_CARD_SUCCESS,
   OPEN_CARD_DETAIL,
+  SELECT_CARD,
   UNLIKE_CARD_SUCCESS,
+  UNSELECT_CARD,
   DELETE_CARD_SUCCESS,
 } from '../reducers/card';
 import {
@@ -30,6 +32,16 @@ const Containner = styled.div`
   margin-top: 1.5rem;
   color: #dce2f0;
   background-color: #50586c;
+  &.selected-card {
+    .heart-icon {
+      right: 0.7rem;
+    }
+    .btn-info {
+      bottom: 5px;
+    }
+    padding: 10px 5px 5px 5px;
+    border: 5px solid #1abc9c;
+  }
   h4 {
     color: #ffdfde;
     display: block;
@@ -81,15 +93,22 @@ const BtnInfo = styled.div`
   #moreBtn {
     background-color: #78e08f;
   }
+  #selectBtn {
+    background-color: #1abc9c;
+  }
+  #selectedBtn {
+    background-color: #f39c12;
+  }
 `;
 
 function Card({ cardInfo, cardRole }) {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
+  const { selectedCardsId } = useSelector((state) => state.card);
   const [isLike, setIsLike] = useState(false);
   const [shortAnswer, setShortAnsewer] = useState(cardInfo.answer);
   const [cardLikersLen, setCardLikersLen] = useState(cardInfo.Likers.length);
-
+  const [isSelect, setIsSelected] = useState(false);
   useEffect(() => {
     if (shortAnswer.length > 51) {
       let str = shortAnswer.substr(0, 51);
@@ -100,12 +119,20 @@ function Card({ cardInfo, cardRole }) {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < cardInfo.Likers.length; i++) {
         if (cardInfo.Likers[i].id === me.id) {
-          setIsLike(true);
+          setIsSelected(true);
           break;
         }
       }
     }
   }, [me]);
+
+  useEffect(() => {
+    if (selectedCardsId.includes(cardInfo.id)) {
+      setIsSelected(true);
+    } else {
+      setIsSelected(false);
+    }
+  }, [cardRole === 'study' && selectedCardsId]);
 
   const handleHeart = async () => {
     if (isLike === false) {
@@ -172,9 +199,22 @@ function Card({ cardInfo, cardRole }) {
     }
   };
 
+  const handleSelect = () => {
+    dispatch({
+      type: SELECT_CARD,
+      data: cardInfo.id,
+    });
+  };
+  const handleUnSelect = () => {
+    dispatch({
+      type: UNSELECT_CARD,
+      data: cardInfo.id,
+    });
+  };
+
   return (
-    <Containner>
-      <HeartIcon onClick={handleHeart}>
+    <Containner className={isSelect ? 'selected-card' : null}>
+      <HeartIcon className="heart-icon" onClick={handleHeart}>
         <FontAwesomeIcon
           icon={isLike ? like : unlike}
           className={isLike ? 'like' : 'unlike'}
@@ -187,7 +227,7 @@ function Card({ cardInfo, cardRole }) {
       <div className="answer">
         <p>{shortAnswer}</p>
       </div>
-      <BtnInfo>
+      <BtnInfo className="btn-info">
         {cardRole === 'main' && me ? (
           <button onClick={handleShare} id="shareBtn" type="button">
             {' '}
@@ -211,6 +251,18 @@ function Card({ cardInfo, cardRole }) {
               삭제하기
             </button>
           </>
+        ) : null}
+        {cardRole === 'study' && !isSelect ? (
+          <button onClick={handleSelect} id="selectBtn" type="button">
+            {' '}
+            선택하기
+          </button>
+        ) : null}
+        {cardRole === 'study' && isSelect ? (
+          <button onClick={handleUnSelect} id="selectedBtn" type="button">
+            {' '}
+            취소하기
+          </button>
         ) : null}
         <button onClick={handleDetail} id="moreBtn" type="button">
           {' '}
