@@ -27,9 +27,12 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "react-slick": "^0.28.1",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.1",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
@@ -51,7 +54,10 @@
       "react/prop-types": 0,
       "no-param-reassign": 0,
       "default-param-last": 0,
-      "react/destructuring-assignment":0
+      "react/destructuring-assignment": 0,
+      "react/jsx-props-no-spreading": 0,
+      "jsx-a11y/click-events-have-key-events": 0,
+      "jsx-a11y/no-static-element-interactions": 0
     },
     "env": {
       "browser": true,

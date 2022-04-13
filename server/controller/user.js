@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt');
 const { isAuth } = require('./auth');
 const {
   generateAccessToken,
-  sendAccessToken,
-  checkAccessToken,
+  sendToken,
+  checkToken,
+  generateRefreshToken,
 } = require('./functions/jwtToken');
 
 const { hashPassword } = require('./functions/security');
@@ -67,7 +68,8 @@ module.exports = {
       const newAccessToken = generateAccessToken(
         userWithoutPassword.dataValues,
       );
-      sendAccessToken(res, newAccessToken);
+      const newRefreshToken = generateRefreshToken();
+      sendToken(res, newAccessToken, newRefreshToken);
       return res.status(200).json(userWithoutPassword);
     } catch (err) {
       console.error(err);
@@ -78,7 +80,8 @@ module.exports = {
   logout: async (req, res, next) => {
     try {
       // 로그아웃 할 때는 쿠키를 삭제한다.
-      res.cookie('accessToken', null, { maxAge: 0 });
+      res.clearCookie('refreshToken');
+      res.clearCookie('accessToken');
       // 로그아웃 성공시 200을 보냄.
       res.status(200).json({ message: 'ok' });
     } catch (err) {
@@ -164,7 +167,8 @@ module.exports = {
         where: { id: userId },
       });
       // 쿠키 삭제
-      res.cookie('accessToken', null, { maxAge: 0 });
+      res.clearCookie('refreshToken');
+      res.clearCookie('accessToken');
       res.status(200).json({ userId });
     } catch (err) {
       console.error(err);

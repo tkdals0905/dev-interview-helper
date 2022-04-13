@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useQuery } from 'react-query';
 import { logOutApi } from '../api/user';
 import {
   HeaderBackColor,
@@ -12,15 +11,11 @@ import {
   Rightmenu,
   SearchBtn,
 } from '../styles/HeaderStyle';
-import { LOG_OUT_SUCCESS } from '../reducers/user';
+import { loginThunk, logoutThunk } from '../reducers';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { refetch, status } = useQuery('logout', logOutApi, {
-    enabled: false,
-  });
 
   const { me } = useSelector((state) => state.user);
 
@@ -28,25 +23,25 @@ function Header() {
   // console.log('여기는 헤더:', me.username);
 
   const handleLogout = async () => {
-    await refetch();
-    if (status === 'success') {
-      dispatch({
-        type: LOG_OUT_SUCCESS,
-      });
+    const islogout = await logOutApi();
+    if (islogout.status === 200) {
+      dispatch(logoutThunk());
       navigate('/');
     }
+  };
+  const gotohome = () => {
+    dispatch(loginThunk());
+    navigate('/');
   };
 
   return (
     <HeaderBackColor>
       <HeaderNavbar>
         <Logo>
-          <Link className="link-style" to="/">
-            <>
-              <img className="logo" src="/images/logo1.png" alt="logo" />
-              <span className="header-title">dev interview</span>
-            </>
-          </Link>
+          <div className="link-style" onClick={gotohome}>
+            <img className="logo" src="/images/logo1.png" alt="logo" />
+            <span className="header-title">dev interview</span>
+          </div>
         </Logo>
 
         <Rightmenu>
