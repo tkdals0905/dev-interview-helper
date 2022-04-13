@@ -7,7 +7,6 @@ export const HeaderBackColor = styled.div`
 `;
 
 export const HeaderNavbar = styled.header`
-  background: #0a174e;
   display: flex;
   margin: 0px 20px 0px 20px;
   max-width: 1100px;
@@ -17,7 +16,6 @@ export const HeaderNavbar = styled.header`
   justify-content: space-between;
   width: 100%;
   padding: 15px 0px;
-  font-weight: 900;
   .link-style {
     text-decoration: none;
     color: white;
@@ -38,6 +36,8 @@ export const HeaderNavbar = styled.header`
   li {
     list-style: none;
     cursor: pointer;
+    font-size: 18px;
+    font-weight: 800;
   }
   li:hover {
     color: #fdd835;
@@ -47,29 +47,41 @@ export const HeaderNavbar = styled.header`
 export const Rightmenu = styled.div`
   display: flex;
   align-items: center;
+
+  input {
+    height: 40px;
+    width: 300px;
+    border-radius: 20px;
+    padding-left: 10px;
+    font-size: 15px;
+  }
+
   .menu-btn {
     padding: 7px;
     background: #0a174e;
     color: white;
     border: none;
-    font-size: 20px;
+    font-size: 13px;
   }
   .navbar-menu {
     display: flex;
   }
   .menu {
+    position: relative;
     z-index: 1;
   }
 
   .disable-userInfo {
     display: none;
     position: absolute;
+    right: 1000px;
   }
   .userInfo-header {
     height: 30px;
     width: 125px;
     right: 0px;
     top: 2px;
+    position: absolute;
     border-style: none;
     z-index: 2;
   }
@@ -80,7 +92,7 @@ export const Rightmenu = styled.div`
     font-weight: 800;
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 20px;
+    font-size: 16px;
   }
   hr {
     border: solid 1px white;
@@ -111,7 +123,7 @@ export const Rightmenu = styled.div`
     display: none;
     text-align: center;
     position: absolute;
-    right: 0%;
+    right: -30;
     background: #0a174e;
     padding: 5px 10px 20px 0px;
     font-weight: 500;
@@ -129,8 +141,27 @@ export const Rightmenu = styled.div`
   .dropdown:hover .user-profile {
     color: #fdd835;
   }
+  .search {
+    display: flex;
+    align-items: center;
+  }
 `;
 
+export const SearchBtn = styled.button`
+  width: 30px;
+  height: 39px;
+  border-radius: 10px;
+  background: #0a174e;
+  display: flex;
+
+  .search-img {
+    position: relative;
+    right: 40px;
+    top: 5px;
+    color: #0a174e;
+    font-size: 25px;
+  }
+`;
 export const Logo = styled.div`
   display: flex;
   position: relative;

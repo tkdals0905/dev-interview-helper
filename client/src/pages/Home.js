@@ -93,7 +93,6 @@ function Home() {
       }
     }
   }, [getMainCards.status]);
-
   return (
     <Container>
       <Divider title="학습 중" />

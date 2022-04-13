@@ -12,7 +12,6 @@ import { tokenApi } from '../api/user';
 import { LOAD_MY_CARDS_SUCCESS } from '../reducers/card';
 import { LOG_IN_SUCCESS } from '../reducers/user';
 import CardDetail from '../components/CardDetail';
-import EditCardForm from '../components/EditCardForm';
 
 const Background = styled.section`
   display: flex;
@@ -36,9 +35,6 @@ const MyPageComponent = styled.div`
   }
 `;
 const MyInfo = styled.section`
-  @media screen and (max-width: 960px) {
-    flex-wrap: wrap;
-  }
   background: whitesmoke;
   display: flex;
   margin: auto;
@@ -47,7 +43,7 @@ const MyInfo = styled.section`
   font-weight: 700;
   padding: 15px 30px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   font-weight: 700;
   .left-profile {
     display: flex;
@@ -104,7 +100,7 @@ function MyPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { myCards, isLoadMyCards, isDetail, isEditCard } = useSelector(
+  const { myCards, isLoadMyCards, isDetail } = useSelector(
     (state) => state.card,
   );
   const [info, setInfo] = useState(false);
@@ -117,7 +113,6 @@ function MyPage() {
     retry: false,
   });
   // 로드 상태가 true 가 된 상태! 카드 보여?
-
   useEffect(() => {
     if (!isLoadMyCards) {
       if (getMyCards.status === 'error') {
@@ -173,7 +168,6 @@ function MyPage() {
     return (
       <Background>
         {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
-        {isEditCard ? <EditCardForm card={isEditCard} /> : null}
         <MyPageComponent>
           <div className="myPage-title">
             <h1 className="title">My Page</h1>
@@ -199,15 +193,13 @@ function MyPage() {
                 </button>
               </div>
             </div>
-            <div className="Input-info">
-              <SetInFo> {info ? <InfoChange /> : null}</SetInFo>
-            </div>
+            <SetInFo> {info ? <InfoChange /> : null}</SetInFo>
           </MyInfo>
 
           <div className="myPage-title">
             <h1 className="title">Study Cards Storage</h1>
           </div>
-          <MyCards cardsInfo={myCards} cardRole="mine" />
+          <MyCards cardsInfo={myCards} />
           <MyStudyCards />
         </MyPageComponent>
       </Background>

@@ -8,6 +8,7 @@ import { faCopyright } from '@fortawesome/free-regular-svg-icons';
 
 function Footer() {
   const FooterComponent = styled.footer`
+    /* max-width: 1100px; */
     position: absolute;
     left: 0;
     bottom: 0;
