@@ -178,6 +178,7 @@ function Card({ cardInfo, cardRole }) {
 
   const handleUnshare = async () => {
     const Info = await unShareCardApi(cardInfo.id);
+    console.log('공유하기 :', cardInfo.id);
     if (Info.status === 200) {
       dispatch({
         type: UNSHARE_CARD_TO_ME,
