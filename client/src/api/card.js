@@ -5,7 +5,10 @@ axios.defaults.withCredentials = true;
 
 export const postCardApi = (data) => axios.post('/card', data);
 
-export const deleteCardApi = () => axios.delete('/card/:id');
+export const deleteCardApi = () => axios.delete('/card/:cardId');
+
+export const updateCardApi = (data) => axios.patch('/card', data);
+// {cordId:1, question:'blabla', answer:'blabla'};
 
 export const getCardsApi = () => axios.get('/cards');
 
