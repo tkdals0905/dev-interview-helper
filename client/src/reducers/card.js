@@ -24,12 +24,20 @@ export const SELECT_ALL_CARDS = 'SELECT_ALL_CARDS';
 export const UNSELECT_ALL_CARDS = 'UNSELECT_ALL_CARDS';
 export const SELECT_CARD = 'SELECT_CARD';
 export const UNSELECT_CARD = 'UNSELECT_CARD';
-
 export const DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS';
-
+export const REFRESH_STATE = 'REFRESH_STATE';
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case REFRESH_STATE:
+        draft.mainCards = [];
+        draft.myCards = [];
+        draft.isLoadCards = false;
+        draft.isLoadMyCards = false;
+        draft.isDetail = null;
+        draft.selectedCardsId = [];
+        draft.isSelectAll = false;
+        break;
       case LOAD_CARDS_SUCCESS:
         draft.mainCards = draft.mainCards.concat(...action.data);
         draft.isLoadCards = true;

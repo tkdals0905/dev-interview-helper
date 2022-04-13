@@ -67,7 +67,6 @@ function Home() {
       });
     }
   }, [getToken.status]);
-
   useEffect(() => {
     if (!isLoadCards) {
       if (getMainCards.status === 'success') {
