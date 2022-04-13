@@ -75,6 +75,7 @@ function Home() {
           const { id, question, answer, Likers } = data;
           const { username } = data.User;
           const newData = {
+            userId: data.User.id,
             id,
             question,
             answer,

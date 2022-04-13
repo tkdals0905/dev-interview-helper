@@ -79,6 +79,7 @@ function CardForm({ handlePostCard }) {
       const { id, question, answer, Likers } = postCardMutation.data.data;
       const { username } = postCardMutation.data.data.User;
       const newPost = {
+        userId: postCardMutation.data.data.User.id,
         id,
         question,
         answer,
