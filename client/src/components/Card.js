@@ -150,6 +150,7 @@ function Card({ cardInfo, cardRole }) {
 
   const handleUnshare = async () => {
     const Info = await unShareCardApi(cardInfo.id);
+    console.log('공유하기 :', cardInfo.id);
     if (Info.status === 200) {
       dispatch({
         type: UNSHARE_CARD_TO_ME,
@@ -161,9 +162,9 @@ function Card({ cardInfo, cardRole }) {
   const handleDeleteCard = async () => {
     const result = window.confirm('정말로 질문 카드를 삭제하시겠습니까?');
     if (result) {
-      const isDelete = await deleteCardApi();
+      const isDelete = await deleteCardApi(cardInfo.id);
       if (isDelete.status === 200) {
-        console.log(isDelete.data); // {userId:6}
+        console.log(isDelete.data);
         dispatch({
           type: DELETE_CARD_SUCCESS,
           data: isDelete.data,
