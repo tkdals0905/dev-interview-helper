@@ -8,7 +8,6 @@ import Confirm from './Confirm';
 import { editNameApi, deleteUserApi, changePWDApi } from '../api/user';
 import { EDIT_NAME_SUCCESS } from '../reducers/user';
 import { DELETE_USER_SUCCESS } from '../reducers/card';
-// import { DELETE_MY_INFO } from '../reducers/user';
 
 // useMutation : 값을 바꿀때 사용하는 api
 
@@ -100,26 +99,12 @@ function InfoChange() {
       });
     }
   };
-  // const hand
-  // const handlePassWord = async (e) => {
-  //   e.preventDefault();
-  //   if (
-  //     me.password === userInfo.password_now &&
-  //     userInfo.password_now !== userInfo.password
-  //   ) {
-  //     infoMutation.mutate({
-  //       password: userInfo.password,
-  //     });
-  //   } else {
-  //     setMessage('info_edit_fail');
-  //   }
-  // };
 
   useEffect(() => {
     if (editNameMutation.status === 'error') {
-      setMessage('info_edit_fail');
+      // setMessage('info_edit_fail');
     } else if (editNameMutation.status === 'success') {
-      setMessage('info_edit_success');
+      // setMessage('info_edit_success');
       dispatch({
         type: EDIT_NAME_SUCCESS,
         data: userInfo.username,
@@ -131,6 +116,7 @@ function InfoChange() {
     const result = window.confirm('정말로 계정삭제를 하시겠습니까?');
     if (result) {
       const isDelete = await deleteUserApi();
+      // 삭제되면
       if (isDelete.status === 200) {
         // console.log(isDelete.data); // {userId:6}
         dispatch({
@@ -145,58 +131,45 @@ function InfoChange() {
     setMessage('');
   };
   return (
-    <>
-      <InfoChangeComponent>
-        {message ? (
-          <Confirm message={message} handleMessage={resetMessage} />
-        ) : null}
-        <Info>
-          <label htmlFor="user-email">이름</label>
-          <input
-            id="user-email"
-            type="text"
-            placeholder="이름"
-            onChange={handleChangeInfo('username')}
-          />
-          <button onClick={handleEditName} className="email-btn" type="button">
-            Nickname edit
-          </button>
-          <hr />
-          {/* <form onSubmit={handlePassWord}> */}
-          <label htmlFor="past-password">현재 비밀번호</label>
-          <input
-            id="past-password"
-            type="password"
-            placeholder="현재 비밀번호"
-            onChange={handleChangeInfo('password_now')}
-          />
-          <label htmlFor="set-password">비밀번호 생성</label>
-          <input
-            id="set-password"
-            type="password"
-            placeholder="새로운 비밀번호"
-            onChange={handleChangeInfo('password')}
-          />
-          <button
-            className="pass-btn"
-            type="submit"
-            onClick={handleEditPassword}
-          >
-            Password edit
-          </button>
+    <InfoChangeComponent>
+      {message ? (
+        <Confirm message={message} handleMessage={resetMessage} />
+      ) : null}
+      <Info>
+        <label htmlFor="user-email">이름</label>
+        <input
+          id="user-email"
+          type="text"
+          placeholder="이름"
+          onChange={handleChangeInfo('username')}
+        />
+        <button onClick={handleEditName} className="email-btn" type="button">
+          Nickname edit
+        </button>
+        <hr />
+        <label htmlFor="past-password">현재 비밀번호</label>
+        <input
+          id="past-password"
+          type="password"
+          placeholder="현재 비밀번호"
+          onChange={handleChangeInfo('password_now')}
+        />
+        <label htmlFor="set-password">비밀번호 생성</label>
+        <input
+          id="set-password"
+          type="password"
+          placeholder="새로운 비밀번호"
+          onChange={handleChangeInfo('password')}
+        />
+        <button className="pass-btn" type="submit" onClick={handleEditPassword}>
+          Password edit
+        </button>
 
-          <button
-            className="delete-btn"
-            type="button"
-            onClick={handleInfoDelete}
-          >
-            Profile Delete
-          </button>
-        </Info>
-      </InfoChangeComponent>
-      {/* </MainPage> */}
-      {/* // </MyPageComponent> */}
-    </>
+        <button className="delete-btn" type="button" onClick={handleInfoDelete}>
+          Profile Delete
+        </button>
+      </Info>
+    </InfoChangeComponent>
   );
 }
 
