@@ -119,7 +119,7 @@ function Study() {
               type="button"
               className="unseleteAll-btn"
             >
-              전테선택취소
+              전체선택취소
             </button>
           ) : (
             <button

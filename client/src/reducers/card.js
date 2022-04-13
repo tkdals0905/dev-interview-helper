@@ -77,12 +77,13 @@ const reducer = (state = initialized, action) =>
         draft.isSelectAll = false;
         draft.selectedCardsId = draft.selectedCardsId.filter(
           (id) => id !== action.data,
+        );
+        break;
       case DELETE_CARD_SUCCESS:
         // 카드 삭제 기능 : 마이 카드 & 메인카드에서 해당 유저가 작성한 카드를 삭제해야함
         draft.myCards = draft.myCards.filter(
           (card) =>
             card.userId === action.data.userId && card.id !== action.data.id,
-
         );
         break;
       default:
