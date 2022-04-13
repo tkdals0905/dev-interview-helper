@@ -146,4 +146,26 @@ module.exports = {
       next(error);
     }
   },
+  deleteCard: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+
+      const card = await Card.destroy({
+        where: {
+          id: req.params.cardId,
+          UserId: userInfo.dataValues.id,
+        },
+      });
+      if (!card) {
+        return res.status(403).send('카드가 존재하지 않습니다.');
+      }
+      return res.status(200).json({ CardId: Number(req.params.cardId) });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
 };

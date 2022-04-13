@@ -28,6 +28,8 @@ export const UNLIKE_CARD_SUCCESS = 'UNLIKE_CARD_SUCCESS';
 
 export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 
+export const DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS';
+
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -61,6 +63,13 @@ const reducer = (state = initialized, action) =>
       case DELETE_USER_SUCCESS:
         draft.mainCards = draft.mainCards.filter(
           (card) => card.userId !== action.data.userId,
+        );
+        break;
+      case DELETE_CARD_SUCCESS:
+        // 카드 삭제 기능 : 마이 카드 & 메인카드에서 해당 유저가 작성한 카드를 삭제해야함
+        draft.myCards = draft.myCards.filter(
+          (card) =>
+            card.userId === action.data.userId && card.id !== action.data.id,
         );
         break;
       default:

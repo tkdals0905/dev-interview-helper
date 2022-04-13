@@ -6,6 +6,7 @@ const {
   unShareCard,
   like,
   dislike,
+  deleteCard,
 } = require('../controller/card');
 
 router.post('/', card);
@@ -18,4 +19,5 @@ router.patch('/:cardId/like', like);
 // 좋아요 삭제
 router.delete('/:cardId/like', dislike);
 
+router.delete('/:cardId', deleteCard);
 module.exports = router;
