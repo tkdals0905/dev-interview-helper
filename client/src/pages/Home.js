@@ -88,19 +88,20 @@ function Home() {
       }
     }
   }, [getMainCards.status]);
-  if (getToken.status === 'loading') {
-    return <h1>Loading...</h1>;
+
+  if (getToken.status === 'success' || getToken.status === 'error') {
+    return (
+      <Container>
+        <Divider title="학습 중" />
+        <ShareCards />
+        <Divider title="문제집" />
+        {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
+        {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
+        <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />
+      </Container>
+    );
   }
-  return (
-    <Container>
-      <Divider title="학습 중" />
-      <ShareCards />
-      <Divider title="문제집" />
-      {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
-      {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
-      <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />
-    </Container>
-  );
+  return <h1>Loading...</h1>;
 }
 
 export default Home;

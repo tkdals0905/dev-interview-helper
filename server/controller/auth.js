@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { checkAccessToken } = require('./functions/jwtToken');
+const { checkToken } = require('./functions/jwtToken');
 
 module.exports = {
   auth: async (req, res) => {
@@ -11,7 +11,7 @@ module.exports = {
       }
 
       // 에세스 토큰이 유효한지 확인.
-      const accessTokenData = checkAccessToken(accessToken);
+      const accessTokenData = checkToken(accessToken);
       if (!accessTokenData) {
         return res.status(401).json({ message: 'Invalid token!' });
       }
@@ -32,14 +32,18 @@ module.exports = {
   },
   isAuth: async (req, res) => {
     // 쿠키에 에세스 토큰이 유무 확인.
-    const { accessToken } = req.cookies;
-    if (!accessToken) {
+    console.log('cookies:', req.cookies);
+    const { accessToken, refreshToken } = req.cookies;
+    if (!accessToken || !refreshToken) {
       return false;
     }
     // 에세스 토큰이 유효한지 확인.
-    const accessTokenData = checkAccessToken(accessToken);
-    if (!accessTokenData) {
-      return false;
+    const accessTokenData = checkToken(accessToken);
+    const refreshTokenData = checkToken(refreshToken);
+    if (accessTokenData === null) {
+      if (refreshTokenData === undefined) {
+        return false;
+      }
     }
     // 에세스 토큰 정보가 유효한지 확인.
     const { email } = accessTokenData;
