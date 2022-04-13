@@ -4,20 +4,29 @@ const jwt = require('jsonwebtoken');
 module.exports = {
   // Access token으로 sign
   generateAccessToken: (data) => {
-    return jwt.sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
+    return jwt.sign(data, process.env.ACCESS_SECRET, {
+      expiresIn: '3h',
+      issuer: 'cotak',
+    });
+  },
+  generateRefreshToken: () => {
+    return jwt.sign({}, process.env.ACCESS_SECRET, {
+      expiresIn: '14d',
+      issuer: 'cotak',
+    });
   },
   // JWT 토큰을 쿠키로 전달
-  sendAccessToken: (res, accessToken) => {
+  sendToken: (res, accessToken, refreshToken) => {
     const cookieOptions = {
-      maxAge: 900000,
       httpOnly: true,
     };
     res.cookie('accessToken', accessToken, cookieOptions);
+    res.cookie('refreshToken', refreshToken, cookieOptions);
   },
   // JWT 토큰 정보를 받아서 검증
-  checkAccessToken: (accessToken) => {
+  checkToken: (token) => {
     try {
-      return jwt.verify(accessToken, process.env.ACCESS_SECRET);
+      return jwt.verify(token, process.env.ACCESS_SECRET);
     } catch (err) {
       return null;
     }
