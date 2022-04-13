@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import MyPage from './pages/MyPage';
 import Footer from './components/Footer';
 import Study from './pages/Study';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
   return (

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router';
 import MyCards from '../components/myCards';
 import CardDetail from '../components/CardDetail';
 import { SELECT_ALL_CARDS, UNSELECT_ALL_CARDS } from '../reducers/card';
 import { tokenApi } from '../api/user';
 import { getSharedCards } from '../api/card';
 import { LOG_IN_SUCCESS, LOG_OUT_SUCCESS } from '../reducers/user';
+import Practice from '../components/Practice';
 
 const ButtonContainer = styled.div`
   text-align: center;
@@ -38,6 +40,7 @@ const ButtonContainer = styled.div`
   }
 `;
 function Study() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { isDetail, selectedCardsId, isSelectAll } = useSelector(
@@ -46,6 +49,7 @@ function Study() {
   const getToken = useQuery('getToken', tokenApi, {
     retry: false,
   });
+  const [isPratice, setIsPratice] = useState(false);
   const [customCards, setCustomCards] = useState([]);
   useEffect(() => {
     if (me) {
@@ -78,6 +82,7 @@ function Study() {
       dispatch({
         type: LOG_OUT_SUCCESS,
       });
+      navigate('/');
     } else if (getToken.status === 'success') {
       // 로그인 성공시 공유된카드 불러오기
       getSharedCards().then((cbData) => {
@@ -106,10 +111,14 @@ function Study() {
       type: UNSELECT_ALL_CARDS,
     });
   };
+
+  const handlePractice = (data) => {
+    setIsPratice(data);
+  };
   if (getToken.status === 'loading') {
     return <h1>Loading....</h1>;
   }
-  if (me) {
+  if (me && !isPratice) {
     return (
       <div>
         <ButtonContainer>
@@ -134,6 +143,7 @@ function Study() {
           <button
             type="button"
             disabled={!selectedCardsId.length > 0}
+            onClick={() => handlePractice(true)}
             className={`study-btn ${
               selectedCardsId.length > 0 ? 'abled-btn' : 'disabled-btn'
             }`}
@@ -146,6 +156,15 @@ function Study() {
         {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
         <MyCards cardsInfo={customCards} cardRole="study" />
       </div>
+    );
+  }
+  if (me && isPratice) {
+    return (
+      <Practice
+        handlePractice={handlePractice}
+        selectedCardsId={selectedCardsId}
+        sharedCards={me.Shared}
+      />
     );
   }
 }
