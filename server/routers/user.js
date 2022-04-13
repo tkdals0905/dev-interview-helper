@@ -5,6 +5,7 @@ const {
   login,
   logout,
   editUsername,
+  editPwd,
   signout,
 } = require('../controller/user');
 const { auth } = require('../controller/auth');
@@ -19,8 +20,10 @@ router.post('/login', login);
 router.get('/logout', logout);
 //토근 인증
 router.get('/token', auth);
-// 회원정보 수정 (아메일)
+// 회원정보 수정 (이름)
 router.patch('/username', editUsername);
+// 회원정보 수정 (패스워드)
+router.patch('/password', editPwd);
 // 회원탈퇴
 
 module.exports = router;

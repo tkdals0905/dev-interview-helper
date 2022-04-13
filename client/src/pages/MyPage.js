@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
 import MyCards from '../components/myCards';
+// eslint-disable-next-line import/no-named-as-default
 import InfoChange from '../components/InfoChange';
 import { getMyCardsApi, getSharedCards } from '../api/card';
 import { tokenApi } from '../api/user';
