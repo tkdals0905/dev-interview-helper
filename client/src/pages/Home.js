@@ -67,6 +67,7 @@ function Home() {
       });
     }
   }, [getToken.status]);
+
   useEffect(() => {
     if (!isLoadCards) {
       if (getMainCards.status === 'success') {
@@ -92,6 +93,7 @@ function Home() {
       }
     }
   }, [getMainCards.status]);
+
   return (
     <Container>
       <Divider title="학습 중" />
