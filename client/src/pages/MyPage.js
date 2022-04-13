@@ -36,6 +36,9 @@ const MyPageComponent = styled.div`
   }
 `;
 const MyInfo = styled.section`
+  @media screen and (max-width: 960px) {
+    flex-wrap: wrap;
+  }
   background: whitesmoke;
   display: flex;
   margin: auto;
@@ -44,7 +47,7 @@ const MyInfo = styled.section`
   font-weight: 700;
   padding: 15px 30px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   font-weight: 700;
   .left-profile {
     display: flex;
@@ -70,13 +73,11 @@ const MyInfo = styled.section`
     cursor: pointer;
     border: none;
     background: #0078ff;
-
     margin-top: 5px;
   }
   .Edit-btn {
     margin-left: 5px;
   }
-
   button:active {
     position: relative;
     top: 1px;
