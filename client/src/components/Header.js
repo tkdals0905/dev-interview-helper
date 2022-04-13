@@ -12,7 +12,7 @@ import {
   Rightmenu,
   SearchBtn,
 } from '../styles/HeaderStyle';
-import { LOG_OUT_SUCCESS } from '../reducers/user';
+import { loginThunk, logoutThunk } from '../reducers';
 
 function Header() {
   const navigate = useNavigate();
@@ -30,23 +30,23 @@ function Header() {
   const handleLogout = async () => {
     await refetch();
     if (status === 'success') {
-      dispatch({
-        type: LOG_OUT_SUCCESS,
-      });
+      dispatch(logoutThunk());
       navigate('/');
     }
+  };
+  const gotohome = () => {
+    dispatch(loginThunk());
+    navigate('/');
   };
 
   return (
     <HeaderBackColor>
       <HeaderNavbar>
         <Logo>
-          <Link className="link-style" to="/">
-            <>
-              <img className="logo" src="/images/logo1.png" alt="logo" />
-              <span className="header-title">dev interview</span>
-            </>
-          </Link>
+          <div className="link-style" onClick={gotohome}>
+            <img className="logo" src="/images/logo1.png" alt="logo" />
+            <span className="header-title">dev interview</span>
+          </div>
         </Logo>
 
         <Rightmenu>

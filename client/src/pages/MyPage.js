@@ -10,9 +10,9 @@ import InfoChange from '../components/InfoChange';
 import { getMyCardsApi, getSharedCards } from '../api/card';
 import { tokenApi } from '../api/user';
 import { LOAD_MY_CARDS_SUCCESS } from '../reducers/card';
-import { LOG_IN_SUCCESS } from '../reducers/user';
 import CardDetail from '../components/CardDetail';
 import EditCardForm from '../components/EditCardForm';
+import { loginThunk } from '../reducers';
 
 const Background = styled.section`
   display: flex;
@@ -152,10 +152,7 @@ function MyPage() {
           ...cbData.data,
           SharedIdArr,
         };
-        dispatch({
-          type: LOG_IN_SUCCESS,
-          data: userInfo,
-        });
+        dispatch(loginThunk(userInfo));
       });
     }
   }, [getToken.status]);

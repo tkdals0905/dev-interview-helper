@@ -5,12 +5,12 @@ import { useQuery } from 'react-query';
 import Cards from '../components/Cards';
 import ShareCards from '../components/ShareCards';
 import { LOAD_CARDS_SUCCESS } from '../reducers/card';
-import { LOG_IN_SUCCESS, LOG_OUT_SUCCESS } from '../reducers/user';
 import Divider from '../components/Divider';
 import CardForm from '../components/CardForm';
 import CardDetail from '../components/CardDetail';
 import { tokenApi } from '../api/user';
 import { getCardsApi, getSharedCards } from '../api/card';
+import { loginThunk, logoutThunk } from '../reducers';
 
 const Container = styled.main`
   width: 100%;
@@ -49,9 +49,7 @@ function Home() {
   useEffect(() => {
     if (getToken.status === 'error') {
       console.error(getToken.error);
-      dispatch({
-        type: LOG_OUT_SUCCESS,
-      });
+      dispatch(logoutThunk());
     } else if (getToken.status === 'success') {
       // 로그인 성공시 공유된카드 불러오기
       getSharedCards().then((cbData) => {
@@ -60,10 +58,7 @@ function Home() {
           ...cbData.data,
           SharedIdArr,
         };
-        dispatch({
-          type: LOG_IN_SUCCESS,
-          data: userInfo,
-        });
+        dispatch(loginThunk(userInfo));
       });
     }
   }, [getToken.status]);
@@ -93,7 +88,9 @@ function Home() {
       }
     }
   }, [getMainCards.status]);
-
+  if (getToken.status === 'loading') {
+    return <h1>Loading...</h1>;
+  }
   return (
     <Container>
       <Divider title="학습 중" />
