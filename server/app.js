@@ -50,8 +50,8 @@ app.use(cookieParser());
 // json형식으로 올 경우 body 파싱
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.get('/hi', (req, res) => {
-  res.json({ message: 'hi' });
+app.get('/', (req, res) => {
+  res.send('hello express');
 });
 
 app.use('/user', userRouter);
