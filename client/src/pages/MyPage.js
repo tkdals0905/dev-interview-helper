@@ -199,7 +199,7 @@ function MyPage() {
           <div className="myPage-title">
             <h1 className="title">Study Cards Storage</h1>
           </div>
-          <MyCards cardsInfo={myCards} />
+          <MyCards cardsInfo={myCards} cardRole="mine" />
           <MyStudyCards />
         </MyPageComponent>
       </Background>

@@ -6,27 +6,24 @@ const initialized = {
   isLoadCards: false,
   isLoadMyCards: false,
   isDetail: null,
+  selectedCardsId: [],
+  isSelectAll: false,
 };
 
 export const LOAD_CARDS_SUCCESS = 'LOAD_CARDS_SUCCESS';
-
 export const LOAD_MY_CARDS_SUCCESS = 'LOAD_MY_CARDS_SUCCESS';
-
 export const ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS';
-
 export const SHARE_CARD_SUCCESS = 'SHARE_CARD_SUCCESS';
-
 export const SHARED_CARDS_SUCCESS = 'SHARED_CARDS_SUCCESS';
-
 export const OPEN_CARD_DETAIL = 'OPEN_CARD_DETAIL';
-
 export const CLOSE_CARD_DETAIL = 'CLOSE_CARD_DETAIL';
-
 export const LIKE_CARD_SUCCESS = 'LIKE_CARD_SUCCESS';
-
 export const UNLIKE_CARD_SUCCESS = 'UNLIKE_CARD_SUCCESS';
-
 export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const SELECT_ALL_CARDS = 'SELECT_ALL_CARDS';
+export const UNSELECT_ALL_CARDS = 'UNSELECT_ALL_CARDS';
+export const SELECT_CARD = 'SELECT_CARD';
+export const UNSELECT_CARD = 'UNSELECT_CARD';
 
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
@@ -61,6 +58,23 @@ const reducer = (state = initialized, action) =>
       case DELETE_USER_SUCCESS:
         draft.mainCards = draft.mainCards.filter(
           (card) => card.userId !== action.data.userId,
+        );
+        break;
+      case SELECT_ALL_CARDS:
+        draft.isSelectAll = true;
+        draft.selectedCardsId = [...action.data];
+        break;
+      case UNSELECT_ALL_CARDS:
+        draft.isSelectAll = false;
+        draft.selectedCardsId = [];
+        break;
+      case SELECT_CARD:
+        draft.selectedCardsId.push(action.data);
+        break;
+      case UNSELECT_CARD:
+        draft.isSelectAll = false;
+        draft.selectedCardsId = draft.selectedCardsId.filter(
+          (id) => id !== action.data,
         );
         break;
       default:
