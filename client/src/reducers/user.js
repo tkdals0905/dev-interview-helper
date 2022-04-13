@@ -2,7 +2,6 @@ import produce from 'immer';
 
 const initialized = {
   me: null,
-  // me: { username: 'ys' },
 };
 export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
 
@@ -17,8 +16,6 @@ export const SHARE_CARD_TO_ME = 'SHARE_CARD_TO_ME';
 export const UNSHARE_CARD_TO_ME = 'UNSHARE_CARD_TO_ME';
 
 export const REMOVE_CARD_OF_ME = 'REMOVE_CARD_OF_ME';
-
-export const DELETE_MY_INFO = 'DELETE_MY_INFO';
 
 export const EDIT_NAME_SUCCESS = 'EDIT_NAME_SUCCESS';
 
@@ -51,9 +48,7 @@ const reducer = (state = initialized, action) =>
           (id) => id !== action.data,
         );
         break;
-      case DELETE_MY_INFO:
-        draft.me = null;
-        break;
+
       case EDIT_NAME_SUCCESS:
         draft.me = {
           ...draft.me,

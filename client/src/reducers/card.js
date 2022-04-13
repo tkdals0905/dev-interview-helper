@@ -25,6 +25,8 @@ export const UNSELECT_ALL_CARDS = 'UNSELECT_ALL_CARDS';
 export const SELECT_CARD = 'SELECT_CARD';
 export const UNSELECT_CARD = 'UNSELECT_CARD';
 
+export const DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS';
+
 const reducer = (state = initialized, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -75,6 +77,12 @@ const reducer = (state = initialized, action) =>
         draft.isSelectAll = false;
         draft.selectedCardsId = draft.selectedCardsId.filter(
           (id) => id !== action.data,
+      case DELETE_CARD_SUCCESS:
+        // 카드 삭제 기능 : 마이 카드 & 메인카드에서 해당 유저가 작성한 카드를 삭제해야함
+        draft.myCards = draft.myCards.filter(
+          (card) =>
+            card.userId === action.data.userId && card.id !== action.data.id,
+
         );
         break;
       default:

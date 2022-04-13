@@ -11,12 +11,14 @@ import {
   SELECT_CARD,
   UNLIKE_CARD_SUCCESS,
   UNSELECT_CARD,
+  DELETE_CARD_SUCCESS,
 } from '../reducers/card';
 import {
   likeCardApi,
   shareCardApi,
   unLikeCardApi,
   unShareCardApi,
+  deleteCardApi,
 } from '../api/card';
 import { SHARE_CARD_TO_ME, UNSHARE_CARD_TO_ME } from '../reducers/user';
 
@@ -182,6 +184,20 @@ function Card({ cardInfo, cardRole }) {
       });
     }
   };
+  // 카드 삭제 버튼 : 누르면 확인메세지 => 확인 누르면 =>  (현재 유저 id가 누른 ) 해당카드 id 삭제
+  const handleDeleteCard = async () => {
+    const result = window.confirm('정말로 질문 카드를 삭제하시겠습니까?');
+    if (result) {
+      const isDelete = await deleteCardApi(cardInfo.id);
+      if (isDelete.status === 200) {
+        console.log(isDelete.data);
+        dispatch({
+          type: DELETE_CARD_SUCCESS,
+          data: isDelete.data,
+        });
+      }
+    }
+  };
 
   const handleSelect = () => {
     dispatch({
@@ -230,7 +246,7 @@ function Card({ cardInfo, cardRole }) {
               {' '}
               수정하기
             </button>
-            <button id="deleteBtn" type="button">
+            <button onClick={handleDeleteCard} id="deleteBtn" type="button">
               {' '}
               삭제하기
             </button>
