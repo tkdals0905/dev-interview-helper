@@ -171,5 +171,29 @@ module.exports = {
     }
   },
 
-  editCard: async (req, res, next) => {},
+  editCard: async (req, res, next) => {
+    try {
+      const userInfo = await isAuth(req, res);
+      if (!userInfo) {
+        return res.status(400).json({ message: '로그인 하셔야합니다.' });
+      }
+      const { question, answer } = req.body;
+      await Card.update(
+        {
+          question,
+          answer,
+        },
+        {
+          where: {
+            id: req.params.cardId,
+          },
+        },
+      );
+      return res.status(200).json({ message: 'ok' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'server error' });
+      next(error);
+    }
+  },
 };
