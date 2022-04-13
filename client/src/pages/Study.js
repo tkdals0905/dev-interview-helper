@@ -8,8 +8,8 @@ import CardDetail from '../components/CardDetail';
 import { SELECT_ALL_CARDS, UNSELECT_ALL_CARDS } from '../reducers/card';
 import { tokenApi } from '../api/user';
 import { getSharedCards } from '../api/card';
-import { LOG_IN_SUCCESS, LOG_OUT_SUCCESS } from '../reducers/user';
 import Practice from '../components/Practice';
+import { logoutThunk, loginThunk } from '../reducers';
 
 const ButtonContainer = styled.div`
   text-align: center;
@@ -79,9 +79,7 @@ function Study() {
   useEffect(() => {
     if (getToken.status === 'error') {
       console.error(getToken.error);
-      dispatch({
-        type: LOG_OUT_SUCCESS,
-      });
+      dispatch(logoutThunk());
       navigate('/');
     } else if (getToken.status === 'success') {
       // 로그인 성공시 공유된카드 불러오기
@@ -91,10 +89,7 @@ function Study() {
           ...cbData.data,
           SharedIdArr,
         };
-        dispatch({
-          type: LOG_IN_SUCCESS,
-          data: userInfo,
-        });
+        dispatch(loginThunk(userInfo));
       });
     }
   }, [getToken.status]);
