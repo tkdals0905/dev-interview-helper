@@ -108,11 +108,11 @@
 <img src="https://img.shields.io/badge/common-git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
 
-
+<a href='https://kr.freepik.com/vectors/woman'>Woman 벡터는 jcomp - kr.freepik.com가 제작함</a>
 
 <!-- # Team Introduction -->
 <!-- 
-
+<a href='https://kr.freepik.com/vectors/woman'>Woman 벡터는 jcomp - kr.freepik.com가 제작함</a>
 > **Role** : Team Member
 >
 > **Position** : full stack / FE(Front-End), BE(Back-End)
