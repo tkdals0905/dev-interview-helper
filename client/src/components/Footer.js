@@ -101,8 +101,8 @@ function Footer() {
       cursor: pointer;
     }
     .logo-title {
-      font-weight: 800;
-      font-size: 12px;
+      font-weight: 900;
+      font-size: 18px;
     }
   `;
 

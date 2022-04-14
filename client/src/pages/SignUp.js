@@ -72,6 +72,7 @@ const SignUpWrapper = styled.div`
     display: inline-block;
   }
   .user-alert {
+    margin-top: 20px;
     font-size: 13px;
     font-weight: 500;
     color: #98a8b9;
