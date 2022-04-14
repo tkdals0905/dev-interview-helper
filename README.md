@@ -26,6 +26,7 @@
 |Poto|테스트1|테스트2|테스트3|테스트3|
 |Role|Team Member|Team Member|Team Member|Team Leader|
 |Posotion|full stack | BE(Back-End)| BE(Back-End)| FE(Front-End)|
+  
 ![Team Introduction](https://github.com/codestates/dev-interview-helper/wiki/Team-Introduction)
 ![Team Rule](https://github.com/codestates/dev-interview-helper/wiki/Team-Rule)
 ---
