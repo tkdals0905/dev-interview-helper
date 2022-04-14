@@ -43,36 +43,6 @@ const LoginMain = styled.div`
     background-color: #0078ff;
     cursor: pointer;
   }
-  .git-button {
-    background-color: #000000;
-  }
-  .line {
-    display: flex;
-    flex-basis: 20%;
-    color: gray;
-    opacity: 0.4;
-    font-size: 12px;
-    margin: 8px 0px;
-    align-items: baseline;
-  }
-  .line::before {
-    content: '';
-    flex-grow: 1;
-    margin: 0px 10px 0px 100px;
-    background-color: gray;
-    height: 1px;
-    font-size: 0px;
-    line-height: 0px;
-  }
-  .line::after {
-    content: '';
-    flex-grow: 1;
-    margin: 0px 100px 0px 10px;
-    background-color: gray;
-    height: 1px;
-    font-size: 0px;
-    line-height: 0px;
-  }
   input {
     border-radius: 3px;
     background-color: #fbfbfd;
@@ -159,13 +129,6 @@ function Login() {
       <LoginMain>
         <h2 className="login-title">로그인</h2>
         <form onSubmit={handlesubmit}>
-          <SubmitBtn className="git-button" type="submit">
-            Github으로 로그인하기
-          </SubmitBtn>
-          <div className="between">
-            <p className="line">또는</p>
-          </div>
-
           <label htmlFor="user-email">이메일</label>
           <input
             id="user-email"
