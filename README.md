@@ -27,8 +27,8 @@
 |Role|Team Member|Team Member|Team Member|Team Leader|
 |Posotion|full stack | BE(Back-End)| BE(Back-End)| FE(Front-End)|
   
-![Team Introduction](https://github.com/codestates/dev-interview-helper/wiki/Team-Introduction)
-![Team Rule](https://github.com/codestates/dev-interview-helper/wiki/Team-Rule)
+[Team Introduction](https://github.com/codestates/dev-interview-helper/wiki/Team-Introduction)
+[Team Rule](https://github.com/codestates/dev-interview-helper/wiki/Team-Rule)
 ---
 
 # Project 서비스 소개
