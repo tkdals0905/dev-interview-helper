@@ -1,4 +1,4 @@
-# Logo : Dev_Asisstant
+# Dev_Asisstant
 
 ![devlogo](https://user-images.githubusercontent.com/87491901/162045736-c7c33a65-5d53-4dc8-a500-049c381675f3.png)
 
