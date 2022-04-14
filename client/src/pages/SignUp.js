@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
+import { Link } from 'react-router-dom';
 import { signupApi } from '../api/user';
 import Confirm from '../components/Confirm';
 
@@ -202,9 +203,11 @@ function SignUp() {
         </form>
         <p className="user-alert">
           이미 계정이 있으신가요?{' '}
-          <span role="button" className="login-link">
-            로그인 하기
-          </span>
+          <Link to="/login">
+            <span role="button" className="login-link">
+              로그인 하기
+            </span>
+          </Link>
         </p>
       </SignUpWrapper>
     </SignUpContainer>

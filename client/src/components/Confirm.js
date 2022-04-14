@@ -75,7 +75,7 @@ function Confirm({ message, handleMessage }) {
 
   const handleConfirm = () => {
     if (message === 'success_signup') {
-      navigate('/');
+      navigate('/login');
     } else if (
       message === 'error_signup' ||
       message === 'password_check_fail' ||
