@@ -27,7 +27,7 @@ function Header() {
     }
   };
   const gotohome = () => {
-    dispatch(loginThunk());
+    dispatch(loginThunk(me));
     navigate('/');
   };
 
