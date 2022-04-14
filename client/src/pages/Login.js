@@ -18,6 +18,7 @@ const LoginComponent = styled.section`
   }
   .login-title {
     padding: 30px;
+    font-size: 32px;
   }
 `;
 
@@ -25,7 +26,8 @@ const LoginMain = styled.div`
   width: 320px;
   display: flex;
   flex-direction: column;
-  font-size: 12px;
+  font-size: 15px;
+
   h2 {
     padding: 20px;
     text-align: center;
@@ -44,6 +46,7 @@ const LoginMain = styled.div`
     cursor: pointer;
   }
   input {
+    width: 320px;
     border-radius: 3px;
     background-color: #fbfbfd;
     font-size: 16px;
@@ -51,13 +54,14 @@ const LoginMain = styled.div`
     height: 40px;
     border: 1px solid #0078ff;
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     height: 40px;
     opacity: 0.6;
-    padding: 2px 0px 2px 10px;
+    padding: 8px 12px 8px 12px;
   }
   a {
     display: inline;
+    color: black;
     text-decoration-line: none;
     margin-left: 20px;
   }
@@ -65,6 +69,10 @@ const LoginMain = styled.div`
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #98a8b9;
+    text-align: center;
   }
 `;
 
@@ -77,7 +85,7 @@ const SubmitBtn = styled.button`
   text-align: center;
   font-weight: 600;
   border: none;
-  margin-top: 20px;
+  margin-top: 5px;
 `;
 
 function Login() {
