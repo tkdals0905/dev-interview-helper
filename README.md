@@ -64,8 +64,6 @@
   - 수정 버튼을 누르면? 작성했던 카드의 내용을 수정하여 다시 카드)문제를 추가할 수 있다.
   - 삭제 버튼을 누르면? 내가 작성한 카드를 삭제할 수 있다. (모든 데이터 베이스에서 삭제된다.)
 
-- 카드 기능 : 수정 및 삭제
-  
 ![마이페이지 카드 수정 및 삭제](https://user-images.githubusercontent.com/87491901/163364196-f8c9ccd3-02e0-44da-b0cc-097ae0b7206f.gif)
  
 - 회원 정보 수정 
@@ -77,21 +75,23 @@
  
 # STACK
 
-<img width="832" alt="st" src="https://user-images.githubusercontent.com/87491901/163304247-f1114631-00da-4a1d-876b-a15ac4656791.png">
-
 [기술스택 wiki 바로가기](https://github.com/codestates/dev-interview-helper/wiki/%F0%9F%94%A8Tech-Stack)
 
 
-<!-- 
+<img width="832" alt="st" src="https://user-images.githubusercontent.com/87491901/163304247-f1114631-00da-4a1d-876b-a15ac4656791.png">
+
 
 ## FRONT
 
 
 
-<img src="https://img.shields.io/badge/Front-axios-blue?style=for-the-badge&logo= Query&logoColor=blue"><img src="https://img.shields.io/badge/front-react-61DAFB?style=for-the-badge&logo=react&logoColor=black"><img src="https://img.shields.io/badge/front-ReactQuery-FF4154?style=for-the-badge&logo=React Query&logoColor=white"><img src="https://img.shields.io/badge/front-REDUX-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
- <img src="https://img.shields.io/badge/front-styled components-hotpink?style=for-the-badge&logo=styled-components&logoColor=white">
+<img src="https://img.shields.io/badge/Front-axios-blue?style=for-the-badge&logo= Query&logoColor=blue">
+<img src="https://img.shields.io/badge/front-react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/front-ReactQuery-FF4154?style=for-the-badge&logo=React Query&logoColor=white">
+<img src="https://img.shields.io/badge/front-REDUX-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
+<img src="https://img.shields.io/badge/front-styled components-hotpink?style=for-the-badge&logo=styled-components&logoColor=white">
 <img src="https://img.shields.io/badge/front-css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
- <img src="https://img.shields.io/badge/front-javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/front-javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 
 ## BACK
 
@@ -105,9 +105,6 @@
 ## COMMON
 <img src="https://img.shields.io/badge/common-github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/common-git-F05032?style=for-the-badge&logo=git&logoColor=white">
-
-
---- -->
 
 
 
