@@ -16,6 +16,10 @@
 * 자신의 지식을 문제로 출제하여 다른 개발자와 공유 할 수 있습니다.
 
 * 좋아요 버튼을 누르는 기능을 통해 다른 개발자들에게 가장 도움이 된 자료가 무엇인지 쉽게 알 수 있습니다.
+![pngwing com (4) 복사본 3](https://user-images.githubusercontent.com/87491901/163410445-63ce0925-46fe-458e-a968-df79015e8154.png)
+![pngwing com (4) 복사본 2](https://user-images.githubusercontent.com/87491901/163410452-a728ce69-d6d2-4f84-8d71-24784468d54e.png)
+![pngwing com (4) 복사본](https://user-images.githubusercontent.com/87491901/163410455-d421a5be-ed54-43d1-a122-1366b4d6601b.png)
+![pngwing com (4)](https://user-images.githubusercontent.com/87491901/163410456-5627da5c-42aa-4c32-8982-14565541985e.png)
 
 # 📚 Wiki
 [프로젝트 wiki 바로가기](https://github.com/codestates/dev-interview-helper/wiki)
