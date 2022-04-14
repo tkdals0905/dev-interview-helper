@@ -26,7 +26,8 @@
 |Poto|테스트1|테스트2|테스트3|테스트3|
 |Role|Team Member|Team Member|Team Member|Team Leader|
 |Posotion|full stack | BE(Back-End)| BE(Back-End)| FE(Front-End)|
-
+![Team Introduction](https://github.com/codestates/dev-interview-helper/wiki/Team-Introduction)
+![Team Rule](https://github.com/codestates/dev-interview-helper/wiki/Team-Rule)
 ---
 
 # Project 서비스 소개
@@ -36,7 +37,7 @@
   
 ![회원가입 로그인 한번에](https://user-images.githubusercontent.com/87491901/163363103-d5a2d362-9781-413c-9933-bb120b6ccc03.gif)
 
- - 회원 가입 에러 처리
+ - !회원 가입 에러 처리 : 이미 가입한 회원 인 경우 가입이 되지 않는다.
  
  ![에러처리 - 회원가입 같은 계정일경우 ](https://user-images.githubusercontent.com/87491901/163363129-81ea4df8-789b-4d02-aced-4a17fb97eef5.gif)
  
@@ -58,18 +59,19 @@
 
 ## My Page (마이페이지)
  
-- 카드기능 : 수정 및 삭제
+- 카드 기능 : 수정 및 삭제
+  - 수정 버튼을 누르면? 작성했던 카드의 내용을 수정하여 다시 카드)문제를 추가할 수 있다.
+  - 삭제 버튼을 누르면? 내가 작성한 카드를 삭제할 수 있다. (모든 데이터 베이스에서 삭제된다.)
 
+- 카드 기능 : 수정 및 삭제
 ![마이페이지 카드 수정 및 삭제](https://user-images.githubusercontent.com/87491901/163364196-f8c9ccd3-02e0-44da-b0cc-097ae0b7206f.gif)
  
 - 회원 정보 수정 
   - 이름수정, 비밀번호 수정, 회원탈퇴  
+ 
+ - ! 로그인 에러 처리 : 회원이 아닌 사람은? 로그인이 안된다. (회원탈퇴를 통해 에러 처리를 확실하게 테스트)
 
 ![회원정보 수정 탈퇴및 관련 에러처리](https://user-images.githubusercontent.com/87491901/163363264-5760a497-1be2-460c-907b-0f48834be75c.gif)
-
-- 로그인 에러 처리
-
-![에러처리 - 회원탈퇴 - 없는 유저 로그인 ](https://user-images.githubusercontent.com/87491901/163363205-fbeef8e8-4a8a-4c9f-9a73-ca659c3b5154.gif)
 
  
 # STACK
@@ -100,6 +102,12 @@
 ## COMMON
 <img src="https://img.shields.io/badge/common-github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/common-git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
+
+---
+
+
+
 
 <!-- # Team Introduction -->
 <!-- 
