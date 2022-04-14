@@ -59,7 +59,7 @@ const reducer = (state = initialized, action) =>
         break;
       }
       case LOAD_MY_CARDS_SUCCESS:
-        draft.myCards = draft.myCards.concat(...action.data);
+        draft.myCards = [...action.data];
         draft.isLoadMyCards = true;
         break;
       case DELETE_USER_SUCCESS:
