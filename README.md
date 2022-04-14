@@ -19,7 +19,7 @@
 
 # 📚 Wiki
 [프로젝트 wiki 바로가기](https://github.com/codestates/dev-interview-helper/wiki)
----
+
 # 😎 Team Introduce
 |Name|최성민|이은주|오상민|지영서| 
 |:---:|:---:|:---:|:---:|:---:|
@@ -29,7 +29,7 @@
   
 [Team Introduction](https://github.com/codestates/dev-interview-helper/wiki/Team-Introduction)
 [Team Rule](https://github.com/codestates/dev-interview-helper/wiki/Team-Rule)
----
+
 
 # Project 서비스 소개
 ## Main Page (메인페이지)
@@ -79,8 +79,10 @@
 
 <img width="832" alt="st" src="https://user-images.githubusercontent.com/87491901/163304247-f1114631-00da-4a1d-876b-a15ac4656791.png">
 
-![기술스택 wiki 바로가기](https://github.com/codestates/dev-interview-helper/wiki/%F0%9F%94%A8Tech-Stack)
+[기술스택 wiki 바로가기](https://github.com/codestates/dev-interview-helper/wiki/%F0%9F%94%A8Tech-Stack)
 
+
+<!-- 
 
 ## FRONT
 
@@ -105,7 +107,7 @@
 <img src="https://img.shields.io/badge/common-git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
 
----
+--- -->
 
 
 
