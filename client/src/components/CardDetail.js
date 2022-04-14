@@ -20,6 +20,7 @@ const CardContainer = styled.div`
   width: 70%;
   height: 90%;
   border-radius: 4px;
+  overflow-y: auto;
   .back-arrow {
     font-size: 20px;
     margin-left: 15px;
