@@ -44,7 +44,7 @@ function PraticeCard({ cardInfo }) {
   return (
     <Container>
       <button onClick={() => setIsAnswer((prev) => !prev)} type="button">
-        답보기
+        {isAnswer ? '답숨기기' : '답 보기'}
       </button>
       <pre
         className={`question-pre ${
