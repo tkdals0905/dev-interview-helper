@@ -23,7 +23,8 @@
 # 😎 Team Introduce
 |Name|최성민|이은주|오상민|지영서| 
 |:---:|:---:|:---:|:---:|:---:|
-|Poto|테스트1|테스트2|테스트3|테스트3|
+|Poto|![png-transparent-kakaotalk-kakao-friends-instant-messaging-kakao-talk-mammal-cat-like-mammal-carnivoran-thumbnail](https://user-images.githubusercontent.com/87491901/163406733-9781da32-c6ad-4798-8c7a-68c063f35748.png)
+|테스트2|테스트3|테스트3|
 |Role|Team Member|Team Member|Team Member|Team Leader|
 |Posotion|full stack | BE(Back-End)| BE(Back-End)| FE(Front-End)|
   
