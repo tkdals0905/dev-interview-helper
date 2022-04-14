@@ -120,7 +120,7 @@ function Card({ cardInfo, cardRole }) {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < cardInfo.Likers.length; i++) {
         if (cardInfo.Likers[i].id === me.id) {
-          setIsSelected(true);
+          setIsLike(true);
           break;
         }
       }
