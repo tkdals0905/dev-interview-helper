@@ -133,7 +133,10 @@ function Card({ cardInfo, cardRole }) {
     } else {
       setIsSelected(false);
     }
-  }, [cardRole === 'study' && selectedCardsId]);
+  }, [
+    cardRole === 'study' && selectedCardsId,
+    cardRole === 'share' && selectedCardsId,
+  ]);
 
   const handleHeart = async () => {
     if (isLike === false) {

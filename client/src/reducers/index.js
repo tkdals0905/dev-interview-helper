@@ -13,11 +13,11 @@ export const logoutThunk = () => (dispatch) => {
 
 export const loginThunk = (data) => (dispatch) => {
   dispatch({
-    type: LOG_IN_SUCCESS,
-    data,
+    type: UNSELECT_ALL_CARDS,
   });
   dispatch({
-    type: UNSELECT_ALL_CARDS,
+    type: LOG_IN_SUCCESS,
+    data,
   });
 };
 const rootReducer = combineReducers({
