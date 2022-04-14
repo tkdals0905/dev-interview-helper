@@ -82,7 +82,8 @@ function InfoChange() {
   // console.log(infoMutation.data);
 
   const handleEditName = async () => {
-    if (me.username !== userInfo.username) {
+    const result = window.confirm('닉네임을 변경하시겠습니까?');
+    if (result && me.username !== userInfo.username) {
       editNameMutation.mutate({
         username: userInfo.username,
       });
@@ -90,19 +91,21 @@ function InfoChange() {
   };
 
   const handleEditPassword = async () => {
-    if (userInfo.password !== userInfo.password_now) {
+    const result = window.confirm('비밀번호를 변경하시겠습니까?');
+    if (result && userInfo.password !== userInfo.password_now) {
       editPasswordMutaiton.mutate({
         password_now: userInfo.password_now,
         password: userInfo.password,
       });
+      alert('비밀번호가 변경되었습니다.');
     }
   };
 
   useEffect(() => {
     if (editNameMutation.status === 'error') {
-      // setMessage('info_edit_fail');
+      console.log('error');
     } else if (editNameMutation.status === 'success') {
-      // setMessage('info_edit_success');
+      alert('닉네임이 변경되었습니다.');
       dispatch({
         type: EDIT_NAME_SUCCESS,
         data: userInfo.username,
@@ -159,7 +162,7 @@ function InfoChange() {
           placeholder="새로운 비밀번호"
           onChange={handleChangeInfo('password')}
         />
-        <button className="pass-btn" type="submit" onClick={handleEditPassword}>
+        <button className="pass-btn" type="button" onClick={handleEditPassword}>
           Password edit
         </button>
 
