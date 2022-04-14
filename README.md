@@ -26,7 +26,7 @@ http://devinterviewhelper.tk/
 # 😎 Team Introduce
 |Name|최성민|이은주|오상민|지영서| 
 |:---:|:---:|:---:|:---:|:---:|
-|Poto|![상민](https://user-images.githubusercontent.com/87491901/163416138-f173186c-549c-4322-bfd8-03dd44367365.png)|![은주](https://user-images.githubusercontent.com/87491901/163416775-5749b0b0-b6e4-4120-a056-b948da871781.png)|![성민](https://user-images.githubusercontent.com/87491901/163415777-7ac6ff2f-04f5-4379-b5b8-a31e5fb8fccf.png)|![영서](https://user-images.githubusercontent.com/87491901/163415811-a9dfc4a2-d38c-4880-9140-45fa9a472c49.png)|
+|Poto|![상민](https://user-images.githubusercontent.com/87491901/163416138-f173186c-549c-4322-bfd8-03dd44367365.png)|![무제](https://user-images.githubusercontent.com/87491901/163417527-b72c6fa0-6843-4fdc-b028-5971de8b34ee.png)|![성민](https://user-images.githubusercontent.com/87491901/163415777-7ac6ff2f-04f5-4379-b5b8-a31e5fb8fccf.png)|![영서](https://user-images.githubusercontent.com/87491901/163415811-a9dfc4a2-d38c-4880-9140-45fa9a472c49.png)|
 |Role|Team Member|Team Member|Team Member|Team Leader|
 |Posotion|full stack | BE(Back-End)| BE(Back-End)| FE(Front-End)|
   
