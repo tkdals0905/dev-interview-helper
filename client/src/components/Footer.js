@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faCopyright } from '@fortawesome/free-regular-svg-icons';
 
 function Footer() {
   const FooterComponent = styled.footer`
-    /* max-width: 1100px; */
     position: absolute;
     left: 0;
     bottom: 0;
@@ -85,6 +84,8 @@ function Footer() {
       display: flex;
       font-weight: 700;
       align-items: center;
+      text-decoration: none;
+      color: black;
     }
 
     .git-img {
@@ -106,6 +107,8 @@ function Footer() {
     }
   `;
 
+  const { me } = useSelector((state) => state.user);
+
   return (
     <FooterComponent>
       <Introduce>
@@ -124,11 +127,13 @@ function Footer() {
               <strong> dev interview</strong>
             </p>
           </div>
-          <Link className="link-style" to="/signup">
-            <button type="button" className="footer-btn">
-              Start Learning Together !
-            </button>
-          </Link>
+          {me ? null : (
+            <Link className="link-style" to="/signup">
+              <button type="button" className="footer-btn">
+                Start Learning Together !
+              </button>
+            </Link>
+          )}
         </div>
       </Introduce>
 
@@ -146,8 +151,7 @@ function Footer() {
           <div className="right-footer">
             <a
               className="git-link"
-              href="www.naver.com"
-              style={{ textDecoration: 'none', color: 'black' }}
+              href="https://github.com/codestates/dev-interview-helper/tree/dev"
             >
               <FontAwesomeIcon icon={faGithub} className="git-img" />
               <span>github</span>
