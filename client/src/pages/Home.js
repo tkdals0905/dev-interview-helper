@@ -37,9 +37,11 @@ function Home() {
   const { mainCards, isLoadCards, isDetail } = useSelector(
     (state) => state.card,
   );
+  const { me } = useSelector((state) => state.user);
 
   const getToken = useQuery('getToken', tokenApi, {
     retry: false,
+    enabled: !me,
   });
   const getMainCards = useQuery('getCards', getCardsApi, {
     retry: false,
@@ -47,6 +49,7 @@ function Home() {
   const [isPostCard, setPostCard] = useState(false);
 
   useEffect(() => {
+    console.log('getToken');
     if (getToken.status === 'error') {
       console.error(getToken.error);
       dispatch(logoutThunk());
@@ -58,6 +61,7 @@ function Home() {
           ...cbData.data,
           SharedIdArr,
         };
+        sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
         dispatch(loginThunk(userInfo));
       });
     }
@@ -89,19 +93,16 @@ function Home() {
     }
   }, [getMainCards.status]);
 
-  if (getToken.status === 'success' || getToken.status === 'error') {
-    return (
-      <Container>
-        <Divider title="학습 중" />
-        <ShareCards />
-        <Divider title="문제집" />
-        {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
-        {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
-        <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />
-      </Container>
-    );
-  }
-  return <h1>Loading...</h1>;
+  return (
+    <Container>
+      <Divider title="학습 중" />
+      <ShareCards />
+      <Divider title="문제집" />
+      {isDetail ? <CardDetail cardInfo={isDetail} /> : null}
+      {isPostCard ? <CardForm handlePostCard={setPostCard} /> : null}
+      <Cards cardsInfo={mainCards} handlePostCard={setPostCard} />
+    </Container>
+  );
 }
 
 export default Home;

@@ -23,6 +23,7 @@ function Header() {
     const islogout = await logOutApi();
     if (islogout.status === 200) {
       dispatch(logoutThunk());
+      sessionStorage.removeItem('userInfo');
       navigate('/');
     }
   };
